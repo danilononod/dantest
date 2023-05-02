@@ -36,15 +36,17 @@ CertiHowSavePrint As screen:
     HtmlText1 As htmlViewer:
         Height: =341
         HtmlText: |-
-            ="https://sharedspace.sharepoint.com/:v:/s/apac-ph-process-excellence/EY4LdMO3CNlLuY3_WkpLCuwBg76hbhIoVJR9XEsLMXgHww?e=4OAEpI"
+            ="<div><video controls='' autoplay='' name='media'><source src='https://sharedspace.sharepoint.com/sites/PExManagerReport/Shared%20Documents/5S.mp4' type='video/mp4'></video>
+            <div>"
         Width: =561
-        X: =60
-        Y: =60
+        X: =80
+        Y: =38
         ZIndex: =6
 
     Video4 As videoPlayback:
         Height: =532
-        Media: =vdo
+        Media: |-
+            ="https://sharedspace.sharepoint.com/sites/PExManagerReport/Shared%20Documents/PexLean.mp4"
         Width: =1216
         X: =60
         Y: =156
@@ -52,9 +54,16 @@ CertiHowSavePrint As screen:
 
     Button28 As button:
         OnSelect: |-
-            =Set(vdo, "https://sharedspace.sharepoint.com/sites/PExManagerReport/Shared%20Documents/5S.mp4")
+            =Set(vdo, " https://sharedspace.sharepoint.com/:v:/r/sites/PExManagerReport/Shared%20Documents/5S.mp4")
         Text: ="Button"
         X: =916
         Y: =398
         ZIndex: =8
+
+    HtmlText2 As htmlViewer:
+        HtmlText: |-
+            ="<video controls='' autoplay='' name='media'><source src='https://sharedspace.sharepoint.com/sites/PExManagerReport/Shared%20Documents/5S.mp4' type='video/mp4'></video>"
+        X: =80
+        Y: =80
+        ZIndex: =9
 
