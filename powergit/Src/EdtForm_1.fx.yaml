@@ -1,0 +1,706 @@
+EdtForm_1 As screen:
+
+    Rectangle1_2 As rectangle:
+        Fill: |-
+            =ColorValue("#1DB954")
+        Height: =150
+        Width: =1366
+        ZIndex: =1
+
+    Label2_2 As label:
+        Align: =TextPosition.Left
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =150
+        Size: =36
+        Text: ="Hello,  " & Left(varUserEmail,Find(" ",varUserEmail)) & "      " & If(Hour(Now())<12, "Good morning!", Hour(Now())<17, "Good afternoon!", "Good evening!")
+        Width: =430
+        X: =936
+        ZIndex: =2
+
+    DetailsForm_1 As form:
+        AcceptsFocus: =false
+        DataSource: ='PEx BT'
+        DefaultMode: =varFormMode
+        Height: =618
+        NumberOfColumns: =1
+        OnSuccess: =Navigate(SuccessScrn, ScreenTransition.Fade)
+        Width: =726
+        X: =108
+        Y: =150
+        ZIndex: =4
+
+        "'Full Name_DataCard2_1' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Full_x0020_Name"
+            Default: =ThisItem.FullName
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Full Name"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =92
+            MaxLength: =DataSourceInfo([@HealthTemp], DataSourceInfo.MaxLength, "Full_x0020_Name")
+            Required: =false
+            Update: =DataCardValue4_1.Text
+            Width: =726
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            DataCardKey4_1 As label:
+                FontWeight: =FontWeight.Bold
+                Height: =61
+                Size: =20
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =15
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue4_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =If(varFormMode = FormMode.New, varUserEmail, " " )
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Semibold
+                Height: =56
+                Italic: =true
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =25
+                Tooltip: =Parent.DisplayName
+                Width: =392
+                X: =195
+                Y: =15
+                ZIndex: =2
+
+            ErrorMessage1_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue4_1.Y + DataCardValue4_1.Height
+                ZIndex: =3
+
+            StarVisible1_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey4_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey4_1.Y
+                ZIndex: =4
+
+        Manager_DataCard2_1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Manager"
+            Default: =ThisItem.Manager
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Manager"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =87
+            MaxLength: =DataSourceInfo([@HealthTemp], DataSourceInfo.MaxLength, "Manager")
+            Required: |
+                =false
+            Update: =ManagerCard_1.Text
+            Width: =726
+            X: =0
+            Y: =1
+            ZIndex: =1
+
+            DataCardKey5_1 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =20
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =17
+                Y: =10
+                ZIndex: =1
+
+            ManagerCard_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =If(varFormMode = FormMode.New, varUserMngr, " " )
+                DelayOutput: =true
+                DisplayMode: =LookUp(Sort(HealthTemp,Date_Time,SortOrder.Descending),Full_x0020_Name=varUserEmail, Manager)
+                FontWeight: =FontWeight.Semibold
+                Height: =62
+                Italic: =true
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =25
+                Tooltip: =Parent.DisplayName
+                Width: =392
+                X: =197
+                Y: =2
+                ZIndex: =2
+
+            ErrorMessage2_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =ManagerCard_1.Y + ManagerCard_1.Height
+                ZIndex: =3
+
+            StarVisible2_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey5_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey5_1.Y
+                ZIndex: =4
+
+        Team_DataCard4_1 As typedDataCard.allowedValuesStringEditCard:
+            AllowedValues: =DataSourceInfo([@HealthTemp], DataSourceInfo.AllowedValues, "Team")
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Team"
+            Default: =ThisItem.Team
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Team"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =105
+            Required: =false
+            Update: =drpdwn_team_1.Selected.Value
+            Width: =726
+            X: =0
+            Y: =2
+            ZIndex: =1
+
+            DataCardKey6_1 As label:
+                FontWeight: =FontWeight.Bold
+                Height: =79
+                Size: =20
+                Text: =Parent.DisplayName
+                Width: =580
+                Wrap: =false
+                X: =30
+                Y: =8
+                ZIndex: =1
+
+            drpdwn_team_1 As dropdown:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =67
+                Italic: =true
+                Items: =["Team-Glenn", "Team-Jan", "Team-Shelle", "Team-Louie"]
+                Size: =25
+                Tooltip: =Parent.DisplayName
+                Width: =399
+                X: =196
+                Y: =6
+                ZIndex: =2
+
+            ErrorMessage7_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =drpdwn_team_1.Y + drpdwn_team_1.Height
+                ZIndex: =3
+
+            StarVisible7_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey6_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey6_1.Y
+                ZIndex: =4
+
+        Temperature_DataCard2_1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Temperature"
+            Default: =ThisItem.Temperature
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Temperature"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =141
+            MaxLength: =DataSourceInfo([@HealthTemp], DataSourceInfo.MaxLength, "Temperature")
+            Required: =true
+            Update: =DataCardValue2_1.Text
+            Width: =726
+            X: =0
+            Y: =3
+            ZIndex: =1
+
+            DataCardKey2_1 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =20
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue2_1 As text:
+                Align: =Align.Center
+                BorderColor: =If(IsBlank(ErrorMessage4_1.Text), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =89
+                Italic: =true
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =25
+                Tooltip: =Parent.DisplayName
+                Width: =368
+                X: =214
+                Y: =10
+                ZIndex: =2
+
+            ErrorMessage4_1 As label:
+                Height: =42
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: |-
+                    =Coalesce(Parent.Error,
+                        If(!IsBlank(DataCardValue2_1.Text) && !IsMatch(DataCardValue2_1.Text, "\d+(\.\d{0,2})?"),
+                        "Please Enter your BodyTemp. Here i.e 35.1"),
+                           If(!IsBlank(DataCardValue2_1.Text) && Value(DataCardValue2_1.Text) <= 34.9,
+                        "Low Temperature, Please Check and try again or consult a doctor!"),
+                              If(!IsBlank(DataCardValue2_1.Text) && Value(DataCardValue2_1.Text) >= 37.0  ,
+                        "Opps! High Temperature, You should get some rest and inform your Manager!")
+                        
+                        
+                        )
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =666
+                X: =30
+                Y: =99
+                ZIndex: =3
+
+            StarVisible4_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey2_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey2_1.Y
+                ZIndex: =4
+
+        CreatedDate_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="CreatedDate"
+            Default: =ThisItem.CreatedDate
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="CreatedDate"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =115
+            Required: =false
+            Update: =Value(input_date.Text)
+            Visible: =false
+            Width: =726
+            X: =0
+            Y: =4
+            ZIndex: =1
+
+            DataCardKey1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            input_date As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Value(Text(timestamp,"[$-en-US]yyyymmdd"))
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey1.Y + DataCardKey1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =input_date.Y + input_date.Height
+                ZIndex: =3
+
+            StarVisible1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey1.Y
+                ZIndex: =4
+
+        CreateDateHour_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="CreateDateHour"
+            Default: =ThisItem.CreateDateHour
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="CreateDateHour"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(input_hour.Text)
+            Visible: =false
+            Width: =726
+            X: =0
+            Y: =5
+            ZIndex: =1
+
+            DataCardKey2 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            input_hour As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Value(Text(timestamp,"[$-en-US]hh"))
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey2.Y + DataCardKey2.Height + 5
+                ZIndex: =2
+
+            ErrorMessage2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =input_hour.Y + input_hour.Height
+                ZIndex: =3
+
+            StarVisible2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey2.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey2.Y
+                ZIndex: =4
+
+        TeamID_Up_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Team_ID"
+            Default: =ThisItem.TeamID_Up
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="TeamID_Up"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue1.Text)
+            Width: =726
+            X: =0
+            Y: =6
+            ZIndex: =1
+
+            DataCardKey3 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Filter(PExHealthTeam, Full_Name="Danilo Nonod Jr")
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey3.Y + DataCardKey3.Height + 5
+                ZIndex: =2
+
+            ErrorMessage3 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue1.Y + DataCardValue1.Height
+                ZIndex: =3
+
+            StarVisible3 As label:
+                Align: =Align.Center
+                Height: =DataCardKey3.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey3.Y
+                ZIndex: =4
+
+        NameID_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NameID"
+            Default: =ThisItem.NameID
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NameID"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue2.Text)
+            Width: =726
+            X: =0
+            Y: =7
+            ZIndex: =1
+
+            DataCardKey4 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue2 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey4.Y + DataCardKey4.Height + 5
+                ZIndex: =2
+
+            ErrorMessage4 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue2.Y + DataCardValue2.Height
+                ZIndex: =3
+
+            StarVisible4 As label:
+                Align: =Align.Center
+                Height: =DataCardKey4.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey4.Y
+                ZIndex: =4
+
+    timer_2 As timer:
+        AutoStart: =true
+        Duration: =0
+        OnTimerEnd: = Set(timestamp,Now())
+        OnTimerStart: =true
+        Repeat: =true
+        Visible: =false
+        X: =12
+        Y: =128
+        ZIndex: =5
+
+    Label1_1 As label:
+        AutoHeight: =true
+        Color: =RGBA(232, 244, 217, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =52
+        Italic: =true
+        Size: =24
+        Text: |-
+            =Text(timestamp,"[$-en-US]mm/dd/yy hh:mm:ss")
+        Width: =286
+        Y: =78
+        ZIndex: =6
+
+    Button1_1 As button:
+        DisplayMode: =If(!IsBlank(ErrorMessage4_1.Text) || IsBlank(DataCardValue2_1.Text) , DisplayMode.Disabled, DisplayMode.Edit)
+        Fill: |-
+            =ColorValue("#1DB954")
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        Font: =Font.Verdana
+        FontWeight: =FontWeight.Bold
+        Height: =97
+        OnSelect: |-
+            =Patch('PEx BT', varFormdatt, DetailsForm_1.Updates); 
+            If(IsEmpty(Errors('PEx BT')),
+            Notify("Success",NotificationType.Success);
+            Navigate(SuccessScrn, ScreenTransition.Fade);
+            Notify(First(Errors('PEx BT')).Message, NotificationType.Error))
+            
+            
+            /*Notify("Form Submitted", Success);
+            ResetForm(DetailsForm_1);
+            Navigate(SuccessScrn, ScreenTransition.Fade)
+            */
+        Size: =50
+        Text: ="SUBMIT"
+        Width: =412
+        X: =936
+        Y: =541
+        ZIndex: =10
+
+    Icon3_1 As icon.Home:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =89
+        Icon: =Icon.Home
+        OnSelect: =Back()
+        Width: =71
+        X: =56
+        ZIndex: =11
+
+    Label5_1 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(230, 230, 230, 1)
+        Height: =35
+        Italic: =true
+        Text: ="Date                  Time"
+        Width: =262
+        Y: =115
+        ZIndex: =12
+
+    Image4_1 As image:
+        Height: =72
+        Image: =celcius
+        Width: =56
+        X: =696
+        Y: =438
+        ZIndex: =13
+
+    Button1_5 As button:
+        DisplayMode: =If(!IsBlank(ErrorMessage4_1.Text) || IsBlank(DataCardValue2_1.Text) , DisplayMode.Disabled, DisplayMode.Edit)
+        Fill: |-
+            =ColorValue("#1DB954")
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        Font: =Font.Verdana
+        FontWeight: =FontWeight.Bold
+        Height: =97
+        OnSelect: |
+            =Patch('PEx BT',Defaults('PEx BT'),DetailsForm_1.Updates)
+        Size: =50
+        Text: ="SUBMIT"
+        Width: =412
+        X: =916
+        Y: =368
+        ZIndex: =14
+
+    Label11 As label:
+        Text: |-
+            =Filter(
+                PExHealthTeam,
+                Full_Name = "Danilo Nonod Jr."
+            )
+        X: =916
+        Y: =228
+        ZIndex: =15
+

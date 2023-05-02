@@ -1,0 +1,766 @@
+HomeTrainingList As screen:
+    OnVisible: |-
+        =//Select(btn_resetgal);
+        
+        
+        
+        
+        /*
+        Set(HomeListTopic,Filter(AddColumns(myTrainingTopics, "NameRec", LookUp(myProfileProgress, User=varUserEmail ), "NameRed", LookUp(myTrainingReg, TrainingModule=myTrainingTopics[@Vid_Dur] )),
+        Vid_Dur = training_prog_gal.Selected.Value && Vid_Dur = NameRed.TrainingModule))
+        
+        ClearCollect(myProfileProgress, ShowColumns(TrainingProfileProgress,"ID","Program", "User", "Title", "TimeDura", "Progress", "DateTime", "Modified", "TotalScore", "Reg_ID_ref"));
+        
+        */
+
+    "gal_topic As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        BorderThickness: =1
+        Default: ={}
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =485
+        Items: |+
+            =//Filter('Lean Topics', Program = training_prog_gal.Selected.Value);
+            HomeListTopic
+            
+            
+            
+        Layout: =Layout.Vertical
+        OnSelect: |
+            =Set(varRecord, ThisItem);
+        TemplateFill: |-
+            =//If(ThisItem.IsSelected,RGBA(215,213,240,1),RGBA(215, 223, 240,.001))
+            If(ThisItem.ID=varRecord.ID,RGBA(215,213,240,1),Color.White)
+        TemplatePadding: =0
+        TemplateSize: =77
+        Visible: =!locShowSpinner || If(Value(idgal.Text)-1 && Value(lbl_exam.Text) =100% && Value(lbl_exam.Text) >= 95%, true, false)
+        Width: =460
+        X: =11
+        Y: =160
+        ZIndex: =1
+
+        Title9 As label:
+            DisplayMode: =Switch(Icon30.Visible,true,DisplayMode.Disabled,DisplayMode.Edit)
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Title
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Parent.TemplateWidth - 104
+            X: =21
+            Y: =24
+            ZIndex: =1
+
+        Separator10 As rectangle:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =2
+
+        Rectangle4 As rectangle:
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =ThisItem.NameRec.Progress
+            OnSelect: =Select(Parent)
+            Width: =10
+            Y: =1
+            ZIndex: =3
+
+        lbl_progress As label:
+            Height: =39
+            Italic: =true
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =Text(ThisItem.NameRec.Progress *100, "0%")
+            Visible: =false
+            Width: =53
+            X: =373
+            Y: =38
+            ZIndex: =4
+
+        idgal As label:
+            Height: =36
+            OnSelect: =Select(Parent)
+            Text: |-
+                =//"ID: " & If(Last(Filter(myTrainingReg, Title=varUserEmail)).Title=varUserEmail, Last(Filter(myTrainingReg, Title=varUserEmail)).ID)
+                ThisItem.ID
+                 
+            Visible: =false
+            Width: =117
+            Y: =1
+            ZIndex: =5
+
+        lbl_exam As label:
+            Height: =38
+            Italic: =true
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =Text(ThisItem.NameRec.TotalScore*1, "0%")
+            Visible: =false
+            Width: =31
+            X: =429
+            Y: =39
+            ZIndex: =6
+
+        Circle6 As circle:
+            Fill: =If((ThisItem.NameRec.Progress=0% || IsBlank(ThisItem.NameRec.Progress)) && (ThisItem.NameRec.TotalScore=0 || IsBlank(ThisItem.NameRec.TotalScore)), Color.Red, If((ThisItem.NameRec.Progress>0 && ThisItem.NameRec.Progress<=100%) && (ThisItem.NameRec.TotalScore=0 || IsBlank(ThisItem.NameRec.TotalScore) || ThisItem.NameRec.TotalScore <95), Color.Yellow, If(ThisItem.NameRec.Progress=100% && ThisItem.NameRec.TotalScore >=95%, Color.Green  )))
+            Height: =25
+            OnSelect: =Select(Parent)
+            Width: =25
+            X: =Label52.X+Self.Width
+            Y: =5
+            ZIndex: =7
+
+        Icon27 As icon.Lightbulb:
+            Color: =If(Circle6.Fill=Color.Yellow, Color.Black,Color.White)
+            Height: =20
+            Icon: =If(Circle6.Fill=Color.Red, Icon.Cancel,If(Circle6.Fill=Color.Yellow, Icon.Flag, Icon.Check))
+            Width: =20
+            X: =Circle6.X
+            Y: =8
+            ZIndex: =8
+
+        Label52 As label:
+            Align: =LayoutAlignItems.Center
+            Height: =21
+            OnSelect: =Select(Parent)
+            Size: =6
+            Text: |-
+                =//"In-Progress"
+                If(Circle6.Fill=Color.Red, "NotYetStarted",If(Circle6.Fill=Color.Yellow, "In-Progress", "Completed"))
+            Width: =63
+            X: =Parent.TemplateWidth-Self.Width-30
+            Y: =31
+            ZIndex: =9
+
+        Icon30 As icon.Save:
+            Height: =30
+            Icon: =Icon.Lock
+            OnSelect: =Select(Parent)
+            Visible: =LookUp(AllStateExported,Title=ThisItem.Title, Status) = false
+            Width: =25
+            X: =342
+            Y: =31
+            ZIndex: =10
+
+        Rectangle8 As rectangle:
+            Height: =3
+            OnSelect: =Select(Parent)
+            Width: =460
+            Y: =76
+            ZIndex: =11
+
+        Button17 As button:
+            Align: =TextPosition.Left
+            Color: =RGBA(0, 0, 0, 1)
+            Fill: =Color.Transparent
+            Height: =74
+            HoverFill: =Self.Fill
+            OnSelect: =Select(Parent)
+            PressedFill: =Self.Fill
+            Size: =17
+            Text: =
+            Width: =460
+            Y: =2
+            ZIndex: =12
+
+    Rectangle1_20 As rectangle:
+        Height: =115
+        Width: =1366
+        Y: =653
+        ZIndex: =2
+
+    Label2_15 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        FontWeight: =FontWeight.Bold
+        Height: =86
+        Size: =36
+        Text: |-
+            =//"PEX Training for: " & training_prog_gal.Selected.Value
+            Switch(training_prog_gal.Selected.Value,
+            "ESD", "ESD Annual Certification Training",
+            "Six Sigma", "PEX Training for: " & training_prog_gal.Selected.Value,
+            "PEX Training for: " & training_prog_gal.Selected.Value)
+        Visible: =If(!locShowSpinner, true, false)
+        Width: =1182
+        X: =92
+        Y: =667
+        ZIndex: =3
+
+    Image2_2 As image:
+        Image: =SSlogo
+        Visible: =!locShowSpinner
+        X: =1155
+        Y: =660
+        ZIndex: =4
+
+    Button14 As button:
+        DisplayMode: =If(LookUp(AllStateExported,Title=varRecord.Title, Status) = false, DisplayMode.Disabled,DisplayMode.Edit)
+        Height: =81
+        OnSelect: |
+            =Set(goWatchec,0);
+            //Set(ID_gal, Last(Filter(myTrainingReg, Title=varUserEmail)).ID);
+            Reset(VideoData);
+            
+            If(gal_topic.Selected.NameRec.Progress<>1,
+            
+            Navigate(
+                HomeTrainingLeanVid,
+                ScreenTransition.None
+            ),
+            Navigate(
+                HomeTrainingLeanVid_1,
+                ScreenTransition.None
+            ))
+        Text: ="- Start - " & Char(10) & "New Session"
+        Visible: =If(IsBlank(gal_topic.Selected), false, true) && !locShowSpinner && !IsBlank(varRecord)
+        Width: =190
+        X: =624
+        Y: =362
+        ZIndex: =5
+
+    Label19 As label:
+        Text: |-
+            ="Select Training Topic:"
+        Visible: =!locShowSpinner
+        Width: =197
+        X: =24
+        Y: =120
+        ZIndex: =7
+
+    locShowSpinner As image:
+        Fill: =RGBA(0, 0, 0, 0.001)
+        Image: =spinner
+        Visible: =locShowSpinner
+        X: =154
+        Y: =334
+        ZIndex: =8
+
+    Timer5 As timer:
+        AutoStart: =true
+        Duration: =5000
+        OnTimerEnd: |
+            =UpdateContext({endspinner:true});
+            UpdateContext({locShowSpinner:false});
+        OnTimerStart: |-
+            =UpdateContext({locShowSpinner:true});
+            Select(btn_resetgal)
+        Visible: =false
+        X: =61
+        Y: =690
+        ZIndex: =9
+
+    bargrpprogress As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =16
+
+        Button14_1 As button:
+            DisplayMode: =If(Value(Label22.Text) < 100%, DisplayMode.Edit, DisplayMode.View)
+            Height: =81
+            OnSelect: |
+                =Reset(VideoData);
+                Set(
+                    goWatchec,
+                
+                       Last(Filter(
+                            myProfileProgress,
+                            Title = gal_topic.Selected.Title,
+                            User = varUserEmail
+                            
+                        )).TimeDura);
+                
+                Set(Confira, true);
+                Set(Confirma, true);
+                //Set(ID_gal, Last(Filter(TrainingRegistration, Title=varUserEmail)).ID);
+                
+                Navigate(
+                    HomeTrainingLeanVid,
+                    ScreenTransition.None
+                )
+            Text: |+
+                =If(Value(Label22.Text) <> 100%, "Continue on Last session " & Char(10), "Session
+                Completed")
+                
+            Visible: =If(gal_topic.Selected.NameRec.Progress < 0.01, false, true)  && !locShowSpinner && !IsBlank(varRecord)
+            Width: =238
+            X: =835
+            Y: =362
+            ZIndex: =6
+
+        Button14_2 As button:
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(152, 208, 70, 1)
+            Height: =9
+            OnSelect: =
+            Text: =
+            Visible: =If(gal_topic.Selected.NameRec.Progress < 0.01, false, true)  && !locShowSpinner && !IsBlank(varRecord)
+            Width: |-
+                =Button14_1.Width * Value(gal_topic.Selected.NameRec.Progress)
+                //238*0.75
+            X: =835
+            Y: =434
+            ZIndex: =10
+
+        Label22 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =45
+            Italic: =true
+            OnSelect: =
+            Size: =9
+            Text: =Text(gal_topic.Selected.NameRec.Progress*100, "0%")
+            Visible: =If(gal_topic.Selected.NameRec.Progress < 0.01, false, true)  && !locShowSpinner && !IsBlank(varRecord)
+            Width: =57
+            X: =Button14_2.X+Button14_2.Width-30
+            Y: =415
+            ZIndex: =14
+
+    HT_header_grp As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =17
+
+        Rectangle1_19 As rectangle:
+            Height: =115
+            Width: =1366
+            ZIndex: =11
+
+        Label2_14 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =115
+            Text: ="Welcome, " & varUserEmail
+            Width: =120
+            X: =1244
+            ZIndex: =12
+
+        img_user_1 As image:
+            Image: =varUserimg
+            RadiusBottomLeft: =img_user_1.Height
+            RadiusBottomRight: =img_user_1.Height
+            RadiusTopLeft: =img_user_1.Height
+            RadiusTopRight: =img_user_1.Height
+            X: =1144
+            Y: =7
+            ZIndex: =13
+
+        GoHome As icon.Home:
+            Height: =73
+            Icon: =Icon.Home
+            OnSelect: =Navigate(TrainingReg,ScreenTransition.Fade)
+            Visible: =!locShowSpinner
+            Width: =79
+            X: =24
+            Y: =12
+            ZIndex: =15
+
+    Label23_1 As label:
+        Text: |
+            =locShowSpinner_1
+        Visible: =false
+        X: =853
+        Y: =514
+        ZIndex: =21
+
+    Timer7 As timer:
+        Start: =Confira
+        Visible: =false
+        X: =807
+        Y: =582
+        ZIndex: =22
+
+    Group7 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =22
+
+        Circle3 As circle:
+            Fill: =If(gal_topic.Selected.NameRec.TotalScore>=80,  ColorValue("Green"), ColorValue("Red"))
+            Height: =65
+            Visible: =If(Group9.Visible=false || gal_topic.Selected.NameRec.TotalScore>=95, true, false)  && !locShowSpinner && !IsBlank(varRecord)
+            Width: =71
+            X: =1159
+            Y: =378
+            ZIndex: =16
+
+        Label27 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =36
+            Size: =12
+            Text: =Text(gal_topic.Selected.NameRec.TotalScore,"0%")
+            Visible: =If(Group9.Visible=false || gal_topic.Selected.NameRec.TotalScore>=95, true, false)  && !locShowSpinner && !IsBlank(varRecord)
+            Width: =51
+            X: =1170
+            Y: =392
+            ZIndex: =17
+
+        Label27_1 As label:
+            Color: =RGBA(0, 18, 107, 1)
+            Height: =29
+            Size: =10
+            Text: ="Quiz Rating"
+            Visible: =If(Group9.Visible=false || gal_topic.Selected.NameRec.TotalScore>=95, true, false)  && !locShowSpinner && !IsBlank(varRecord)
+            Width: =86
+            X: =1151
+            Y: =349
+            ZIndex: =18
+
+        Icon12 As icon.Document:
+            Color: =RGBA(56, 96, 178, 1)
+            Height: =51
+            Icon: =Icon.DocumentPDF
+            OnSelect: |
+                =//Set(ID_gal, Last(Filter(TrainingRegistration, Title=varUserEmail)).ID);
+                Navigate(ESD_Certifcate)
+            Visible: =If(Group9.Visible=false || gal_topic.Selected.NameRec.TotalScore>=95, true, false)  && !locShowSpinner && !IsBlank(varRecord)
+            Width: =53
+            X: =1255
+            Y: =388
+            ZIndex: =19
+
+        Label27_2 As label:
+            Color: =RGBA(0, 18, 107, 1)
+            Height: =29
+            Size: =10
+            Text: ="Certificate"
+            Visible: =If(Group9.Visible=false || gal_topic.Selected.NameRec.TotalScore>=95, true, false)  && !locShowSpinner && !IsBlank(varRecord)
+            Width: =86
+            X: =1244
+            Y: =349
+            ZIndex: =20
+
+    btn_resetgal As button:
+        OnSelect: |-
+            =Set(
+                varRecord,
+                Blank()
+            );
+            Clear(AllStateExported);
+            ForAll(
+                gal_topic.AllItems,
+                Collect(
+                    AllStateExported,
+                    {
+                        Title: ThisRecord.Title,
+                        Status: Switch(
+                            ThisRecord.ID,
+                            1,
+                            true,
+                            2,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=1, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=1, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                           3,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=2, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=2, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                                           4,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=3, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=3, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                                          5,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=4, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=4, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                            6,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=5, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=5, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                           7,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=6, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=6, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                                           8,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=7, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=7, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                                          9,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=8, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=8, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                            10,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=9, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=9, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                           11,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=10, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=10, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                                           12,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=11, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=11, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                                          13,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=12, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=12, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                            14,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=13, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=13, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                           15,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=14, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=14, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                                           16,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=15, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=15, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                                          17,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=16, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=16, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                            18,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=17, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=17, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                           19,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=18, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=18, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                                           20,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=19, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=19, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+                                                          21,
+                            If(
+                                LookUp(gal_topic.AllItems, ID=20, Value(lbl_exam.Text) ) = 100% &&
+                                LookUp(gal_topic.AllItems, ID=20, Value(lbl_progress.Text )) =100%,
+                                true,
+                                false
+                            ),
+            
+            
+            false
+                        )
+                    }
+                )
+            )
+        Text: ="Restgal"
+        Visible: =false
+        X: =626
+        Y: =67
+        ZIndex: =25
+
+    Label42 As label:
+        Fill: =RGBA(255, 255, 0, 1)
+        Height: =53
+        Text: ="Please complete first the previous topic!"
+        Visible: =Switch(Button14.DisplayMode=DisplayMode.Disabled,true,true,false) && !locShowSpinner
+        Width: =340
+        X: =558
+        Y: =296
+        ZIndex: =26
+
+    Button19 As button:
+        OnSelect: |+
+            =Set(varCounter, 1);
+            Set(varSum, 0);
+            Set(varLoop, false);
+            Reset(TextInput3)
+            
+        Text: ="Buttonreset"
+        Visible: =false
+        X: =199
+        Y: =40
+        ZIndex: =27
+
+    Group9 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =27
+
+        Icon15 As icon.Edit:
+            Height: =80
+            Icon: =Icon.AddLibrary
+            OnSelect: |-
+                =//Set(ID_gal, gal_topic.Selected.NameRec.Reg_ID_ref);
+                Navigate(HomeTrainingLean_HomeExam,
+                    ScreenTransition.None
+                )
+            Visible: =If(Value(Label22.Text)=100% && bargrpprogress.Visible && !IsEmpty(gal_topic.Selected.NameRec.TotalScore) && gal_topic.Selected.NameRec.TotalScore<95, true, false)  && !locShowSpinner && !IsBlank(varRecord)
+            Width: =51
+            X: =1203
+            Y: =365
+            ZIndex: =23
+
+        Label27_3 As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(0, 18, 107, 1)
+            Fill: =Color.Yellow
+            Height: =57
+            Size: =10
+            Text: |-
+                =If(IsBlank(gal_topic.Selected.NameRec.TotalScore), "Need to:" & Char(10) & "Take a Quiz to Complete", "Need to:" & Char(10) &"Re-take a Quiz to Complete")
+            Visible: =If(Value(Label22.Text)=100% && bargrpprogress.Visible && !IsEmpty(gal_topic.Selected.NameRec.TotalScore) && gal_topic.Selected.NameRec.TotalScore<95, true, false)  && !locShowSpinner && !IsBlank(varRecord)
+            Width: =108
+            X: =1175
+            Y: =320
+            ZIndex: =24
+
+    Label49 As label:
+        Text: =
+        X: =627
+        Y: =37
+        ZIndex: =28
+
+    TextInput3 As text:
+        Default: =varSum
+        Visible: =false
+        X: =869
+        Y: =160
+        ZIndex: =29
+
+    Button19_2 As button:
+        OnSelect: |-
+            =If(varCounter<=CountRows(gal_topic.AllItems), Set(varLoop, true));
+            Set(varLoop, false)
+        Text: ="ButtonLoop"
+        Visible: =false
+        X: =423
+        Y: =37
+        ZIndex: =30
+
+    Toggle1 As toggleSwitch:
+        Default: =varLoop
+        OnCheck: |-
+            =Set(varSum, varSum+1 );
+            Set(varCounter, varCounter+1);
+            Select(Button19_2)
+        Visible: =false
+        X: =510
+        Y: =132
+        ZIndex: =31
+
+    Label54 As label:
+        Text: =varSum
+        Visible: =false
+        X: =674
+        Y: =166
+        ZIndex: =32
+
+    bar_completed As rectangle:
+        Fill: |
+            =Color.Green
+        Height: =24
+        Visible: =If(endspinner&&!locShowSpinner, true, false)
+        Width: =(Parent.Width-gal_topic.Width-25)*Value(lblPercCompletion.Text)
+        X: =479
+        Y: =621
+        ZIndex: =35
+
+    bar_completed_1 As rectangle:
+        Fill: =RGBA(255, 0, 0, 1)
+        Height: =24
+        Visible: =If(endspinner&&!locShowSpinner, true, false)
+        Width: =(Parent.Width-gal_topic.Width-25)*(1-Value(lblPercCompletion.Text))
+        X: =bar_completed.X+bar_completed.Width
+        Y: =621
+        ZIndex: =36
+
+    lblPercCompletion As label:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =34
+        Italic: =true
+        Text: =Text(Sum(gal_topic.AllItems, Value(lbl_exam.Text)=100% && Value(lbl_progress.Text ) =100%) / CountRows(gal_topic.AllItems) *100, "0.0%")
+        Visible: =If(endspinner&&!locShowSpinner, true, false)
+        Width: =67
+        X: =Switch(true, Value(Self.Text) = 0, bar_completed_1.X+ (bar_completed_1.Width - Self.Width) /2, bar_completed.X+bar_completed.Width-(Self.Width/2))
+        Y: =bar_completed.Y-(bar_completed.Height*3)+Self.Width
+        ZIndex: =37
+
+    Label59 As label:
+        Height: =29
+        Italic: =true
+        Text: |-
+            ="Overall Status:" & " ("&Sum(gal_topic.AllItems, Value(lbl_exam.Text)) &"/"&CountRows(gal_topic.AllItems)&", Completed vs AllTopics)"
+        Visible: =If(endspinner&&!locShowSpinner, true, false)
+        Width: =459
+        X: =477
+        Y: =587
+        ZIndex: =38
+
+    Label60 As label:
+        Align: =Align.Center
+        FontWeight: =FontWeight.Semibold
+        Height: =137
+        Size: =30
+        Text: ="Please Select a Topic to get started..."
+        Visible: =If(IsBlank(varRecord)&&!locShowSpinner, true, false)
+        Width: =488
+        X: =642
+        Y: =297
+        ZIndex: =39
+

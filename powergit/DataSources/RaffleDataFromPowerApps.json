@@ -1,0 +1,9 @@
+[
+  {
+    "AddinConnectorId": "afc28347-0d70-40bb-ba38-df059d7dbaba",
+    "AddinId": "6d1f157d-95bf-406d-b65d-cfd3240f724e",
+    "Name": "RaffleDataFromPowerApps",
+    "ServiceKind": "AddinWadl",
+    "Type": "ServiceInfo"
+  }
+]

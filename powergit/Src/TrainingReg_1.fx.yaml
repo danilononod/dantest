@@ -1,0 +1,449 @@
+TrainingReg_1 As screen:
+
+    Rectangle1_15 As rectangle:
+        Height: =115
+        Width: =1366
+        ZIndex: =1
+
+    Rectangle1_16 As rectangle:
+        Height: =115
+        Width: =1366
+        Y: =653
+        ZIndex: =3
+
+    Label2_12 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        FontWeight: =FontWeight.Bold
+        Height: =86
+        Size: =36
+        Text: ="PEX Training Registration for " & training_prog_gal.Selected.Value
+        Width: =1182
+        X: =34
+        Y: =667
+        ZIndex: =4
+
+    Image2_1 As image:
+        Image: =SSlogo
+        X: =1155
+        Y: =660
+        ZIndex: =5
+
+    Icon3 As icon.ChevronLeft:
+        Color: =RGBA(255, 255, 255, 1)
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Back()
+        Tooltip: ="Back to previous..."
+        X: =58
+        Y: =25
+        ZIndex: =6
+
+    TrainingRegForm As form:
+        AcceptsFocus: =false
+        DataSource: =TrainingRegistration
+        DefaultMode: =varFormModeTraining
+        NumberOfColumns: =1
+        OnSuccess: =Navigate(FormSuccessTraining,ScreenTransition.Fade)
+        Width: =587
+        X: =370
+        Y: =125
+        ZIndex: =7
+
+        Function_DataCard1 As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Function"
+            Default: =ThisItem.Function
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Function"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =true
+            Update: =DataCardValue15.Selected
+            Width: =587
+            X: =0
+            Y: =4
+            ZIndex: =1
+
+            DataCardKey18 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue15 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                IsSearchable: =false
+                Items: =Choices([@TrainingRegistration].Function)
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey18.Y + DataCardKey18.Height + 5
+                ZIndex: =2
+
+            ErrorMessage18 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue15.Y + DataCardValue15.Height
+                ZIndex: =3
+
+            StarVisible18 As label:
+                Align: =Align.Center
+                Height: =DataCardKey18.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey18.Y
+                ZIndex: =4
+
+        Title_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Title"
+            Default: =ThisItem.Title
+            DisplayMode: =varDisplayView
+            DisplayName: ="Title"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@TrainingRegistration], DataSourceInfo.MaxLength, "Title")
+            Required: =true
+            Update: =DataCardValue5.Text
+            Width: =587
+            X: =0
+            Y: =0
+            ZIndex: =12
+
+            DataCardKey7 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: ="Name"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue5 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =varUserEmail
+                DelayOutput: =true
+                DisplayMode: =If(Button10_1.Text="Edit", varDisplayView, DisplayMode.Edit )
+                FontWeight: =FontWeight.Semibold
+                Height: =50
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =20
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =34
+                ZIndex: =2
+
+            ErrorMessage7 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue5.Y + DataCardValue5.Height
+                ZIndex: =3
+
+            StarVisible7 As label:
+                Align: =Align.Center
+                Height: =DataCardKey7.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey7.Y
+                ZIndex: =4
+
+        TrainingModule_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="TrainingModule"
+            Default: =ThisItem.TrainingModule
+            DisplayMode: =varDisplayView
+            DisplayName: ="TrainingModule"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@TrainingRegistration], DataSourceInfo.MaxLength, "TrainingModule")
+            Required: =false
+            Update: =DataCardValue6.Text
+            Width: =587
+            X: =0
+            Y: =1
+            ZIndex: =12
+
+            DataCardKey8 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue6 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =If(training_prog_gal.Selected.Value="ESD", "ESD Annual Certification", training_prog_gal.Selected.Value)
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Semibold
+                Height: =50
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =20
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey8.Y + DataCardKey8.Height + 5
+                ZIndex: =2
+
+            ErrorMessage8 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue6.Y + DataCardValue6.Height
+                ZIndex: =3
+
+            StarVisible8 As label:
+                Align: =Align.Center
+                Height: =DataCardKey8.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey8.Y
+                ZIndex: =4
+
+        "'Belt Type_DataCard3' As typedDataCard.comboBoxEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="BeltType"
+            Default: =ThisItem.'Belt Type'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Belt Type"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =DataCardValue6.Text="Six Sigma"
+            Update: =DataCardValue8.Selected
+            Visible: =If(training_prog_gal.Selected.Value="Six Sigma",true,false)
+            Width: =587
+            X: =0
+            Y: =2
+            ZIndex: =12
+
+            DataCardKey10 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue8 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Semibold
+                InputTextPlaceholder: ="Select Belt Type"
+                IsSearchable: =false
+                Italic: =true
+                Items: =Choices([@TrainingRegistration].'Belt Type')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =20
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey10.Y + DataCardKey10.Height + 5
+                ZIndex: =2
+
+            ErrorMessage10 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue8.Y + DataCardValue8.Height
+                ZIndex: =3
+
+            StarVisible10 As label:
+                Align: =Align.Center
+                Height: =DataCardKey10.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey10.Y
+                ZIndex: =4
+
+        StartDate_DataCard1 As typedDataCard.dateEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="StartDate"
+            Default: =ThisItem.StartDate
+            DisplayMode: =varDisplayView
+            DisplayName: ="StartDate"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue7.SelectedDate
+            Width: =587
+            X: =0
+            Y: =3
+            ZIndex: =12
+
+            DataCardKey9 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue7 As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =If(varFormModeTraining= FormMode.New,Today(), ThisItem.StartDate)
+                DisplayMode: =If(Button10_1.Text="Edit", varDisplayView, DisplayMode.Edit )
+                EndYear: =Year(Today())+100
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                Size: =20
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey9.Y + DataCardKey9.Height + 5
+                ZIndex: =2
+
+            ErrorMessage9 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue7.Y + DataCardValue7.Height
+                ZIndex: =3
+
+            StarVisible9 As label:
+                Align: =Align.Center
+                Height: =DataCardKey9.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey9.Y
+                ZIndex: =4
+
+    Button10 As button:
+        OnSelect: =SubmitForm(TrainingRegForm)
+        Text: ="Submit"
+        X: =1166
+        Y: =582
+        ZIndex: =9
+
+    Button10_1 As button:
+        OnSelect: |-
+            =UpdateContext({LetsEditForm:!LetsEditForm});
+        Text: =If(LetsEditForm, "Edit", "Cancel")
+        X: =1166
+        Y: =458
+        ZIndex: =10
+
+    Button10_2 As button:
+        OnSelect: =ResetForm(TrainingRegForm)
+        Text: ="Reset"
+        Visible: =If(Button10_1.Text="Edit", false, true)
+        X: =1166
+        Y: =520
+        ZIndex: =11
+
+    Label18 As label:
+        Height: =61
+        Text: ="Sorry, Edit not allowed! Please contact admin."
+        Visible: =LetsEditForm
+        Width: =275
+        X: =1091
+        Y: =509
+        ZIndex: =12
+
+    Label2_26 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        Height: =115
+        Text: ="Welcome, " & varUserEmail
+        Width: =120
+        X: =1246
+        ZIndex: =14
+
+    img_user_6 As image:
+        Image: =varUserimg
+        RadiusBottomLeft: =img_user_6.Height
+        RadiusBottomRight: =img_user_6.Height
+        RadiusTopLeft: =img_user_6.Height
+        RadiusTopRight: =img_user_6.Height
+        X: =1146
+        Y: =7
+        ZIndex: =15
+

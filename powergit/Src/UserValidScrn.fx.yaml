@@ -1,0 +1,20 @@
+UserValidScrn As screen:
+
+    Button1 As button:
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        Height: =114
+        OnSelect: =Back()
+        Text: ="Thank, your name already included in the list"
+        Width: =1363
+        X: =3
+        Y: =339
+        ZIndex: =1
+
+    Timer1 As timer:
+        AutoStart: =true
+        Duration: =10000
+        OnTimerEnd: =Navigate(Home)
+        X: =81
+        Y: =57
+        ZIndex: =2
+

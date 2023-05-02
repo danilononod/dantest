@@ -1,0 +1,701 @@
+HomeTrainingLean_Exam_1 As screen:
+    OnVisible: |-
+        =Set(_guideStep, 1); UpdateContext({Sel_ans:DisplayMode.Edit});
+        UpdateContext({Sel_ok:false});
+        UpdateContext({check:false});
+        UpdateContext({txt_rec:true});
+        Reset(drpdwn_ans);
+        Set(bt_dis, btn_record.DisplayMode.Edit)
+
+    Rectangle1_26 As rectangle:
+        Height: =115
+        Width: =1366
+        Y: =653
+        ZIndex: =1
+
+    Label2_21 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        FontWeight: =FontWeight.Bold
+        Height: =86
+        Size: =25
+        Text: |-
+            =Switch(training_prog_gal.Selected.Value,
+            "ESD", "ESD Annual Training Certification Quiz",
+            "Six Sigma", "PEX Training for: " & training_prog_gal.Selected.Value & " Quiz",
+            "PEX Training for: " & training_prog_gal.Selected.Value & " Quiz")
+        Width: =1182
+        Y: =667
+        ZIndex: =2
+
+    Image2_5 As image:
+        Image: =SSlogo
+        X: =1155
+        Y: =660
+        ZIndex: =3
+
+    bot_nxt As button:
+        DisplayMode: |
+            =If(check && CountRows(TutorialNavigator1.AllItems) >= _guideStep+1, DisplayMode.Edit, DisplayMode.Disabled)
+            //Lookup(DataSourceName, CustomerID = 5, CustomerName)
+        Height: =67
+        OnSelect: |-
+            =//UpdateContext({Sel_ok:!Sel_ok});
+            UpdateContext({Sel_ans:DisplayMode.Edit});
+            UpdateContext({Sel_ok:!Sel_ok});
+            UpdateContext({check:!check});
+            Collect(
+                    AnswersToQuestion, 
+                    {
+                      QuestionName:Label31.Text, 
+                      Answer:drpdwn_ans.Selected.Value
+                    }
+            );
+            Reset(drpdwn_ans);
+            Set(_guideStep, Min(_guideStep+1, Last(TutorialNavigator1.AllItems).TopicID))
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Size: =20
+        Text: =If(_guideStep = CountRows(TutorialNavigator1.AllItems), "Done", "Next" & Char(10) & If(IsBlank(_guideStep), First(TutorialNavigator1.AllItems).Questionitem, LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).TopicID)+1 & "/"&CountRows(TutorialNavigator1.AllItems))
+        Visible: |-
+            =If(drpdwn_ans.DisplayMode=DisplayMode.Disabled && check,
+            If(drpdwn_ans.DisplayMode=DisplayMode.Disabled && _guideStep = 1 && _guideStep = CountRows(TutorialNavigator1.AllItems) && check
+            , false ,true))
+            
+            //If(_guideStep = 20, "Complete", "Next" & Char(10) & If(IsBlank(_guideStep), First(TutorialNavigator1.AllItems).Questionitem, LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).TopicID)+1 & "/20")
+        Width: =165
+        X: =1090
+        Y: =496
+        ZIndex: =4
+
+    TutorialNavigator1 As gallery.galleryVertical:
+        Height: =197
+        Items: =myTrainingQ
+        Layout: =Layout.Vertical
+        ShowScrollbar: =false
+        TemplateSize: =190
+        Visible: =false
+        Width: =643
+        Y: =571
+        ZIndex: =8
+
+    Label31 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(0, 0, 0, 1)
+        Height: =228
+        Italic: =true
+        OnSelect: |-
+            =Collect(DataEmpBox, {Text: Label31.Text})
+        Size: =20
+        Text: |-
+            =If(
+                IsBlank(_guideStep),
+                First(TutorialNavigator1.AllItems).Questionitem,
+              If(
+                _guideStep=CountRows(TutorialNavigator1.AllItems) && check,
+                "",
+                LookUp(
+                    TutorialNavigator1.AllItems,
+                    TopicID = _guideStep
+                ).Questionitem))
+        Width: =1339
+        X: =11
+        Y: =177
+        ZIndex: =9
+
+    Label32 As label:
+        Color: =RGBA(255, 191, 0, 1)
+        Height: =30
+        Text: =If( _guideStep=CountRows(TutorialNavigator1.AllItems) && check,"", "Question No. " & If(IsBlank(_guideStep), First(TutorialNavigator1.AllItems).Questionitem, LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).TopicID) & "/" & CountRows(TutorialNavigator1.AllItems))
+        Width: =179
+        X: =1171
+        Y: =177
+        ZIndex: =10
+
+    HTExam_header_grp As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =20
+        ZIndex: =16
+
+        Rectangle1_25 As rectangle:
+            Height: =89
+            Width: =1366
+            Y: =3
+            ZIndex: =5
+
+        Label2_20 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =89
+            Text: ="Welcome, " & varUserEmail
+            Width: =120
+            X: =1244
+            Y: =3
+            ZIndex: =6
+
+        img_user_4 As image:
+            Height: =77
+            Image: =varUserimg
+            RadiusBottomLeft: =img_user_4.Height
+            RadiusBottomRight: =img_user_4.Height
+            RadiusTopLeft: =img_user_4.Height
+            RadiusTopRight: =img_user_4.Height
+            Width: =img_user_4.Height
+            X: =1160
+            Y: =9
+            ZIndex: =7
+
+    drpdwn_ans As dropdown:
+        Default: =""
+        DisplayMode: =Sel_ans
+        Height: =47
+        Items: |-
+            =[ "-Select One-",
+               If(!IsBlank(Q_opt1), "A. " & Q_opt1.Text),
+               If(!IsBlank(Q_opt2), "B. " & Q_opt2.Text),
+               If(!IsBlank(Q_opt3), "C. " & Q_opt3.Text),
+               If(!IsBlank(Q_opt4), "D. " & Q_opt4.Text),
+               If(!IsBlank(Q_opt5), "E. " & Q_opt5.Text)
+            ]
+        OnChange: |
+            =//Patch(AnswersToQuestion,ThisItem,{Result:drpdwn_ans.SelectedText.Value})
+            //Set(SelAns,drpdwn_ans.Selected.Value);
+            If(!IsBlank(drpdwn_ans.Selected.Value) || drpdwn_ans.Selected.Value<>"-Select One-",  UpdateContext({Sel_ans:DisplayMode.Disabled}));
+            UpdateContext({sel_on: true});
+            //If (Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) = Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ","")), Set(PointScore, PointScore+5))
+        PaddingBottom: =5
+        PaddingRight: =5
+        Visible: =If(_guideStep = CountRows(TutorialNavigator1.AllItems) && check, false, true)
+        Width: =564
+        X: =391
+        Y: =423
+        ZIndex: =17
+
+    editans As icon.Edit:
+        DisplayMode: =If(!Sel_ok,DisplayMode.Edit,DisplayMode.Disabled)
+        Height: =61
+        Icon: =Icon.Edit
+        OnSelect: |-
+            =UpdateContext({Sel_ans: DisplayMode.Edit});
+            Reset(drpdwn_ans)
+        Visible: |-
+            =//If(IsBlank(drpdwn_ans.Selected.Value) || drpdwn_ans.Selected.Value="-Select One-" || !sel_on, false, true)
+            If(drpdwn_ans.DisplayMode=DisplayMode.Disabled, true, false)
+        Width: =47
+        X: =974
+        Y: =417
+        ZIndex: =18
+
+    qscore As label:
+        Align: =TextPosition.Right
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        Text: |-
+            =If(IsBlank(PointScore), "0/100", "Score: " & PointScore & "/100")
+        Visible: =If(_guideStep = CountRows(TutorialNavigator1.AllItems) && check, true, false)
+        X: =1200
+        Y: =342
+        ZIndex: =19
+
+    AnsGuide As label:
+        Height: =63
+        Text: =Proper(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey)
+        Visible: =false
+        Width: =208
+        Y: =588
+        ZIndex: =20
+
+    Icon7 As icon.Check:
+        DisplayMode: =If(!Sel_ok,DisplayMode.Edit,DisplayMode.Disabled)
+        Height: =61
+        Icon: =Icon.Check
+        OnSelect: |-
+            =If (Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) = Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ","")), Set(PointScore, RoundDown(PointScore+(100/CountRows(TutorialNavigator1.AllItems)),1)));
+            UpdateContext({Sel_ok:!Sel_ok});
+            If(drpdwn_ans.DisplayMode=DisplayMode.Disabled,true,false);
+            UpdateContext({check:!check});
+        Visible: =If(drpdwn_ans.DisplayMode=DisplayMode.Disabled && !IsBlank(drpdwn_ans.Selected.Value), true,false)
+        Width: =53
+        X: =1139
+        Y: =408
+        ZIndex: =24
+
+    Label26 As label:
+        Align: =LayoutAlignItems.Center
+        DisplayMode: =DisplayMode.View
+        Size: =10
+        Text: |-
+            =If(!check && _guideStep < CountRows(TutorialNavigator1.AllItems) && IsBlank(drpdwn_ans.Selected.Value), "",
+            If(!check && _guideStep < CountRows(TutorialNavigator1.AllItems), "Check your answer to proceed",
+            If(!check && _guideStep = CountRows(TutorialNavigator1.AllItems), "Check your answer", "")))
+        Visible: =If(drpdwn_ans.DisplayMode=DisplayMode.Disabled,true,false)
+        X: =1090
+        Y: =456
+        ZIndex: =25
+
+    btn_try As button:
+        DisabledColor: =Self.Color
+        DisplayMode: =If( PointScore >= 95,DisplayMode.View, DisplayMode.Edit) 
+        Fill: =If(PointScore>=95,  ColorValue("Green"), ColorValue("Red"))
+        Height: =54
+        HoverColor: =RGBA(255, 255, 0, 1)
+        HoverFill: =If(PointScore>=95,  ColorValue("Green"), ColorValue("Red"))
+        OnSelect: |-
+            =Navigate(HomeTrainingLean_HomeExam);
+            Set(PointScore, 0);
+            Set(Sel_ok, false)
+        PressedColor: =RGBA(255, 255, 0, 1)
+        PressedFill: =If(PointScore>=95,  ColorValue("Green"), ColorValue("Red"))
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: =If( PointScore >= 95,"PASSED", "FAILED" & Char(10) & "Re-take?")
+        Visible: =If(_guideStep= CountRows(TutorialNavigator1.AllItems) && Sel_ok, true, false)
+        Width: =146
+        X: =1021
+        Y: =587
+        ZIndex: =28
+
+    btn_record As button:
+        DisplayMode: =btn_dis
+        Height: =54
+        OnSelect: |
+            =Patch(TrainingProfileProgress_SixSigma,Last(Filter(myProfileProgress, Reg_ID_ref=ID_gal,
+                        Title = gal_topic.Selected.Title)),({TotalScore:PointScore})); If(IsEmpty(Errors(TrainingProfileProgress_SixSigma)),Notify("Success",NotificationType.Success,3);UpdateContext({btn_dis:btn_record.DisplayMode.View});, Notify(First(Errors(TrainingProfileProgress_SixSigma)).Message,NotificationType.Error,1));UpdateContext({txt_rec:!txt_rec});
+            ClearCollect(myProfileProgress,ShowColumns(SortByColumns(TrainingProfileProgress_SixSigma, "Modified",SortOrder.Descending), "ID","Program", "User", "Title", "TimeDura", "Progress", "DateTime", "Modified", "TotalScore", "Reg_ID_ref"))
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: |-
+            =//"Save Result"
+            If(txt_rec, "Click to Save", "Saved!" )
+        Visible: =If(_guideStep= CountRows(TutorialNavigator1.AllItems) && Sel_ok, true, false)
+        X: =1189
+        Y: =587
+        ZIndex: =29
+
+    "'Rating%' As label":
+        Align: =TextPosition.Right
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        Text: |-
+            =If(IsBlank(PointScore), "", "Rating: " & Text(PointScore,"0%"))
+        Visible: =If(_guideStep = CountRows(TutorialNavigator1.AllItems) && check, true, false)
+        X: =1199
+        Y: =368
+        ZIndex: =30
+
+    Timer2_2 As timer:
+        Duration: =5000
+        OnTimerEnd: |-
+            =Patch(
+                TrainingProfileProgress_SixSigma,
+                Last(
+                    Filter(
+                        myProfileProgress,
+                        Reg_ID_ref = ID_gal,
+                        Title = gal_topic.Selected.Title
+                    )
+                ),
+                ({TotalScore: PointScore})
+            );
+            If(
+                IsEmpty(Errors(TrainingProfileProgress_SixSigma)),
+                Notify(
+                    "Success",
+                    NotificationType.Success,
+                    3
+                );
+                UpdateContext({btn_dis: btn_record.DisplayMode.View});
+                ,
+                Notify(
+                    First(Errors(TrainingProfileProgress_SixSigma)).Message,
+                    NotificationType.Error,
+                    1
+                )
+            );
+            UpdateContext({txt_rec: !txt_rec});
+            ClearCollect(
+                myProfileProgress,
+                ShowColumns(
+                    SortByColumns(
+                        TrainingProfileProgress_SixSigma,
+                        "Modified",
+                        SortOrder.Descending
+                    ),
+                    "ID",
+                    "Program",
+                    "User",
+                    "Title",
+                    "TimeDura",
+                    "Progress",
+                    "DateTime",
+                    "Modified",
+                    "TotalScore",
+                    "Reg_ID_ref"
+                )
+            )
+        Start: |
+            =_guideStep=CountRows(TutorialNavigator1.AllItems) && btn_record.Visible
+        Visible: =false
+        X: =11
+        Y: =591
+        ZIndex: =31
+
+    Group6 As group:
+        Height: =5
+        Width: =5
+        X: =60
+        Y: =60
+        ZIndex: =31
+
+        Circle1_1 As circle:
+            Fill: =If(Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) = Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ","")), RGBA(54, 176, 75, 1), ColorValue("Red"))
+            Height: =47
+            Visible: =//Sel_ok
+            Width: =52
+            X: =333
+            Y: =423
+            ZIndex: =26
+
+        Icon10_1 As icon.Check:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =37
+            Icon: =If(Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) = Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ","")), Icon.Check, Icon.Cancel)
+            Visible: =//Sel_ok
+            Width: =44
+            X: =337
+            Y: =428
+            ZIndex: =27
+
+    LblSuccessMsg2_5 As label:
+        Align: =Align.Center
+        Height: =23
+        Size: =10
+        Text: |
+            =If(!txt_rec,"Saved Successfully!", "Saving... " & RoundUp(5- Timer2_2.Value/1000,0))
+        Visible: =If(_guideStep=CountRows(TutorialNavigator1.AllItems) && btn_record.Visible, true, false)
+        Width: =151
+        X: =1189
+        Y: =564
+        ZIndex: =32
+
+    Label29 As label:
+        Color: =RGBA(255, 0, 0, 1)
+        DisplayMode: =DisplayMode.View
+        Height: =33
+        Italic: =true
+        Text: =If(!check && _guideStep < CountRows(TutorialNavigator1.AllItems) && IsBlank(drpdwn_ans.Selected.Value), "*No Selected Answer!","")
+        Width: =186
+        X: =963
+        Y: =468
+        ZIndex: =33
+
+    Group4 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =33
+
+        Q_opt1 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =63
+            Italic: =true
+            OnSelect: |-
+                =Collect(DataEmpBox, {Text: Q_opt1.Text})
+            Size: =10
+            Text: |
+                =Proper(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).Option1)
+            Visible: |-
+                =//Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) = Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ",""))
+                false
+            Width: =225
+            X: =11
+            Y: =338
+            ZIndex: =11
+
+        Q_opt2 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =63
+            Italic: =true
+            OnSelect: |-
+                =Collect(DataEmpBox, {Text: Q_opt2.Text})
+            Size: =10
+            Text: |
+                =Proper(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).Option2)
+            Visible: |-
+                =//Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) = Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ",""))
+                false
+            Width: =225
+            X: =266
+            Y: =338
+            ZIndex: =12
+
+        Q_opt3 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =63
+            Italic: =true
+            OnSelect: |-
+                =Collect(DataEmpBox, {Text: Q_opt3.Text})
+            Size: =10
+            Text: |
+                =Proper(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).Option3)
+            Visible: |-
+                =//Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) = Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ",""))
+                false
+            Width: =225
+            X: =556
+            Y: =342
+            ZIndex: =13
+
+        Q_opt4 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =63
+            Italic: =true
+            OnSelect: |-
+                =Collect(DataEmpBox, {Text: Q_opt4.Text})
+            Size: =10
+            Text: |
+                =Proper(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).Option4)
+            Visible: |-
+                =//Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) = Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ",""))
+                false
+            Width: =225
+            X: =810
+            Y: =342
+            ZIndex: =14
+
+        Q_opt5 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =63
+            Italic: =true
+            OnSelect: |-
+                =Collect(DataEmpBox, {Text: Q_opt5.Text})
+            Size: =10
+            Text: |
+                =Proper(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).Option5)
+            Visible: |-
+                =//Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) = Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ",""))
+                false
+            Width: =225
+            X: =1071
+            Y: =338
+            ZIndex: =15
+
+        Q_optnum As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =63
+            Italic: =true
+            OnSelect: |-
+                =Collect(DataEmpBox, {Text: Q_optnum.Text})
+            Size: =10
+            Text: |
+                =LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).OptNum
+            Visible: |-
+                =//Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) = Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ",""))
+                false
+            Width: =65
+            X: =1284
+            Y: =338
+            ZIndex: =16
+
+    GoHome_1 As icon.Home:
+        Height: =73
+        Icon: =Icon.Home
+        OnSelect: =Navigate(TrainingReg,ScreenTransition.Fade)
+        Visible: |-
+            =//If( _guideStep=20 && check,true, false)
+            If( _guideStep= 20 && Sel_ok && PointScore >= 1 && txt_rec=false,true, false)
+        Width: =79
+        X: =24
+        Y: =12
+        ZIndex: =35
+
+    IDLabel As label:
+        Text: |-
+            ="ID:"&ID_gal
+        Visible: =false
+        X: =564
+        Y: =45
+        ZIndex: =36
+
+    Group5 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =40
+
+        Circle1 As circle:
+            Fill: =RGBA(54, 176, 75, 1)
+            Height: =47
+            Visible: |-
+                =/*Sel_ok
+                If(Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) <> Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ","")) && Sel_ok && !blk_1.Visible, true, false)
+                */
+                false
+            Width: =52
+            X: =333
+            Y: =346
+            ZIndex: =21
+
+        Icon10 As icon.Check:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =37
+            Icon: =Icon.Check
+            Visible: |-
+                =/*Sel_ok
+                If(Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) <> Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ","")) && Sel_ok && !blk_1.Visible, true, false)
+                */
+                false
+            Width: =44
+            X: =336
+            Y: =351
+            ZIndex: =22
+
+        Label25 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =72
+            Italic: =true
+            Size: =15
+            Text: =If(Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) = Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ","")), "Correct!", Proper(AnsGuide.Text))
+            Visible: |-
+                =/*Sel_ok
+                If(Lower(Substitute(Mid(drpdwn_ans.Selected.Value, 4), " ","")) <> Lower(Substitute(LookUp(TutorialNavigator1.AllItems, TopicID = _guideStep).AnsKey, " ","")) && Sel_ok && !blk_1.Visible, true, false)
+                */
+                false
+            Width: =812
+            X: =398
+            Y: =333
+            ZIndex: =23
+
+    blker As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =40
+
+        blk_2 As rectangle:
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =223
+            Visible: |-
+                =//If( _guideStep=CountRows(TutorialNavigator1.AllItems)+1 && check,true, false)
+                If( _guideStep=CountRows(TutorialNavigator1.AllItems)+1 && check,true, false)
+            Width: =1184
+            X: =16
+            Y: =177
+            ZIndex: =34
+
+        blk_1 As rectangle:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =147
+            Visible: |-
+                =//If( _guideStep=CountRows(TutorialNavigator1.AllItems)+1 && check,true, false)
+                If( _guideStep=CountRows(TutorialNavigator1.AllItems)+1,true, false)
+            Width: =1334
+            X: =16
+            Y: =417
+            ZIndex: =43
+
+    "'Rating%_1' As label":
+        Align: =TextPosition.Right
+        Color: =RGBA(255, 191, 0, 1)
+        DisplayMode: =DisplayMode.View
+        Height: =49
+        Text: |-
+            =If(IsBlank(PointScore), "", "(PassingRate: >95%)")
+        Visible: =If(_guideStep>=2, true, false)
+        Width: =178
+        X: =1160
+        Y: =192
+        ZIndex: =41
+
+    Icon6 As icon.Reset:
+        Color: =RGBA(39, 113, 194, 1)
+        Height: =33
+        HoverColor: =ColorFade(Self.Color, 80%)
+        Icon: =Icon.Reset
+        OnSelect: |-
+            =Set(PointScore, 0);
+            Set(Sel_ok, false);
+            
+            Navigate(HomeTrainingLean_HomeExam,ScreenTransition.UnCover)
+        Tooltip: ="Click to Start Again!"
+        Visible: =If(_guideStep = CountRows(TutorialNavigator1.AllItems)  && check && PointScore < 95, true, false)
+        Width: =34
+        X: =1205
+        Y: =368
+        ZIndex: =42
+
+    Group8 As group:
+        Height: =5
+        Width: =5
+        X: =60
+        Y: =60
+        ZIndex: =47
+
+        Label36 As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 191, 0, 1)
+            Height: =114
+            Size: =50
+            Text: ="Congratulations!!!"
+            Visible: =If( _guideStep= CountRows(TutorialNavigator1.AllItems) && Sel_ok && PointScore >= 95 && txt_rec=false,true, false)
+            Width: =750
+            X: =274
+            Y: =162
+            ZIndex: =37
+
+        Label37 As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 191, 0, 1)
+            Height: =132
+            Size: =40
+            Text: ="Thank you for completing the training."
+            Visible: =If( _guideStep= CountRows(TutorialNavigator1.AllItems) && Sel_ok && PointScore >= 95 && txt_rec=false,true, false)
+            Width: =1189
+            X: =66
+            Y: =262
+            ZIndex: =38
+
+        Icon12_1 As icon.Document:
+            Color: =RGBA(255, 191, 0, 1)
+            Height: =51
+            Icon: =Icon.DocumentPDF
+            OnSelect: =Navigate(ESD_Certifcate)
+            Visible: =If( _guideStep= CountRows(TutorialNavigator1.AllItems) && Sel_ok && PointScore >= 95 && txt_rec=false,true, false)
+            Width: =53
+            X: =1243
+            Y: =262
+            ZIndex: =39
+
+        Label39 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            Text: ="View Certificate"
+            Visible: =If( _guideStep= CountRows(TutorialNavigator1.AllItems) && Sel_ok && PointScore >= 95 && txt_rec=false,true, false)
+            X: =1192
+            Y: =228
+            ZIndex: =40
+

@@ -1,0 +1,48 @@
+"SuccessScrn As screen.'tabletLayout_Success_ver3.0'":
+
+    iconCircle1 As circle.Circle:
+        X: =628
+        Y: =234
+        ZIndex: =1
+
+    iconCheck1 As icon.Check:
+        Height: =iconCircle1.Height
+        Icon: =Icon.Check
+        PaddingBottom: =Self.PaddingTop
+        PaddingLeft: =Self.PaddingTop
+        PaddingRight: =Self.PaddingTop
+        PaddingTop: =24
+        Width: =iconCircle1.Width
+        X: =628
+        Y: =234
+        ZIndex: =2
+
+    LblSuccessMsg1 As label:
+        Align: =Align.Center
+        AutoHeight: =true
+        Height: =iconCircle1.Height
+        Size: =20
+        Text: ="This was successfully completed... " &  DetailsForm_1.LastSubmit.
+        Width: =Parent.Width * 0.75
+        X: =183
+        Y: =358
+        ZIndex: =3
+
+    Rectangle1_6 As rectangle:
+        Fill: |-
+            =ColorValue("#1DB954")
+        Height: =150
+        Width: =1366
+        Y: =2
+        ZIndex: =4
+
+    Icon3_4 As icon.Home:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =89
+        Icon: =Icon.Home
+        OnSelect: =Back()
+        Width: =71
+        X: =56
+        Y: =2
+        ZIndex: =5
+

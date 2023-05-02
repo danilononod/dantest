@@ -1,0 +1,1129 @@
+DashBoard As screen:
+    OnVisible: |+
+        =Set(VRY,{});
+        UpdateContext({locShowSpinner_2:true});
+        UpdateContext({locShowSpinner_3:false});
+        Set(VRY,{}); 
+        If(IsEmpty(myAllFunctionStatus) || IsEmpty(myAllFunctionStatusDesc)  , ClearCollect(myAllFunctionStatus,Sort(GroupBy(myHREmplist,"field_Function","Department"), CountRows(Department), SortOrder.Ascending));
+        ClearCollect(myAllFunctionStatusDesc,Sort(GroupBy(myHREmplist,"field_Function","Department"), CountRows(Department), SortOrder.Descending)),false)
+        
+        
+
+    Rectangle1_37 As rectangle:
+        Fill: =RGBA(7, 184, 224, 1)
+        Height: =115
+        Width: =1366
+        ZIndex: =6
+
+    "Gallery5_5 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        BorderColor: |
+            =RGBA(0, 18, 107, 1)
+        BorderThickness: =1
+        Default: =VRY
+        Fill: =Color.White
+        Height: =630
+        Items: |-
+            =//If(SortAsDes,myAllFunctionStatus,myAllFunctionStatusDesc)
+            myFuncAll
+        Layout: =Layout.Vertical
+        OnSelect: |-
+            =UpdateContext({locShowSpinner_3:true});
+            //UpdateContext({GroupPop:false});
+            Concurrent(
+            ClearCollect(myFunctionStatus,GroupBy(Gallery5_5.Selected.Department,"field_ManagerName","Department")),
+            UpdateContext({galhide:!galhide})
+            );
+            UpdateContext({locShowSpinner_3:false})
+        TemplateFill: =If(ThisItem.IsSelected,RGBA(215,213,240,1),ColorValue("White"))
+        TemplatePadding: =0
+        TemplateSize: =40
+        Transition: =Transition.Pop
+        Visible: =!locShowSpinner_2
+        Width: =646
+        X: =72
+        Y: =123
+        ZIndex: =7
+
+        TTLqty As label:
+            Align: =LayoutAlignItems.Center
+            Height: =38
+            OnSelect: =
+            Text: =CountRows(ThisItem.Department)
+            Width: =55
+            X: =278
+            Y: =2
+            ZIndex: =2
+
+        TTLqty_Not_Started As label:
+            Align: =LayoutAlignItems.Center
+            Height: =38
+            OnSelect: =Select(Parent)
+            Text: |
+                =CountRows(Filter(AddColumns(myHREmplist, "NameProf", LookUp(myProfileProgress, User = myHREmplist[@EmployeeName])), IsBlank(NameProf.Progress), Function=ThisItem.field_Function))
+            Width: =55
+            X: =356
+            ZIndex: =3
+
+        TTLqty_Ongoing As label:
+            Align: =LayoutAlignItems.Center
+            Height: =38
+            OnSelect: =Select(Parent)
+            Text: |
+                =CountRows(Filter(AddColumns(myHREmplist, "NameProf", LookUp(myProfileProgress, User = myHREmplist[@EmployeeName])), NameProf.Progress > 1% && NameProf.Progress < 100%, Function=ThisItem.field_Function))
+            Width: =55
+            X: =425
+            ZIndex: =4
+
+        TTLqty_Completed As label:
+            Align: =LayoutAlignItems.Center
+            Height: =38
+            OnSelect: =Select(Parent)
+            Text: |
+                =CountRows(Filter(AddColumns(myHREmplist, "NameProf", LookUp(myProfileProgress, User = myHREmplist[@EmployeeName])), NameProf.Progress = 100%, Function=ThisItem.field_Function))
+            Width: =37
+            X: =495
+            ZIndex: =5
+
+        Bar_Completed As rectangle:
+            Fill: =RGBA(54, 176, 75, 1)
+            Height: =25
+            OnSelect: =Select(Parent)
+            Tooltip: =Text((TTLqty_Completed.Text/TTLqty.Text)*100, "0%")
+            Width: =(TTLqty_Completed.Text/TTLqty.Text)*100
+            X: =540
+            Y: =6
+            ZIndex: =6
+
+        Bar_Not_Started As rectangle:
+            Fill: =RGBA(255, 0, 0, 1)
+            Height: =25
+            OnSelect: =Select(Parent)
+            Tooltip: =Text((TTLqty_Not_Started.Text/TTLqty.Text)*100, "0%")
+            Width: =(TTLqty_Not_Started.Text/TTLqty.Text)*100
+            X: =Bar_Completed.X+Bar_Completed.Width
+            Y: =Bar_Completed.Y
+            ZIndex: =7
+
+        Txt_TTLqty_Not_Completed As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =Bar_Not_Started.Height
+            Italic: =true
+            Size: =8
+            Text: =Text((TTLqty_Not_Started.Text/TTLqty.Text)*100, "0%")
+            Tooltip: =Text((TTLqty_Not_Started.Text/TTLqty.Text)*100, "0%")
+            Visible: =!locShowSpinner_2
+            Width: =Bar_Not_Started.Width
+            X: =Bar_Not_Started.X
+            Y: =Bar_Not_Started.Y
+            ZIndex: =8
+
+        Txt_TTLqty_Completed As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =Bar_Not_Started.Height
+            Italic: =true
+            Size: =If(Value(Txt_TTLqty_Not_Completed.Text)<=65%,8,0)
+            Text: =Text((TTLqty_Completed.Text/TTLqty.Text)*100, "0%")
+            Tooltip: =Text((TTLqty_Completed.Text/TTLqty.Text)*100, "0%")
+            Visible: =!locShowSpinner_2
+            Width: =Bar_Completed.Width
+            X: =Bar_Completed.X
+            Y: =Bar_Completed.Y
+            ZIndex: =9
+
+        Button18 As button:
+            Align: =Align.Left
+            AutoDisableOnSelect: =false
+            BorderColor: =ColorFade(Self.Fill, 15%)
+            Color: =RGBA(0, 0, 0, 1)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =29
+            HoverColor: =RGBA(0, 0, 0, 1)
+            HoverFill: |-
+                =//ColorFade(RGBA(215,213,240,1), -20%)
+                RGBA(215,213,240,1)
+            Italic: =true
+            OnSelect: =
+            PressedColor: =Color.White
+            PressedFill: =RGBA(215,213,240,1)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =14
+            Text: =ThisItem.field_Function
+            Width: =288
+            Y: =2
+            ZIndex: =10
+
+        Rectangle7 As rectangle:
+            Fill: =RGBA(175, 191, 224, 1)
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =640
+            Y: =40
+            ZIndex: =11
+
+    Bar_OA_NotStarted As rectangle:
+        Fill: =RGBA(255, 0, 0, 1)
+        Height: =Bar_OA_Completed.Height
+        OnSelect: =
+        Tooltip: =Text((TTLqty_Overall_Not_Started.Text/TTLqty_Overall.Text)*100, "0%")
+        Visible: =!locShowSpinner_2
+        Width: =(TTLqty_Overall_Not_Started.Text/TTLqty_Overall.Text)*100
+        X: =Bar_OA_Ongoing.X+Bar_OA_Ongoing.Width
+        Y: =Bar_OA_Completed.Y
+        ZIndex: =14
+
+    Bar_OA_Ongoing As rectangle:
+        Fill: =RGBA(255, 255, 0, 1)
+        Height: =25
+        OnSelect: =
+        Tooltip: =Text((TTLqty_Overall_Completed.Text/TTLqty_Overall.Text)*100, "0%")
+        Visible: =!locShowSpinner_2
+        Width: =(TTLqty_Overall_Ongoing.Text/TTLqty_Overall.Text)*100
+        X: =Bar_OA_Completed.X+Bar_OA_Completed.Width
+        Y: =Bar_OA_Completed.Y
+        ZIndex: =15
+
+    "Gallery5_6 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        BorderColor: =If(!galhide,Color.White,RGBA(0, 18, 107, 1))
+        BorderThickness: =1
+        Default: =VRYY
+        Height: =337
+        Items: =GroupBy(Gallery5_5.Selected.Department,"field_ManagerName","Department")
+        Layout: =Layout.Vertical
+        TemplateFill: =If(ThisItem.IsSelected,RGBA(215,213,240,1),ColorValue("White"))
+        TemplatePadding: =0
+        TemplateSize: =38
+        Transition: =Transition.Pop
+        Visible: =!locShowSpinner_3 && !locShowSpinner_2
+        Width: =440
+        X: =821
+        Y: =197
+        ZIndex: =16
+
+        TTLqty_1 As label:
+            Align: =LayoutAlignItems.Center
+            OnSelect: =Select(Parent)
+            Size: =9
+            Text: =CountRows(ThisItem.Department)
+            Width: =37
+            X: =159
+            ZIndex: =2
+
+        TTLqty_Not_Started_1 As label:
+            Align: =LayoutAlignItems.Center
+            Height: =38
+            OnSelect: =Select(Parent)
+            Size: =9
+            Text: |
+                =CountRows(Filter(AddColumns(myHREmplist, "NameProf", LookUp(myProfileProgress, User = myHREmplist[@EmployeeName])), IsBlank(NameProf.Progress), ManagerName=ThisItem.field_ManagerName))
+            Width: =35
+            X: =201
+            ZIndex: =3
+
+        TTLqty_Ongoing_1 As label:
+            Align: =LayoutAlignItems.Center
+            Height: =38
+            OnSelect: =Select(Parent)
+            Size: =9
+            Text: |
+                =CountRows(Filter(AddColumns(myHREmplist, "NameProf", LookUp(myProfileProgress, User = myHREmplist[@EmployeeName])), NameProf.Progress > 1% && NameProf.Progress < 100%, ManagerName=ThisItem.field_ManagerName))
+            Width: =35
+            X: =241
+            Y: =2
+            ZIndex: =5
+
+        TTLqty_Completed_1 As label:
+            Align: =LayoutAlignItems.Center
+            Height: =38
+            OnSelect: =Select(Parent)
+            Size: =9
+            Text: |
+                =CountRows(Filter(AddColumns(myHREmplist, "NameProf", LookUp(myProfileProgress, User = myHREmplist[@EmployeeName])), NameProf.Progress = 100%, ManagerName=ThisItem.field_ManagerName))
+            Width: =35
+            X: =282
+            Y: =2
+            ZIndex: =6
+
+        Bar_Completed_1 As rectangle:
+            Fill: =RGBA(54, 176, 75, 1)
+            Height: =25
+            OnSelect: =Select(Parent)
+            Tooltip: =Text((TTLqty_Completed_1.Text/TTLqty_1.Text)*100, "0%")
+            Width: =(TTLqty_Completed_1.Text/TTLqty_1.Text)*100
+            X: =TTLqty_Completed_1.X+TTLqty_Completed_1.Width
+            Y: =6
+            ZIndex: =7
+
+        Bar_Not_Started_1 As rectangle:
+            Fill: =RGBA(255, 0, 0, 1)
+            Height: =25
+            OnSelect: =Select(Parent)
+            Tooltip: =Text((TTLqty_Not_Started_1.Text/TTLqty_1.Text)*100, "0%")
+            Width: =(TTLqty_Not_Started_1.Text/TTLqty_1.Text)*100
+            X: =Bar_Completed_1.X+Bar_Completed_1.Width
+            Y: =Bar_Completed_1.Y
+            ZIndex: =8
+
+        Button18_1 As button:
+            Align: =Align.Left
+            AutoDisableOnSelect: =false
+            Color: =RGBA(0, 0, 0, 1)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =32
+            HoverColor: =RGBA(0, 0, 0, 1)
+            HoverFill: |-
+                =//ColorFade(RGBA(215,213,240,1), -20%)
+                RGBA(215,213,240,1)
+            Italic: =true
+            OnSelect: |
+                =//Set(VRY,{});UpdateContext({locShowSpinner_3:true})
+                UpdateContext({GroupPop:!GroupPop})
+            PressedColor: =Color.White
+            PressedFill: =RGBA(215,213,240,1)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =10
+            Text: =ThisItem.field_ManagerName
+            Width: =166
+            X: =3
+            Y: =6
+            ZIndex: =9
+
+        Rectangle7_2 As rectangle:
+            Fill: =RGBA(175, 191, 224, 1)
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =440
+            Y: =37
+            ZIndex: =10
+
+    Label46_1 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(98, 157, 209, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =30
+        Size: =18
+        Text: =Gallery5_5.Selected.field_Function
+        Visible: =!locShowSpinner_3 && !locShowSpinner_2
+        Width: =440
+        X: =821
+        Y: =125
+        ZIndex: =17
+
+    Icon20 As icon.Reload:
+        Color: =RGBA(3, 92, 112, 1)
+        DisabledColor: =RGBA(7, 184, 224, 1)
+        DisplayMode: =DisplayMode.View
+        Height: =46
+        Icon: =Icon.Reload
+        OnSelect: |-
+            =Set(VRY,{});
+            UpdateContext({locShowSpinner_2:true});
+            UpdateContext({locShowSpinner_3:false});
+            Set(VRY,{}); 
+            If(IsEmpty(myAllFunctionStatus),ClearCollect(myAllFunctionStatus,Sort(GroupBy(myHREmplist,"field_Function","Department"), CountRows(Department), If(SortAsDes,SortOrder.Descending, SortOrder.Ascending))),false)
+        Visible: =!locShowSpinner_2
+        Width: =42
+        X: =56
+        Y: =69
+        ZIndex: =18
+
+    Timer5_3 As timer:
+        AutoPause: =false
+        AutoStart: =true
+        Duration: |-
+            =//20000
+            //If(locShowSpinner_2, 10000, 1000)
+        OnTimerEnd: |+
+            =UpdateContext({locShowSpinner_2:false});
+            UpdateContext({locShowSpinner_3:false});
+            //GroupBy(Gallery5_5.Selected.Department,"field_ManagerName","Department"
+            //Set(CVY,GroupBy(Gallery5_5.Selected.Department,"field_ManagerName","Department"))
+            
+            
+        OnTimerStart: |-
+            =UpdateContext({locShowSpinner:true});
+        Start: |
+            =locShowSpinner_2 || locShowSpinner_3
+        Visible: =false
+        X: =114
+        Y: =728
+        ZIndex: =19
+
+    locShowSpinner_3 As image:
+        Image: =spinner
+        Visible: =locShowSpinner_2
+        X: =665
+        Y: =247
+        ZIndex: =20
+
+    Label40_2 As label:
+        Height: =45
+        Text: ="Loading... Please wait!"
+        Visible: =locShowSpinner_2
+        Width: =212
+        X: =609
+        Y: =227
+        ZIndex: =21
+
+    Group10 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =21
+
+        Label46 As label:
+            Color: =RGBA(3, 92, 112, 1)
+            Font: =Font.Verdana
+            FontWeight: =FontWeight.Bold
+            Height: =53
+            Size: =25
+            Text: =" verall"
+            Visible: =!locShowSpinner_2
+            Width: =265
+            X: =72
+            Y: =68
+            ZIndex: =8
+
+        TTLqty_Overall As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Size: =15
+            Text: =Sum(Gallery5_5.AllItems,TTLqty.Text)
+            Visible: =!locShowSpinner_2
+            Width: =69
+            X: =333
+            Y: =65
+            ZIndex: =9
+
+        TTLqty_Overall_Not_Started As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Size: =15
+            Text: =Sum(Gallery5_5.AllItems,TTLqty_Not_Started.Text)
+            Visible: =!locShowSpinner_2
+            Width: =69
+            X: =409
+            Y: =65
+            ZIndex: =10
+
+        TTLqty_Overall_Ongoing As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Size: =15
+            Text: =Sum(Gallery5_5.AllItems,TTLqty_Ongoing.Text)
+            Visible: =!locShowSpinner_2
+            Width: =40
+            X: =500
+            Y: =64
+            ZIndex: =11
+
+        TTLqty_Overall_Completed As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Size: =15
+            Text: =Sum(Gallery5_5.AllItems,TTLqty_Completed.Text)
+            Visible: =!locShowSpinner_2
+            Width: =69
+            X: =549
+            Y: =67
+            ZIndex: =12
+
+        Bar_OA_Completed As rectangle:
+            Fill: =RGBA(54, 176, 75, 1)
+            Height: =25
+            OnSelect: =
+            Tooltip: =Text((TTLqty_Overall_Completed.Text/TTLqty_Overall.Text)*100, "0%")
+            Visible: =!locShowSpinner_2
+            Width: =(TTLqty_Overall_Completed.Text/TTLqty_Overall.Text)*100
+            X: =611
+            Y: =74
+            ZIndex: =13
+
+    TTLqty_Overall_Completed_2 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =27
+        Size: =8
+        Text: =Text((TTLqty_Overall_Not_Started.Text/TTLqty_Overall.Text)*100, "0%")
+        Tooltip: =Text((TTLqty_Overall_Not_Started.Text/TTLqty_Overall.Text)*100, "0%")
+        Visible: =!locShowSpinner_2
+        Width: =Bar_OA_NotStarted.Width
+        X: =Bar_OA_NotStarted.X
+        Y: =Bar_OA_NotStarted.Y
+        ZIndex: =22
+
+    locShowSpinner_4 As image:
+        Image: =spinner
+        Visible: =locShowSpinner_3
+        X: =1001
+        Y: =272
+        ZIndex: =23
+
+    Image3_4 As image:
+        Height: =46
+        Image: |-
+            ="https://sharedspace.sharepoint.com/sites/PEXSystemsProject/Images1/WD_Culture_FootNote.PNG"
+        Width: =1366
+        Y: =722
+        ZIndex: =24
+
+    Label43 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(127, 143, 169, 1)
+        DisplayMode: =DisplayMode.View
+        Height: =19
+        Size: =10
+        Text: ="Reload"
+        Visible: =!locShowSpinner_2
+        Width: =67
+        X: =34
+        Y: =83
+        ZIndex: =25
+
+    Rectangle6 As rectangle:
+        Height: =9
+        Visible: =!locShowSpinner_3 && !locShowSpinner_2 && !IsEmpty(Gallery5_6.AllItems)
+        Width: =Label46_1.Width
+        X: =815
+        Y: =Label46_1.Y+Label46_1.Height
+        ZIndex: =26
+
+    Group11 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =30
+
+        TTLqty_Overall_2 As label:
+            Align: =LayoutAlignItems.Center
+            Size: =9
+            Text: ="TTL"
+            Visible: =!locShowSpinner_3 && !locShowSpinner_2 && !IsEmpty(Gallery5_6.AllItems)
+            Width: =47
+            X: =971
+            Y: =163
+            ZIndex: =1
+
+        Icon21 As icon.CancelBadge:
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =25
+            Icon: =Icon.CancelBadge
+            Tooltip: ="NotYetStarted"
+            Visible: =!locShowSpinner_3 && !locShowSpinner_2 && !IsEmpty(Gallery5_6.AllItems)
+            Width: =31
+            X: =1018
+            Y: =169
+            ZIndex: =2
+
+        Icon21_1 As icon.CancelBadge:
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =25
+            Icon: =Icon.Flag
+            Tooltip: ="On-Going"
+            Visible: =!locShowSpinner_3 && !locShowSpinner_2 && !IsEmpty(Gallery5_6.AllItems)
+            Width: =31
+            X: =1063
+            Y: =169
+            ZIndex: =3
+
+        Icon21_2 As icon.CancelBadge:
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =25
+            Icon: =Icon.CheckBadge
+            Tooltip: ="Completed"
+            Visible: =!locShowSpinner_3 && !locShowSpinner_2 && !IsEmpty(Gallery5_6.AllItems)
+            Width: =31
+            X: =1105
+            Y: =169
+            ZIndex: =4
+
+        TTLqty_Overall_3 As label:
+            Align: =LayoutAlignItems.Center
+            Height: =35
+            Size: =9
+            Text: ="ManagerName"
+            Visible: =!locShowSpinner_3 && !locShowSpinner_2 && !IsEmpty(Gallery5_6.AllItems)
+            Width: =104
+            X: =821
+            Y: =167
+            ZIndex: =5
+
+    Group11_1 As group:
+        Height: =5
+        Width: =5
+        X: =20
+        Y: =20
+        ZIndex: =35
+
+        TTLqty_Overall_5 As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(3, 92, 112, 1)
+            DisabledColor: =RGBA(244, 244, 244, 1)
+            Height: =37
+            Size: =9
+            Text: ="TTL"
+            Visible: =!locShowSpinner_2
+            Width: =78
+            X: =334
+            Y: =37
+            ZIndex: =34
+
+        Icon21_3 As icon.CancelBadge:
+            Color: =RGBA(3, 92, 112, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =23
+            Icon: =Icon.CancelBadge
+            Tooltip: ="NotYetStarted"
+            Visible: =!locShowSpinner_2
+            Width: =52
+            X: =420
+            Y: =43
+            ZIndex: =35
+
+        Icon21_4 As icon.CancelBadge:
+            Color: =RGBA(3, 92, 112, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =23
+            Icon: =Icon.Flag
+            Tooltip: ="On-Going"
+            Visible: =!locShowSpinner_2
+            Width: =52
+            X: =500
+            Y: =43
+            ZIndex: =36
+
+        Icon21_5 As icon.CancelBadge:
+            Color: =RGBA(3, 92, 112, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =23
+            Icon: =Icon.CheckBadge
+            Tooltip: ="Completed"
+            Visible: =!locShowSpinner_2
+            Width: =52
+            X: =557
+            Y: =43
+            ZIndex: =37
+
+    TTLqty_Overall_7 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        FontWeight: =FontWeight.Semibold
+        Height: =31
+        Size: =12
+        Text: ="("&CountRows(Gallery5_7.AllItems)&") " & Gallery5_6.Selected.field_ManagerName&"'s"&" Direct Report"
+        Visible: =GroupPop
+        Width: =387
+        X: =817
+        Y: =126
+        ZIndex: =38
+
+    Group12 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =38
+
+        Rectangle6_1 As rectangle:
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =43
+            Visible: =GroupPop
+            Width: =448
+            X: =816
+            Y: =121
+            ZIndex: =27
+
+        Rectangle6_2 As rectangle:
+            Fill: =RGBA(128, 128, 128, 1)
+            Height: =369
+            Visible: =GroupPop
+            Width: =448
+            X: =817
+            Y: =163
+            ZIndex: =28
+
+        TTLqty_Overall_6 As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =36
+            Size: =9
+            Text: ="Status"
+            Visible: =GroupPop
+            Width: =88
+            X: =989
+            Y: =157
+            ZIndex: =29
+
+        Icon21_6 As icon.CancelBadge:
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =24
+            Icon: =Icon.CalendarBlank
+            Tooltip: ="Completion Date"
+            Visible: =GroupPop
+            Width: =28
+            X: =1100
+            Y: =164
+            ZIndex: =30
+
+        TTLqty_Overall_4 As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =34
+            Size: =9
+            Text: ="EmployeeName"
+            Visible: =GroupPop
+            Width: =145
+            X: =810
+            Y: =160
+            ZIndex: =31
+
+        "Gallery5_7 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+            BorderThickness: =1
+            Default: =VRY
+            Height: =365
+            Items: =GroupBy(Gallery5_6.Selected.Department,"field_EmployeeName","EmpName")
+            Layout: =Layout.Vertical
+            TemplateFill: =If(ThisItem.IsSelected,RGBA(215,213,240,1),ColorValue("White"))
+            TemplatePadding: =0
+            TemplateSize: =38
+            Visible: =GroupPop
+            Width: =438
+            X: =821
+            Y: =195
+            ZIndex: =32
+
+            Bar_Not_Started_2 As rectangle:
+                Fill: |-
+                    =//RGBA(255, 0, 0, 1)
+                    If(Value(TTLqty_Completed_indv.Text)=1,
+                    RGBA(54, 176, 75, 1), RGBA(255, 0, 0, 1))
+                Height: =23
+                OnSelect: =Select(Parent)
+                Width: =31
+                X: =194
+                Y: =10
+                ZIndex: =8
+
+            Button18_2 As button:
+                Align: =Align.Left
+                AutoDisableOnSelect: =false
+                Color: =RGBA(0, 0, 0, 1)
+                DisplayMode: =DisplayMode.View
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =32
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: |-
+                    =//ColorFade(RGBA(215,213,240,1), -20%)
+                    RGBA(215,213,240,1)
+                Italic: =true
+                OnSelect: |-
+                    =Set(VRY,{});UpdateContext({locShowSpinner_3:true})
+                PressedColor: =Color.White
+                PressedFill: =RGBA(215,213,240,1)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =10
+                Text: =ThisItem.field_EmployeeName
+                Width: =166
+                X: =3
+                Y: =6
+                ZIndex: =9
+
+            TTLqty_Completed_indv As label:
+                Align: =LayoutAlignItems.Center
+                Height: =38
+                OnSelect: =Select(Parent)
+                Size: =9
+                Text: |
+                    =CountRows(Filter(AddColumns(myHREmplist, "NameProf", LookUp(myProfileProgress, User = myHREmplist[@EmployeeName])), NameProf.Progress = 100%, EmployeeName=ThisItem.field_EmployeeName))
+                Visible: =false
+                Width: =35
+                X: =207
+                ZIndex: =10
+
+            Button18_3 As button:
+                Align: =Align.Left
+                AutoDisableOnSelect: =false
+                Color: =RGBA(0, 0, 0, 1)
+                DisplayMode: =DisplayMode.View
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =32
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: |-
+                    =//ColorFade(RGBA(215,213,240,1), -20%)
+                    RGBA(215,213,240,1)
+                Italic: =true
+                OnSelect: |-
+                    =Set(VRY,{});UpdateContext({locShowSpinner_3:true})
+                PressedColor: =Color.White
+                PressedFill: =RGBA(215,213,240,1)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =10
+                Text: =
+                Width: =166
+                X: =270
+                Y: =6
+                ZIndex: =11
+
+            TTLqty_Completed_indv_1 As label:
+                Align: =LayoutAlignItems.Center
+                Height: =33
+                OnSelect: =Select(Parent)
+                Size: =9
+                Text: =Last(Filter(AddColumns(myHREmplist, "NameProf", LookUp(myProfileProgress, User = myHREmplist[@EmployeeName])), NameProf.Progress = 100%, EmployeeName=ThisItem.field_EmployeeName)).NameProf.DateTime
+                Width: =80
+                X: =255
+                Y: =2
+                ZIndex: =12
+
+        Icon23 As icon.Cancel:
+            Color: =RGBA(255, 255, 0, 1)
+            Height: =32
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =UpdateContext({GroupPop:!GroupPop})
+            Visible: =GroupPop
+            Width: =35
+            X: =1220
+            Y: =125
+            ZIndex: =33
+
+    TTLqty_Overall_Completed_3 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =27
+        Size: =If(Value(TTLqty_Overall_Completed_2.Text)<=74%,7,If(Value(TTLqty_Overall_Completed_2.Text)<=65%,8,0))
+        Text: =Text((TTLqty_Overall_Completed.Text/TTLqty_Overall.Text)*100, "0%")
+        Tooltip: =Text((TTLqty_Overall_Completed.Text/TTLqty_Overall.Text)*100, "0%")
+        Visible: =!locShowSpinner_2
+        Width: =Bar_OA_Completed.Width
+        X: =Bar_OA_Completed.X
+        Y: =Bar_OA_NotStarted.Y
+        ZIndex: =39
+
+    StartDate As datepicker:
+        BorderColor: =RGBA(214, 223, 238, 1)
+        Color: =RGBA(39, 67, 125, 1)
+        DefaultDate: =DateValue("10/29/2021")
+        Height: =29
+        Size: =12
+        Width: =134
+        X: =1230
+        Y: =80
+        ZIndex: =40
+
+    Label45 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        Font: =Font.Verdana
+        FontWeight: =FontWeight.Lighter
+        Height: =43
+        Size: =30
+        Text: =DateDiff(Today(),DateValue("10/29/2021"),TimeUnit.Days)
+        Width: =66
+        X: =1300
+        ZIndex: =41
+
+    Icon24 As icon.Folder:
+        Color: =RGBA(39, 113, 194, 1)
+        DisplayMode: =DisplayMode.View
+        Height: =67
+        Icon: =Icon.Clock
+        X: =1248
+        Y: =7
+        ZIndex: =42
+
+    Label47 As label:
+        Align: =LayoutAlignItems.Center
+        Height: =41
+        Size: =10
+        Text: =If(Value(Label45.Text)=1, "Day Remaining", "Days Remaining")
+        Width: =78
+        X: =1288
+        Y: =37
+        ZIndex: =43
+
+    btn_PerFunction As button:
+        OnSelect: |-
+            =/*
+            ForAll(Gallery5_6.AllItems,Collect(myexport, {EmployeeName:ThisRecord.field_Function, Progress: ThisRecord.Department }));
+            //ClearCollect(myexport_2,Ungroup(RenameColumns(myexport,"EmployeeName","field_ManagerName"),"Progress"));
+            ClearCollect(myexport_2,Ungroup(RenameColumns(myexport,"EmployeeName","EmployeeName"),"Progress"));
+            */
+            ClearCollect( DepartmentByEmployee, Filter( myAllFunctionStatus, Label46_1.Text in field_Function ) );
+            
+            ClearCollect( EmployeeUngroup, Ungroup(DepartmentByEmployee, "Department" ));
+            
+            ClearCollect( EmployeeUngroupAdd, ShowColumns(
+                AddColumns(
+                    EmployeeUngroup,
+                    "Progress",
+                    LookUp(
+                        myProfileProgress,
+                        User = EmployeeUngroup[@field_EmployeeName],
+                        If(IsBlank(Progress),Text(Progress*100, "0%"), If(Progress=1,
+                        Text(Progress*100, "0%")))
+                    ),
+                    "DateTime",
+                    LookUp(
+                        myProfileProgress,
+                        User = Substitute(EmployeeUngroup[@field_EmployeeName], "ñ", "Ã±"),
+                        DateTime),
+                               "TotalScore",
+                    LookUp(
+                        myProfileProgress,
+                        User = Substitute(EmployeeUngroup[@field_EmployeeName], "ñ", "Ã±"),
+                        TotalScore 
+            
+                    ))  
+                
+                
+                ,"field_EmployeeName","field_Function","field_ManagerName","Progress", "DateTime", "TotalScore"
+            )
+            );
+            
+            
+            
+            Set(varExport, ExportDataFromPowerApps.Run(JSON(EmployeeUngroupAdd,JSONFormat.IncludeBinaryData & JSONFormat.IgnoreUnsupportedTypes)).filelink); Launch(varExport); Clear(EmployeeUngroupAdd)
+            
+            /*
+            
+            
+            ForAll(Gallery5_6.AllItems,Collect(myexport,{EmployeeName:ThisRecord.field_ManagerName, Progress: ThisRecord.}));
+            
+            ClearCollect(ColCollection2,Ungroup(RenameColumns(Gallery5_6.AllItems,"field_Active","Progress_Chunk"),"Progress"))
+            
+            ForAll(Gallery5_7.AllItems,Collect(myexport2,{EmployeeName:ThisRecord.field_EmployeeName, Progress: ThisRecord.EmpName.field_Active }));
+            
+            Set(varExport, ExportDataFromPowerApps.Run(JSON(myexport,JSONFormat.IncludeBinaryData & JSONFormat.IgnoreUnsupportedTypes)).filelink); Launch(varExport)
+            */
+        Text: ="ExportData"
+        Visible: =!IsBlank(Label44.Text)
+        X: =929
+        Y: =637
+        ZIndex: =44
+
+    Label44 As label:
+        Align: =Align.Center
+        Height: =32
+        Text: =Label46_1.Text
+        Visible: =!locShowSpinner_3 && !locShowSpinner_2
+        Width: =235
+        X: =891
+        Y: =605
+        ZIndex: =45
+
+    Label34_3 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =74
+        Size: =25
+        Text: ="ESD Certification Compliance"
+        Width: =612
+        X: =700
+        Y: =7
+        ZIndex: =46
+
+    Icon18_1 As icon.BackArrow:
+        Color: =RGBA(39, 113, 194, 1)
+        Icon: =Icon.Home
+        OnSelect: =Navigate(HomeUser,ScreenTransition.None)
+        Visible: |-
+            =//If(varUserEmail="Danilo Nonod Jr.", true, false)
+            true
+        X: =34
+        ZIndex: =47
+
+    Label44_1 As label:
+        Align: =Align.Center
+        Height: =38
+        Text: |-
+            ="For Replace: 'Ã±', 'ñ'"
+        Visible: =!IsBlank(Label44.Text)
+        Width: =196
+        X: =1170
+        Y: =684
+        ZIndex: =48
+
+    Icon25 As icon.ArrowDown:
+        Color: =RGBA(215,213,240,1)
+        Height: =40
+        Icon: =Icon.Sort
+        OnSelect: |-
+            =UpdateContext({locShowSpinner_2:true});
+            Concurrent(
+            UpdateContext({locShowSpinner_3:false}),
+            UpdateContext({SortAsDes:!SortAsDes}), 
+            Set(VRY,{}), 
+            Set(VRYY,{}),
+            UpdateContext({galhide:false})
+            );
+            UpdateContext({locShowSpinner_2:!locShowSpinner_2})
+        Visible: =!locShowSpinner_2
+        Width: =34
+        X: =305
+        Y: =72
+        ZIndex: =49
+
+    Label47_1 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(215, 223, 240, 1)
+        Height: =30
+        Size: =10
+        Text: |-
+            ="Due Date:"
+        Width: =78
+        X: =1149
+        Y: =83
+        ZIndex: =50
+
+    btn_ExportAll As button:
+        Height: =72
+        OnSelect: |-
+            =/*
+            ForAll(Gallery5_6.AllItems,Collect(myexport, {EmployeeName:ThisRecord.field_Function, Progress: ThisRecord.Department }));
+            //ClearCollect(myexport_2,Ungroup(RenameColumns(myexport,"EmployeeName","field_ManagerName"),"Progress"));
+            ClearCollect(myexport_2,Ungroup(RenameColumns(myexport,"EmployeeName","EmployeeName"),"Progress"));
+            */
+            
+            ClearCollect( AllStat, ShowColumns(
+                AddColumns(
+                    myHREmplist,
+                    "Progress",
+                    LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmployeeName],
+                        If(IsBlank(Progress),Text(Progress*100, "0%"), If(Progress=1,
+                        Text(Progress*100, "0%")))
+                    ),
+                    "DateTime",
+                    LookUp(
+                        myProfileProgress,
+                        User = Substitute(myHREmplist[@EmployeeName], "ñ", "Ã±"),
+                        DateTime),
+                               "TotalScore",
+                    LookUp(
+                        myProfileProgress,
+                        User = Substitute(myHREmplist[@EmployeeName], "ñ", "Ã±"),
+                        TotalScore 
+                    ),
+                    "Remarks",
+                            LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmployeeName],
+                        If(IsBlank(Progress) || IsBlank(TotalScore), "NotYetStarted",
+                        If((Progress="100%" && (TotalScore <= 95 || IsBlank(TotalScore) ), "In-Progress",
+                        If(Progress="100%" && TotalScore => 95, "Completed"))))
+                    )
+            
+                
+                    )  
+                
+                
+                ,"field_EmployeeName","field_Function","field_ManagerName","Progress", "DateTime", "TotalScore" , "Remarks"
+            )
+            );
+            
+            
+            
+            Set(varExportAll, ExportDataFromPowerApps.Run(JSON(AllStat,JSONFormat.IncludeBinaryData & JSONFormat.IgnoreUnsupportedTypes)).filelink); Launch(varExportAll); Clear(EmployeeUngroupAdd)
+            
+            /*
+            
+            
+            ForAll(Gallery5_6.AllItems,Collect(myexport,{EmployeeName:ThisRecord.field_ManagerName, Progress: ThisRecord.}));
+            
+            ClearCollect(ColCollection2,Ungroup(RenameColumns(Gallery5_6.AllItems,"field_Active","Progress_Chunk"),"Progress"))
+            
+            ForAll(Gallery5_7.AllItems,Collect(myexport2,{EmployeeName:ThisRecord.field_EmployeeName, Progress: ThisRecord.EmpName.field_Active }));
+            
+            Set(varExport, ExportDataFromPowerApps.Run(JSON(myexport,JSONFormat.IncludeBinaryData & JSONFormat.IgnoreUnsupportedTypes)).filelink); Launch(varExport)
+            */
+        Text: ="AllExportData"
+        Visible: =!IsBlank(Label44.Text)
+        X: =1152
+        Y: =605
+        ZIndex: =51
+
+    Button23 As button:
+        OnSelect: |-
+            =/*
+            ForAll(Gallery5_6.AllItems,Collect(myexport, {EmployeeName:ThisRecord.field_Function, Progress: ThisRecord.Department }));
+            //ClearCollect(myexport_2,Ungroup(RenameColumns(myexport,"EmployeeName","field_ManagerName"),"Progress"));
+            ClearCollect(myexport_2,Ungroup(RenameColumns(myexport,"EmployeeName","EmployeeName"),"Progress"));
+            */
+            
+            ClearCollect( AllStat, ShowColumns(
+                AddColumns(
+                    myHREmplist,
+                    "Progress",
+                    LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmployeeName],
+                        If(IsBlank(Progress),Text(Progress*100, "0%"), If(Progress=1,
+                        Text(Progress*100, "0%")))
+                    ),
+                    "DateTime",
+                    LookUp(
+                        myProfileProgress,
+                        User = Substitute(myHREmplist[@EmployeeName], "ñ", "Ã±"),
+                        DateTime),
+                               "TotalScore",
+                    LookUp(
+                        myProfileProgress,
+                        User = Substitute(myHREmplist[@EmployeeName], "ñ", "Ã±"),
+                        TotalScore 
+                    ),
+                    "Remarks",
+                            LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmployeeName],
+                        If(IsBlank(Progress) || IsBlank(TotalScore), "NotYetStarted",
+                        If((Progress=1 && (TotalScore <= 95 || IsBlank(TotalScore) ), "In-Progress",
+                        If(Progress=1 && TotalScore => 95, "Completed"))))
+                    
+                    ))
+                
+                
+                , "field_EmployeeName","field_Function","field_ManagerName","Progress", "DateTime", "TotalScore", "Remarks"
+            )
+            );
+            
+            
+            
+            Set(varExportAll, ExportDataFromPowerApps.Run(JSON(AllStat,JSONFormat.IncludeBinaryData & JSONFormat.IgnoreUnsupportedTypes)).filelink); Launch(varExportAll); Clear(EmployeeUngroupAdd)
+            
+            /*
+            
+            
+            ForAll(Gallery5_6.AllItems,Collect(myexport,{EmployeeName:ThisRecord.field_ManagerName, Progress: ThisRecord.}));
+            
+            ClearCollect(ColCollection2,Ungroup(RenameColumns(Gallery5_6.AllItems,"field_Active","Progress_Chunk"),"Progress"))
+            
+            ForAll(Gallery5_7.AllItems,Collect(myexport2,{EmployeeName:ThisRecord.field_EmployeeName, Progress: ThisRecord.EmpName.field_Active }));
+            
+            Set(varExport, ExportDataFromPowerApps.Run(JSON(myexport,JSONFormat.IncludeBinaryData & JSONFormat.IgnoreUnsupportedTypes)).filelink); Launch(varExport)
+            */
+        Text: ="Button"
+        X: =135
+        Y: =43
+        ZIndex: =52
+

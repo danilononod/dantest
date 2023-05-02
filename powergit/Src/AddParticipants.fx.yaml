@@ -1,0 +1,596 @@
+AddParticipants As screen:
+
+    Form2 As form:
+        AcceptsFocus: =false
+        DataSource: =HR_EMPLIST_100421
+        Height: =556
+        NumberOfColumns: =2
+        X: =566
+        Y: =141
+        ZIndex: =1
+
+        Function_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_Function"
+            Default: =ThisItem.Function
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Function"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@HR_EMPLIST_100421], DataSourceInfo.MaxLength, "field_Function")
+            Required: =drp_Function.Selected.Value="-Select Function-"
+            Update: =drp_Function.Selected.Value
+            Width: =800
+            X: =0
+            Y: =1
+            ZIndex: =1
+
+            DataCardKey39 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            ErrorMessage39 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =drp_Function.Y + drp_Function.Height
+                ZIndex: =3
+
+            StarVisible39 As label:
+                Align: =Align.Center
+                Height: =DataCardKey39.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey39.Y
+                ZIndex: =4
+
+            drp_Function As dropdown:
+                Items: =Choices([@TrainingRegistration].Function)
+                Y: =44
+                ZIndex: =5
+
+        Active_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_Active"
+            Default: =ThisItem.Active
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Active"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@HR_EMPLIST_100421], DataSourceInfo.MaxLength, "field_Active")
+            Required: =false
+            Update: =DataCardValue42.Text
+            Visible: =false
+            Width: =400
+            X: =0
+            Y: =2
+            ZIndex: =1
+
+            DataCardKey55 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue42 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: ="Y"
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey55.Y + DataCardKey55.Height + 5
+                ZIndex: =2
+
+            ErrorMessage54 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue42.Y + DataCardValue42.Height
+                ZIndex: =3
+
+            StarVisible54 As label:
+                Align: =Align.Center
+                Height: =DataCardKey55.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey55.Y
+                ZIndex: =4
+
+        Lean_Rem_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Lean_Rem"
+            Default: =ThisItem.Lean_Rem
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Lean_Rem"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@HR_EMPLIST_100421], DataSourceInfo.MaxLength, "Lean_Rem")
+            Required: =IsBlank(rad_Required)
+            Update: =rad_Required.Selected.Value
+            Width: =400
+            X: =1
+            Y: =2
+            ZIndex: =1
+
+            DataCardKey37 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: ="Required?"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            ErrorMessage37 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =rad_Required.Y + rad_Required.Height
+                ZIndex: =3
+
+            StarVisible37 As label:
+                Align: =Align.Center
+                Height: =DataCardKey37.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey37.Y
+                ZIndex: =4
+
+            rad_Required As radio:
+                Height: =50
+                Items: =["Yes", "No"]
+                Layout: =Layout.Horizontal
+                RadioSize: =20
+                Width: =252
+                X: =40
+                Y: =40
+                ZIndex: =5
+
+        Batch_DataCard1 As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Batch"
+            Default: =ThisItem.Batch
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Batch"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue25.Selected
+            Width: =400
+            X: =0
+            Y: =3
+            ZIndex: =1
+
+            DataCardKey38 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue25 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Items: =Choices([@HR_EMPLIST_100421].Batch)
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =Choices(HR_EMPLIST_100421.Batch,DataCardValue25.SearchText)
+                SelectMultiple: =false
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey38.Y + DataCardKey38.Height + 5
+                ZIndex: =2
+
+            ErrorMessage38 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue25.Y + DataCardValue25.Height
+                ZIndex: =3
+
+            StarVisible38 As label:
+                Align: =Align.Center
+                Height: =DataCardKey38.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey38.Y
+                ZIndex: =4
+
+        YR_DataCard1 As typedDataCard.dateEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="YR"
+            Default: =ThisItem.YR
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="YR"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =txt_Year.Text
+            Width: =400
+            X: =1
+            Y: =3
+            ZIndex: =1
+
+            DataCardKey36 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            ErrorMessage36 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =txt_Year.Y + txt_Year.Height
+                ZIndex: =3
+
+            StarVisible36 As label:
+                Align: =Align.Center
+                Height: =DataCardKey36.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey36.Y
+                ZIndex: =4
+
+            txt_Year As label:
+                Text: =If(varchangee, Text(varYY,"[$-en-US]yyyy"), Text(timestamp,"[$-en-US]yyyy"))
+                Visible: =!varchange
+                X: =40
+                Y: =40
+                ZIndex: =5
+
+            Icon8 As icon.Edit:
+                Height: =70
+                Icon: =Icon.Edit
+                OnSelect: =Set(varchange, true)
+                Width: =40
+                X: =292
+                Y: =25
+                ZIndex: =6
+
+            DatePicker5 As datepicker:
+                OnChange: |-
+                    =Set(varYY, DatePicker5.SelectedDate);
+                    Set(varchangee,true);
+                    Set(varchange,false)
+                Visible: =varchange
+                Width: =176
+                X: =93
+                Y: =40
+                ZIndex: =7
+
+        DataCard3 As typedDataCard.blankCard:
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =83
+            Width: =800
+            X: =0
+            Y: =4
+            ZIndex: =1
+
+            Button31 As button:
+                OnSelect: =SubmitForm(Form2)
+                Text: ="Submit"
+                X: =312
+                Y: =21
+                ZIndex: =1
+
+        EmployeeName_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_EmployeeName"
+            Default: =ThisItem.EmployeeName
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="EmployeeName"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =104
+            MaxLength: =DataSourceInfo([@HR_EMPLIST_100421], DataSourceInfo.MaxLength, "field_EmployeeName")
+            Required: =false
+            Update: =txtInputEmpName.Text
+            Width: =400
+            X: =0
+            Y: =0
+            ZIndex: =2
+
+            DataCardKey41 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                ZIndex: =1
+
+            ErrorMessage41 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =txtInputEmpName.Y + txtInputEmpName.Height
+                ZIndex: =3
+
+            StarVisible41 As label:
+                Align: =Align.Center
+                Height: =DataCardKey41.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey41.Y
+                ZIndex: =4
+
+            txtInputEmpName As text:
+                Default: =varUserRecord.DisplayName
+                Height: =38
+                Width: =263
+                Y: =43
+                ZIndex: =5
+
+        ManagerName_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_ManagerName"
+            Default: =ThisItem.ManagerName
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="ManagerName"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@HR_EMPLIST_100421], DataSourceInfo.MaxLength, "field_ManagerName")
+            Required: =false
+            Update: =DataCardValue30.Text
+            Width: =400
+            X: =1
+            Y: =0
+            ZIndex: =2
+
+            DataCardKey42 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                ZIndex: =1
+
+            DataCardValue30 As text:
+                Default: =Office365Users.ManagerV2(varUserRecord.Mail).displayName
+                DelayOutput: =true
+                DisplayMode: =varViewMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Y: =33
+                ZIndex: =2
+
+            ErrorMessage42 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue30.Y + DataCardValue30.Height
+                ZIndex: =3
+
+            StarVisible42 As label:
+                Align: =Align.Center
+                Height: =DataCardKey42.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey42.Y
+                ZIndex: =4
+
+    TextInputSearch_2 As text:
+        Clear: =true
+        Default: =""
+        Height: =46
+        Italic: =true
+        Reset: =Clear(EmpNames)
+        Size: =20
+        Width: =288
+        X: =160
+        Y: =160
+        ZIndex: =4
+
+    Label4_3 As label:
+        Height: =54
+        Text: |-
+            ="Search Result:"
+        Width: =131
+        X: =29
+        Y: =152
+        ZIndex: =5
+
+    Button2_1 As button:
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        Height: =60
+        OnSelect: |
+            =ClearCollect(
+               EmpNames, 
+            Office365Users.SearchUser({searchTerm:TextInputSearch_2.Text,top:5}))
+        Text: ="Search"
+        Width: =410
+        X: =58
+        Y: =222
+        ZIndex: =6
+
+    "Gallery5_12 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        BorderColor: =If(!IsBlank(TextInputSearch_1.Text), ColorValue("black"), ColorValue("White"))
+        BorderStyle: =BorderStyle.None
+        BorderThickness: =3
+        Height: =454
+        Items: =EmpNames
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =87
+        Visible: =If(!IsBlank(TextInputSearch_2.Text), true, false)
+        Width: =385
+        X: =83
+        Y: =308
+        ZIndex: =7
+
+        Title8_6 As label:
+            FontWeight: =FontWeight.Normal
+            Height: =72
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =1
+            PaddingRight: =1
+            PaddingTop: =0
+            Size: =15
+            Text: =ThisItem.DisplayName
+            Tooltip: =ThisItem.DisplayName
+            VerticalAlign: =VerticalAlign.Top
+            Width: =239
+            Wrap: =false
+            X: =14
+            Y: =20
+            ZIndex: =1
+
+        Separator9_5 As rectangle:
+            Height: =0
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Icon4_5 As icon.Add:
+            Height: =48
+            Icon: =Icon.Add
+            OnSelect: |-
+                =ClearCollect(
+                   DirectReports, 
+                   Office365Users.DirectReports(ThisItem.Mail)
+                   /*(LookUp(Gallery5_2, 'Full Name'= ThisItem.DisplayName).'Full Name')Michael@xxxxxx.xxmicrosoft.com is a manager email*/
+                );
+                
+                Collect(DirectReports,
+                  Table(
+                    {
+                      Manager: ThisItem.DisplayName
+                    }
+                  )       
+                );
+                Set(varUserRecord, ThisItem);
+                NewForm(Form2);
+                Set(varViewMode, DisplayMode.View)
+            Visible: |-
+                =/*If(LookUp(HealthTemp, 'Full Name'= ThisItem.DisplayName).'Full Name' = ThisItem.DisplayName, false, true)*/
+                true
+            Width: =44
+            X: =298
+            Y: =20
+            ZIndex: =4
+
+    Image3_8 As image:
+        Height: =46
+        Image: |-
+            ="https://sharedspace.sharepoint.com/sites/PEXSystemsProject/Images1/WD_Culture_FootNote.PNG"
+        Width: =1366
+        Y: =722
+        ZIndex: =9
+
+    Button32 As button:
+        OnSelect: |-
+            =ResetForm(Form2);
+            Set(varchange, false)
+        Text: ="Button"
+        X: =566
+        Y: =86
+        ZIndex: =10
+

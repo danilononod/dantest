@@ -1,0 +1,65 @@
+"FormSuccessTraining As screen.'tabletLayout_Success_ver3.0'":
+    OnVisible: =ClearCollect(myTrainingReg, ShowColumns(TrainingRegistration, "Title", "TrainingModule", "StartDate", "BeltType", "Function"))
+
+    iconCircle2 As circle.Circle:
+        X: =633
+        Y: =326
+        ZIndex: =1
+
+    iconCheck2 As icon.Check:
+        Height: =iconCircle2.Height
+        Icon: =Icon.Check
+        PaddingBottom: =Self.PaddingTop
+        PaddingLeft: =Self.PaddingTop
+        PaddingRight: =Self.PaddingTop
+        PaddingTop: =24
+        Width: =iconCircle2.Width
+        X: =633
+        Y: =326
+        ZIndex: =2
+
+    LblSuccessMsg2_1 As label:
+        Align: =Align.Center
+        AutoHeight: =true
+        Height: =iconCircle2.Height
+        Size: =20
+        Text: ="Your name was successfully updated..."
+        Width: =Parent.Width * 0.75
+        X: =180
+        Y: =457
+        ZIndex: =3
+
+    Timer2 As timer:
+        AutoStart: =true
+        DisplayMode: =DisplayMode.View
+        Duration: =30000
+        OnTimerEnd: =Navigate(TrainingReg)
+        Visible: =false
+        X: =60
+        Y: =713
+        ZIndex: =7
+
+    LblSuccessMsg2_2 As label:
+        Align: =Align.Center
+        AutoHeight: =true
+        Height: =iconCircle2.Height
+        Size: =20
+        Text: ="Redirecting to Training List in " & RoundUp(30- Timer2.Value/1000,0) & "s "
+        Width: =Parent.Width * 0.75
+        X: =171
+        Y: =517
+        ZIndex: =8
+
+    Rectangle1_30 As rectangle:
+        Height: =115
+        Width: =1366
+        ZIndex: =9
+
+    Image3_1 As image:
+        Height: =46
+        Image: |-
+            ="https://sharedspace.sharepoint.com/sites/PEXSystemsProject/Images1/WD_Culture_FootNote.PNG"
+        Width: =1366
+        Y: =722
+        ZIndex: =10
+

@@ -1,0 +1,91 @@
+ESD_Certifcate2 As screen:
+
+    Gallery5_4 As gallery.galleryVertical:
+        Height: =768
+        Items: =HomeListTopic
+        Layout: =Layout.Vertical
+        ShowScrollbar: =false
+        TemplateSize: =809
+        Width: =1056
+        X: =174
+        ZIndex: =1
+
+        Image10_2 As image:
+            Height: =768
+            Image: |-
+                ="https://bdp-sas.wdc.com/UserPages/7118999/images/ottmod/KMFlixCertii.png"
+            OnSelect: =Select(Parent)
+            Width: =1046
+            ZIndex: =1
+
+        Label38_8 As label:
+            Align: =LayoutAlignItems.Center
+            FontWeight: =FontWeight.Semibold
+            Height: =130
+            Italic: =true
+            OnSelect: =Select(Parent)
+            Size: =50
+            Text: =ThisItem.NameRec.User
+            Width: =969
+            X: =39
+            Y: =222
+            ZIndex: =2
+
+        Label38_9 As label:
+            Align: =LayoutAlignItems.Center
+            FontWeight: =FontWeight.Semibold
+            Height: =101
+            Italic: =true
+            OnSelect: =Select(Parent)
+            Size: =25
+            Text: ="successfully completed"
+            Width: =1046
+            Y: =325
+            ZIndex: =3
+
+        Label38_10 As label:
+            Align: =LayoutAlignItems.Center
+            FontWeight: =FontWeight.Semibold
+            Height: =180
+            Italic: =true
+            OnSelect: =Select(Parent)
+            Size: =50
+            Text: =ThisItem.Title
+            Width: =969
+            X: =38
+            Y: =429
+            ZIndex: =4
+
+        Label38_11 As label:
+            Align: =LayoutAlignItems.Center
+            FontWeight: =FontWeight.Semibold
+            Height: =101
+            Italic: =true
+            OnSelect: =Select(Parent)
+            Size: =25
+            Text: =ThisItem.NameRec.DateTime
+            Width: =1046
+            Y: =588
+            ZIndex: =5
+
+    Icon6_2 As icon.Text:
+        Color: =RGBA(0, 18, 107, 0.76)
+        Height: =49
+        Icon: =Icon.Print
+        OnSelect: =Navigate(ESD_Certifcate)
+        Visible: =!ESD_Certifcate2.Printing
+        Width: =66
+        X: =1230
+        Y: =13
+        ZIndex: =2
+
+    Icon13_4 As icon.BackArrow:
+        Color: =RGBA(0, 18, 107, 0.76)
+        Height: =52
+        Icon: =Icon.BackArrow
+        OnSelect: =Navigate(HomeTrainingList,ScreenTransition.Fade)
+        Tooltip: ="Back to previous"
+        X: =1296
+        Y: =13
+        ZIndex: =3
+

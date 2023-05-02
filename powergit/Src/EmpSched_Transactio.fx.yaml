@@ -1,0 +1,289 @@
+EmpSched_Transactio As screen:
+    Fill: =
+    OnVisible: =
+
+    "Gallery3_1 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Height: =421
+        Items: =Filter(PExHealthTeamSched, CreatedDate=empSchedule)
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =78
+        Width: =391
+        X: =31
+        Y: =274
+        ZIndex: =1
+
+        Title4_3 As label:
+            Height: =36
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =12
+            Text: =ThisItem.Full_Name
+            VerticalAlign: =VerticalAlign.Top
+            X: =12
+            Y: =16
+            ZIndex: =1
+
+        Separator5_1 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Title4_4 As label:
+            Height: =36
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =12
+            Text: =ThisItem.Schedule.Value
+            VerticalAlign: =VerticalAlign.Top
+            Width: =43
+            X: =162
+            Y: =16
+            ZIndex: =4
+
+        Title4_7 As label:
+            Height: =36
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =12
+            Text: =ThisItem.Remarks
+            VerticalAlign: =VerticalAlign.Top
+            Width: =43
+            X: =236
+            Y: =16
+            ZIndex: =5
+
+    Group2_2 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =4
+
+        Rectangle1_11 As rectangle:
+            Height: =115
+            Width: =1366
+            ZIndex: =1
+
+        Label2_8 As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.View
+            FontWeight: =FontWeight.Bold
+            Height: =86
+            Size: =36
+            Text: ="PEX Team Daily Temperature Check"
+            Width: =1182
+            X: =20
+            Y: =20
+            ZIndex: =2
+
+        Image1_2 As image:
+            Height: =82
+            Image: =HDD_1
+            Width: =74
+            X: =31
+            Y: =16
+            ZIndex: =3
+
+    Group3_2 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =6
+
+        Rectangle1_13 As rectangle:
+            Height: =59
+            Width: =1366
+            Y: =708
+            ZIndex: =4
+
+        Label8_2 As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =73
+            Size: =30
+            Text: |-
+                ="Viewing: " & Gallery1.Selected.Title  & " ( "&CountRows(Gallery2.AllItems) &" )"
+            Width: =526
+            X: =372
+            Y: =695
+            ZIndex: =5
+
+    Label12_4 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        Size: =15
+        Text: |-
+            ="Schedule:"
+        X: =668
+        Y: =208
+        ZIndex: =10
+
+    Label12_5 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        Size: =15
+        Text: |-
+            ="Remarks:"
+        X: =668
+        Y: =282
+        ZIndex: =11
+
+    Icon3_6 As icon.Home:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =89
+        Icon: =Icon.Home
+        OnSelect: =Back()
+        Width: =71
+        X: =1270
+        ZIndex: =19
+
+    Label14 As label:
+        Height: =34
+        Text: |-
+            ="Dayshift (DS):      " & CountIf(Gallery3_1.AllItems, Schedule.Value= "DS")
+        Width: =258
+        X: =55
+        Y: =137
+        ZIndex: =21
+
+    Icon4 As icon.Check:
+        Height: =36
+        Icon: =Icon.Check
+        Width: =21
+        X: =31
+        Y: =131
+        ZIndex: =22
+
+    Label14_7 As label:
+        Height: =34
+        Text: |-
+            ="VL, SL others:      " & CountRows(Gallery3_2.AllItems)
+        Width: =258
+        X: =705
+        Y: =143
+        ZIndex: =26
+
+    "Gallery3_3 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Height: =517
+        Items: =Filter(PExHealthTeamSched, CreatedDate=empSchedule)
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =78
+        Width: =274
+        X: =689
+        Y: =191
+        ZIndex: =27
+
+        Title4_5 As label:
+            Height: =36
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =12
+            Text: =ThisItem.Full_Name
+            VerticalAlign: =VerticalAlign.Top
+            Width: =214
+            X: =12
+            Y: =16
+            ZIndex: =1
+
+        Separator5_3 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+    Label14_8 As label:
+        Height: =34
+        Text: |-
+            ="Remaining List:      " & CountRows(Gallery3_2.AllItems)
+        Width: =258
+        X: =991
+        Y: =150
+        ZIndex: =28
+
+    "Gallery3_4 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Height: =517
+        Items: =Filter(PExHealthTeam, Not( ID in PExHealthTeamSched.NameID)
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =78
+        Width: =274
+        X: =996
+        Y: =191
+        ZIndex: =29
+
+        Title4_6 As label:
+            Height: =36
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =12
+            Text: =ThisItem.Full_Name
+            VerticalAlign: =VerticalAlign.Top
+            Width: =214
+            X: =12
+            Y: =16
+            ZIndex: =1
+
+        Separator5_4 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+    Label14_1 As label:
+        Height: =34
+        Text: |-
+            ="Dayshift (NS):      " & CountIf(Gallery3_1.AllItems, Schedule.Value= "NS")
+        Width: =258
+        X: =55
+        Y: =181
+        ZIndex: =30
+
+    Icon4_1 As icon.Check:
+        Height: =36
+        Icon: =Icon.Check
+        Width: =21
+        X: =31
+        Y: =172
+        ZIndex: =31
+
+    Label14_9 As label:
+        Height: =34
+        Text: |-
+            ="Leave (i.e VL,SL, others):      " & CountA(Gallery3_1.AllItems.Remarks)
+        Width: =258
+        X: =55
+        Y: =228
+        ZIndex: =32
+
+    Icon4_3 As icon.Check:
+        Height: =36
+        Icon: =Icon.Check
+        Width: =21
+        X: =31
+        Y: =219
+        ZIndex: =33
+

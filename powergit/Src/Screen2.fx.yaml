@@ -1,0 +1,71 @@
+Screen2 As screen:
+    OnVisible: =
+
+    "Gallery6 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Items: =AllWinner
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =Min(96, Self.Height - 60)
+        Width: =381
+        X: =750
+        Y: =72
+        ZIndex: =1
+
+        Title1 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.name
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Parent.TemplateWidth - 104
+            Y: =6
+            ZIndex: =1
+
+        Separator2 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Title1_2 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.id
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Parent.TemplateWidth - 104
+            Y: =42
+            ZIndex: =4
+
+    Button25 As button:
+        Height: =100
+        OnSelect: |
+            =Set(varWinner,RaffleDataFromPowerApps.Run());
+            Collect(AllWinner, varWinner);
+        Text: ="CLickFOrWinner"
+        Width: =343
+        X: =222
+        Y: =504
+        ZIndex: =1
+
+    Label56 As label:
+        Height: =225
+        Text: =varWinner.name & Char(10) &varWinner.id
+        Width: =620
+        X: =159
+        Y: =162
+        ZIndex: =2
+
+    Label55 As label:
+        Text: =
+        X: =432
+        Y: =51
+        ZIndex: =3
+

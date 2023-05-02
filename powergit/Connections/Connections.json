@@ -1,0 +1,228 @@
+{
+  "5c1a7c95-c819-4e5f-97b5-4144e6329609": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "bypassConsent": true,
+      "displayName": "OneDrive for Business",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1546/1.0.1546.2665/onedriveforbusiness/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_onedriveforbusiness",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [],
+    "dependencies": {},
+    "dependents": [
+      "777dde10-959e-4728-939e-22aafc3d7e8a"
+    ],
+    "id": "5c1a7c95-c819-4e5f-97b5-4144e6329609"
+  },
+  "777dde10-959e-4728-939e-22aafc3d7e8a": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "bypassConsent": true,
+      "displayName": "Logic flows",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1615/1.0.1615.3163/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "5c1a7c95-c819-4e5f-97b5-4144e6329609": {
+          "value": "shared_onedriveforbusiness"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "253a6e1b-bf72-4d9a-bab3-3802d5266adb"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_onedriveforbusiness": {
+          "value": "5c1a7c95-c819-4e5f-97b5-4144e6329609"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "253a6e1b-bf72-4d9a-bab3-3802d5266adb"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "ExportDataFromPowerApps"
+    ],
+    "dependencies": {
+      "shared_onedriveforbusiness": "5c1a7c95-c819-4e5f-97b5-4144e6329609"
+    },
+    "dependents": [],
+    "id": "777dde10-959e-4728-939e-22aafc3d7e8a"
+  },
+  "786c8a68-0335-4414-899c-0cfb4d5a3ceb": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "bypassConsent": true,
+      "displayName": "Office 365 Users",
+      "iconUri": "https://connectoricons-prod.azureedge.net/u/laborbol/releases/ase-v3-99-la-only-no-gov/1.0.1622.3206/office365users/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Users"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "786c8a68-0335-4414-899c-0cfb4d5a3ceb"
+  },
+  "95e2c1dc-5a41-4084-9df0-6cbfed786d94": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "bypassConsent": true,
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/u/laborbol/releases/ase-v3-99-la-only-no-gov/1.0.1622.3206/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://sharedspace.sharepoint.com/sites/PEXSystemsProject": {
+        "dataSources": {
+          "PEx BT": {
+            "tableName": "52cf87bf-a69d-4b64-8c4c-ae42b9abd0d3"
+          },
+          "PEx Team": {
+            "tableName": "f44a02af-eb5b-4616-8f5b-48a08b2d192a"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "PEx BT",
+      "PEx Team"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "95e2c1dc-5a41-4084-9df0-6cbfed786d94"
+  },
+  "ca365e29-7b10-49ab-b517-9377cf3bbf6f": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "bypassConsent": true,
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/u/laborbol/releases/ase-v3-99-la-only-no-gov/1.0.1622.3206/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://sharedspace.sharepoint.com/sites/PEXSystemsProject": {
+        "dataSources": {
+          "Images": {
+            "tableName": "d1b6e010-62ee-4fda-8712-9858a1393331"
+          },
+          "PExHealthTeam": {
+            "tableName": "9886e71d-7918-4242-a3f9-b7c45ab1f5d0"
+          },
+          "PExHealthTeamSched": {
+            "tableName": "cb2e37e2-0b7f-4cae-bf5e-60e8f48ccfa6"
+          }
+        }
+      },
+      "https://sharedspace.sharepoint.com/sites/PExTrainingTeam": {
+        "dataSources": {
+          "HR_EMPLIST_100421": {
+            "tableName": "6c316b40-db89-4071-ab4f-8d20f28ead8a"
+          },
+          "PEx Training Monitoring": {
+            "tableName": "dd0e1efa-4e3d-41fa-8f03-8bfea14f67ac"
+          },
+          "Training Exam": {
+            "tableName": "332d1c32-9a9f-46cd-8eb8-b5b853423312"
+          },
+          "Training Topics": {
+            "tableName": "5ab42acd-bcb9-4ba7-902c-fccc13062ead"
+          },
+          "TrainingProfileProgress_SixSigma": {
+            "tableName": "1e782631-4b7f-40bc-ac29-a22e1c142922"
+          },
+          "TrainingRegistration": {
+            "tableName": "f9ced0e5-14f0-4f4d-89e7-19a5b5626eb6"
+          },
+          "TraningFeedback": {
+            "tableName": "1dd48795-2c8f-4a92-b6d5-5f8905415733"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "PExHealthTeam",
+      "PExHealthTeamSched",
+      "Training Exam",
+      "Training Topics",
+      "TrainingRegistration",
+      "Images",
+      "TraningFeedback",
+      "HR_EMPLIST_100421",
+      "PEx Training Monitoring",
+      "TrainingProfileProgress_SixSigma",
+      "PEx BT",
+      "PEx Team"
+    ],
+    "dependencies": {},
+    "dependents": [
+      "db8ae66a-7871-490a-a5b4-63021833aba2"
+    ],
+    "id": "ca365e29-7b10-49ab-b517-9377cf3bbf6f"
+  },
+  "db8ae66a-7871-490a-a5b4-63021833aba2": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "bypassConsent": true,
+      "displayName": "Logic flows",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1615/1.0.1615.3163/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "ca365e29-7b10-49ab-b517-9377cf3bbf6f": {
+          "value": "shared_sharepointonline"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "253a6e1b-bf72-4d9a-bab3-3802d5266adb"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_sharepointonline": {
+          "value": "ca365e29-7b10-49ab-b517-9377cf3bbf6f"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "253a6e1b-bf72-4d9a-bab3-3802d5266adb"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "RaffleDataFromPowerApps"
+    ],
+    "dependencies": {
+      "shared_sharepointonline": "ca365e29-7b10-49ab-b517-9377cf3bbf6f"
+    },
+    "dependents": [],
+    "id": "db8ae66a-7871-490a-a5b4-63021833aba2"
+  },
+  "ec2d317d-4845-4d22-97d0-ccca3cb88337": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "bypassConsent": true,
+      "displayName": "Office 365 Outlook",
+      "iconUri": "https://connectoricons-prod.azureedge.net/u/laborbol/releases/ase-v3-99-la-only-no-gov/1.0.1622.3206/office365/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Outlook"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "ec2d317d-4845-4d22-97d0-ccca3cb88337"
+  }
+}

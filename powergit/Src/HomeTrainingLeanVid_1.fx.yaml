@@ -1,0 +1,1012 @@
+HomeTrainingLeanVid_1 As screen:
+    OnVisible: |
+        =/*
+        Set(vid_pop, false);
+        UpdateContext({chow:true});
+        Set(vid_init, If(goWatchec=0, VideoData.Duration*0.05, 0));
+        UpdateContext({hide:!hide})
+        */
+        UpdateContext({Confirma:true});
+        UpdateContext({Confirma:true});
+
+    Rectangle5_1 As rectangle:
+        Fill: =RGBA(0, 0, 0, 1)
+        Height: =601
+        Width: =253
+        X: =1113
+        Y: =89
+        ZIndex: =2
+
+    Rectangle1_32 As rectangle:
+        Height: =71
+        Width: =1366
+        Y: =697
+        ZIndex: =3
+
+    Label2_25 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        FontWeight: =FontWeight.Bold
+        Height: =86
+        Size: =26
+        Text: |-
+            ="You are watching: " & gal_topic.Selected.Title
+        Width: =1116
+        Y: =682
+        ZIndex: =4
+
+    Timer3_1 As timer:
+        Duration: =34*1000*60 + 7000
+        Repeat: =true
+        Start: =IsBtnStart
+        Text: |-
+            =Text(Time(0, 0, Self.Value/1000 + varIncre), "hh:mm:ss")
+        Visible: =false
+        X: =1116
+        Y: =712
+        ZIndex: =5
+
+    Image2_6 As image:
+        Height: =86
+        Image: =SSlogo
+        Width: =84
+        X: =1282
+        Y: =682
+        ZIndex: =12
+
+    vid_data_form_1 As form:
+        AcceptsFocus: =false
+        DataSource: =TrainingProfileProgress
+        DefaultMode: =FormMode.New
+        Height: =597
+        NumberOfColumns: =1
+        Visible: =false
+        Width: =460
+        Y: =93
+        ZIndex: =13
+
+        Reg_ID_ref_DataCard1_1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Reg_ID_ref"
+            Default: =Last(Filter(myTrainingReg, Title=varUserEmail, TrainingModule<>"LEAN")).ID
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Reg_ID_ref"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue4_2.Text)
+            Width: =460
+            X: =0
+            Y: =6
+            ZIndex: =1
+
+            DataCardKey6_2 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue4_2 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey6_2.Y + DataCardKey6_2.Height + 5
+                ZIndex: =2
+
+            ErrorMessage6_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue4_2.Y + DataCardValue4_2.Height
+                ZIndex: =3
+
+            StarVisible6_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey6_2.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey6_2.Y
+                ZIndex: =4
+
+        Topic_DataCard1_1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Title"
+            Default: =ThisItem.Topic
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Topic"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =
+            MaxLength: =DataSourceInfo([@TrainingProfileProgress], DataSourceInfo.MaxLength, "Title")
+            Required: =true
+            Update: =DataCardValue3_1.Text
+            Width: =460
+            X: =0
+            Y: =0
+            ZIndex: =25
+
+            DataCardKey5_2 As label:
+                Height: =0
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue3_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =gal_topic.Selected.Title
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey5_2.Y + DataCardKey5_2.Height + 5
+                ZIndex: =2
+
+            ErrorMessage5_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue3_1.Y + DataCardValue3_1.Height
+                ZIndex: =3
+
+            StarVisible5_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey5_2.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey5_2.Y
+                ZIndex: =4
+
+        TimeDura_DataCard1_1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="TimeDura"
+            Default: =ThisItem.TimeDura
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="TimeDura"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue9_1.Text)
+            Width: =460
+            X: =0
+            Y: =1
+            ZIndex: =25
+
+            DataCardKey12_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue9_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =VideoData_1.Time
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey12_1.Y + DataCardKey12_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage12_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue9_1.Y + DataCardValue9_1.Height
+                ZIndex: =3
+
+            StarVisible12_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey12_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey12_1.Y
+                ZIndex: =4
+
+        Progress_DataCard1_1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Progress"
+            Default: =ThisItem.Progress
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Progress"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue10_1.Text)
+            Width: =460
+            X: =0
+            Y: =2
+            ZIndex: =25
+
+            DataCardKey13_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue10_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =VideoData_1.Time/VideoData_1.Duration
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey13_1.Y + DataCardKey13_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage13_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue10_1.Y + DataCardValue10_1.Height
+                ZIndex: =3
+
+            StarVisible13_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey13_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey13_1.Y
+                ZIndex: =4
+
+        User_DataCard1_1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="User"
+            Default: =ThisItem.User
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="User"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@TrainingProfileProgress], DataSourceInfo.MaxLength, "User")
+            Required: =false
+            Update: =DataCardValue11_1.Text
+            Width: =460
+            X: =0
+            Y: =3
+            ZIndex: =25
+
+            DataCardKey15_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue11_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =varUserEmail
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey15_1.Y + DataCardKey15_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage15_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue11_1.Y + DataCardValue11_1.Height
+                ZIndex: =3
+
+            StarVisible15_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey15_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey15_1.Y
+                ZIndex: =4
+
+        Program_DataCard1_1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Program"
+            Default: =
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Program"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@TrainingProfileProgress], DataSourceInfo.MaxLength, "Program")
+            Required: =false
+            Update: =DataCardValue13_1.Text
+            Width: =460
+            X: =0
+            Y: =4
+            ZIndex: =25
+
+            DataCardKey16_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue13_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =training_prog_gal.Selected.Value
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey16_1.Y + DataCardKey16_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage16_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue13_1.Y + DataCardValue13_1.Height
+                ZIndex: =3
+
+            StarVisible16_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey16_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey16_1.Y
+                ZIndex: =4
+
+        DateTime_DataCard1_1 As typedDataCard.dateEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="DateTime"
+            Default: =ThisItem.DateTime
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="DateTime"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue14_1.SelectedDate
+            Width: =460
+            X: =0
+            Y: =5
+            ZIndex: =25
+
+            DataCardKey17_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue14_1 As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =timestamp
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey17_1.Y + DataCardKey17_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage17_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue14_1.Y + DataCardValue14_1.Height
+                ZIndex: =3
+
+            StarVisible17_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey17_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey17_1.Y
+                ZIndex: =4
+
+    Label21_1 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        Height: =27
+        Italic: =true
+        Size: =10
+        Text: =If(hide, "Hide Controller","Show Controller")
+        Width: =115
+        X: =1231
+        Y: =463
+        ZIndex: =14
+
+    Rectangle3_1 As rectangle:
+        BorderColor: =RGBA(0, 0, 0, 1)
+        Fill: =RGBA(0, 0, 0, 1)
+        Height: =193
+        Visible: =!hide
+        Width: =244
+        X: =1122
+        Y: =489
+        ZIndex: =15
+
+    Icon9_1 As icon.ChevronDown:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =26
+        Icon: =If(hide, Icon.ChevronDown, Icon.ChevronUp)
+        OnSelect: |-
+            =UpdateContext({hide:!hide})
+        Width: =35
+        X: =1325
+        Y: =464
+        ZIndex: =16
+
+    Icn_Back_1 As icon.Home:
+        Height: =48
+        Icon: =Icon.BackArrow
+        OnSelect: |-
+            =Set(IsBtnStart,false);
+            Navigate(HomeTrainingList); If(
+                !IsBtnStart,
+                "<img src='" & "https://bdp-sas.wdc.com/UserPages/7118999/images/SixSigma/playbutton.png" & "' height='80' width='80' style='cursor:pointer' />",
+                "<img src='" & "https://bdp-sas.wdc.com/UserPages/7118999/images/SixSigma/pausebutton.png" & "' height='80' width='80' style='cursor:pointer' />"
+            )
+        Visible: |-
+            =true
+            /*
+            If(
+                Value(Label9_1.Text) in [
+                    0.05,
+                    0.1,
+                    0.15,
+                    0.2,
+                    0.25,
+                    0.3,
+                    0.35,
+                    0.4,
+                    0.45,
+                    0.5,
+                    0.55,
+                    0.6,
+                    0.65,
+                    0.7,
+                    0.75,
+                    0.8,
+                    0.85,
+                    0.9,
+                    0.95,
+                    1
+                ] ||
+                Value(Label9_1.Text) in [
+                    0.06,
+            0.11,
+            0.16,
+            0.21,
+            0.26,
+            0.31,
+            0.36,
+            0.41,
+            0.46,
+            0.51,
+            0.56,
+            0.61,
+            0.66,
+            0.71,
+            0.76,
+            0.81,
+            0.86,
+            0.91,
+            0.96
+                ]
+                
+                ,
+                true,
+                false
+            )
+            */
+        Width: =67
+        X: =42
+        Y: =20
+        ZIndex: =20
+
+    Timer6_1 As timer:
+        Duration: =5000
+        OnTimerEnd: |-
+            =Set(varIncree, 0);
+            //UpdateContext({Confirmaa:true});
+            UpdateContext({IsBtnStart:false});
+            UpdateContext({chow:false})
+        Start: =varIncree=3
+        Visible: =false
+        X: =1176
+        Y: =370
+        ZIndex: =21
+
+    Label23_3 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        Text: |-
+            =vid_prog_2.X*0.95 & " " & Text(Time(0, 0, VideoData_1.Time), "hh:mm:ss")
+        Visible: =false
+        X: =196
+        Y: =28
+        ZIndex: =22
+
+    checkInaactivity_1 As timer:
+        AutoPause: =If(!IsBtnStart && !Confirma, true, false)
+        Duration: =5000
+        OnTimerEnd: =Navigate(Screen_Inactivity,ScreenTransition.CoverRight)
+        Start: |-
+            =//If(IsBtnStart,true,false)
+            false
+        Text: |-
+            =Text(Time(0, 0, 300-Self.Value/1000), "hh:mm:ss")
+        Visible: =false
+        X: =1186
+        Y: =203
+        ZIndex: =23
+
+    vid_prog_2 As rectangle:
+        DisplayMode: =
+        Fill: =RGBA(0, 0, 0, 0.1)
+        Height: =51
+        Visible: =false
+        Width: =278
+        X: =749
+        Y: =639
+        ZIndex: =24
+
+    Label9_3 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        Fill: =RGBA(0, 0, 0, 0.65)
+        Height: =26
+        Size: =15
+        Text: |-
+            =Text(Time(0, 0, VideoData_1.Time), "hh:mm:ss") &" / "& Text(Time(0, 0, VideoData_1.Duration), "hh:mm:ss")
+        Visible: =false
+        Width: =207
+        X: =874
+        Y: =633
+        ZIndex: =25
+
+    HTVid_Controller_1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =32
+
+        progress_bar_3 As rectangle:
+            DisplayMode: =
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =33
+            Width: =1002
+            X: =57
+            Y: =626
+            ZIndex: =1
+
+        Label9_1 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =
+            Height: =49
+            Size: =20
+            Text: =Text(VideoData_1.Time / VideoData_1.Duration  *100, "0%")
+            Width: =92
+            X: =1274
+            Y: =558
+            ZIndex: =6
+
+        Label16_1 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =
+            Text: |-
+                ="Progress:"
+            X: =1122
+            Y: =567
+            ZIndex: =7
+
+        HtmlText2_1 As htmlViewer:
+            DisplayMode: =
+            Height: =115
+            HtmlText: |-
+                =If(!IsBtnStart Or VideoData_1.Paused,"<img src='" & "https://bdp-sas.wdc.com/UserPages/7118999/images/SixSigma/pauseprog2.gif" & "' height='80' width='80' style='cursor:pointer' />","<img src='" & "https://bdp-sas.wdc.com/UserPages/7118999/images/SixSigma/playingprog.gif" & "' height='65' width='65' style='cursor:pointer' />")
+            Width: =115
+            X: =1199
+            Y: =540
+            ZIndex: =8
+
+        HtmlText1_3 As htmlViewer:
+            DisplayMode: =
+            Height: =95
+            HtmlText: |-
+                =If(
+                    !IsBtnStart,
+                    "<img src='" & "https://bdp-sas.wdc.com/UserPages/7118999/images/SixSigma/playbutton.png" & "' height='80' width='80' style='cursor:pointer' />",
+                    "<img src='" & "https://bdp-sas.wdc.com/UserPages/7118999/images/SixSigma/pausebutton.png" & "' height='80' width='80' style='cursor:pointer' />"
+                ) 
+            OnSelect: |-
+                =UpdateContext({IsBtnStart: !IsBtnStart})
+            Tooltip: =If(!IsBtnStart,"Click to Play Again!","Pause or Stop Playing!")
+            Width: =88
+            X: =1186
+            Y: =617
+            ZIndex: =9
+
+        HtmlText1_4 As htmlViewer:
+            DisplayMode: =If(varIncree>=3 || VideoData_1.Time<=10, DisplayMode.View, DisplayMode.Edit)
+            Height: =82
+            HtmlText: |-
+                ="<img src='" & "https://bdp-sas.wdc.com/UserPages/7118999/images/SixSigma/rwdbutton.png" & "' height='55' width='55' style='cursor:pointer' />"
+            OnSelect: |-
+                =Set(varIncre, - 10);
+                Set(varIncree, varIncree + 1);
+                Set(go_back, RoundUp(1000*VideoData_1.Time/VideoData_1.Duration,0))
+            Tooltip: =If(varIncree=3,"STOP! Hold for BackOption","("& 3-varIncree&")"& " BackOption")
+            Visible: =false
+            Width: =64
+            X: =1134
+            Y: =626
+            ZIndex: =10
+
+        HtmlText1_5 As htmlViewer:
+            DisplayMode: =If(varIncree>=3, DisplayMode.View, DisplayMode.Edit)
+            Height: =71
+            HtmlText: |-
+                ="<img src='" & "https://bdp-sas.wdc.com/UserPages/7118999/images/SixSigma/fwdbutton.png" & "' height='55' width='55' style='cursor:pointer' />"
+            OnSelect: |-
+                =Set(varIncre,  10);
+                Set(varIncree, varIncree + 1);
+                Set(go_back, RoundUp(1000*VideoData_1.Time/VideoData_1.Duration,0))
+            Tooltip: =If(varIncree=3,"STOP! Hold for FwdOption","("& 3-varIncree&")"& " FwdOption")
+            Visible: =false
+            Width: =80
+            X: =1266
+            Y: =626
+            ZIndex: =11
+
+    Slider1_1 As slider:
+        Default: =RoundUp(VideoData_1.Time,0)
+        HandleSize: =20
+        Height: =31
+        Max: =RoundUp(VideoData_1.Duration, 0)
+        OnChange: |-
+            =Set(go_back, VideoData_1.Time);
+            goWatchec
+        ShowValue: =false
+        Tooltip: |-
+            ="Overall Progress: "&Text(VideoData_1.Time / VideoData_1.Duration  *100, "0%")
+        ValueFill: |
+            =//RGBA(0, 18, 107, 1)
+        Visible: =false
+        Width: =918
+        X: =109
+        Y: =659
+        ZIndex: =33
+
+    Button13_1 As button:
+        OnSelect: |
+            =SubmitForm(vid_data_form_1);
+            ResetForm(vid_data_form_1);
+            
+            RemoveIf(TrainingProfileProgress, First(Filter(
+                        TrainingProfileProgress,
+                        ID=ID_gal,
+                        Topic = gal_topic.Selected.Title &&
+                        User = varUserEmail,
+                        Program = training_prog_gal.Selected.Value
+                    )).Progress > Progress);
+                    
+            ClearCollect(myProfileProgress, ShowColumns(TrainingProfileProgress,"Program", "User", "Title", "TimeDura", "Progress", "DateTime" ));
+            
+            Set(LastVid, Last(Filter(
+                        myProfileProgress,
+                        Title = gal_topic.Selected.Title
+                    )).Progress)
+        Text: ="Button"
+        Visible: =false
+        X: =191
+        Y: =20
+        ZIndex: =34
+
+    Label24_1 As label:
+        Text: |-
+            =If(Value(Label9_1.Text) in [5%,10%,15%,20%,25%,30%,35%,40%,45%,50%,55%,60%,65%,70%,75%,80%,85%,90%,95%,100%] And Value(Label9_1.Text) >= 
+            Last(Filter(myProfileProgress,Title=gal_topic.Selected.Title && User=varUserEmail && gal_topic.Selected.NameRec.Reg_ID_ref=Reg_ID_ref, Program=training_prog_gal.Selected.Value)).Progress || Last(Filter(myProfileProgress,Title=gal_topic.Selected.Title && User=varUserEmail && gal_topic.Selected.NameRec.Reg_ID_ref=Reg_ID_ref, Program=training_prog_gal.Selected.Value))=1, true,false)
+        X: =261
+        Y: =28
+        ZIndex: =35
+
+    VideoData_1 As videoPlayback:
+        BorderColor: =RGBA(0, 0, 0, 1)
+        BorderStyle: =BorderStyle.None
+        Fill: =RGBA(0, 0, 0, 1)
+        FocusedBorderThickness: =0
+        Height: =601
+        ImagePosition: =ImagePosition.Center
+        Media: =gal_topic.Selected.Remarks
+        OnEnd: |
+            =Reset(VideoData_1) && false
+            //Navigate(Training_Complete)
+            /*UpdateContext({IsBtnStart: false})*/
+        OnPause: |
+            =!IsBtnStart 
+        Start: |
+            =//IsBtnStart || popgrp || !confirma
+            If(IsBtnStart, !Confirma)
+        StartTime: |-
+            =//If((go_back=go_back*0.95),go_back, go_back)
+            goWatchec
+        Width: =1366
+        Y: =89
+        ZIndex: =36
+
+    HTVid_header_grp_2 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =20
+        ZIndex: =39
+
+        Rectangle1_31 As rectangle:
+            Height: =89
+            Width: =1366
+            ZIndex: =17
+
+        Label2_24 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =89
+            Text: ="Welcome, " & varUserEmail
+            Width: =120
+            X: =1244
+            ZIndex: =18
+
+        img_user_5 As image:
+            Height: =77
+            Image: =varUserimg
+            RadiusBottomLeft: =img_user_5.Height
+            RadiusBottomRight: =img_user_5.Height
+            RadiusTopLeft: =img_user_5.Height
+            RadiusTopRight: =img_user_5.Height
+            Width: =img_user_5.Height
+            X: =1160
+            Y: =6
+            ZIndex: =19
+
+    home_pop_grp_1 As group:
+        Height: =5
+        Width: =5
+        X: =60
+        Y: =60
+        ZIndex: =48
+
+        pop_cover_1 As rectangle:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderThickness: =3
+            Fill: =RGBA(0, 0, 0, 0.3)
+            Height: =574
+            Visible: =Confirma
+            Width: =855
+            X: =150
+            Y: =95
+            ZIndex: =26
+
+        pop_close_rec_1 As rectangle:
+            BorderColor: =RGBA(56, 96, 178, 1)
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =1
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =176
+            Visible: =Confirma
+            Width: =855
+            X: =150
+            Y: =277
+            ZIndex: =27
+
+        close_pop_1 As icon.Cancel:
+            BorderColor: =RGBA(56, 96, 178, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =52
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =/*Set(goWatchec, If(First(Filter(
+                            myProfileProgress,
+                            Title = gal_topic.Selected.Title &&
+                            User = varUserEmail
+                        )).TimeDura=1, 0, First(Filter(
+                            myProfileProgress,
+                            Title = gal_topic.Selected.Title &&
+                            User = varUserEmail
+                        )).TimeDura)) ;
+                        */
+                UpdateContext({Confirma: false});
+                UpdateContext({IsBtnStart: true})
+            Visible: =Confirma
+            Width: =118
+            X: =886
+            Y: =98
+            ZIndex: =28
+
+        Label20_1 As label:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =44
+            Size: =20
+            Text: |-
+                =If(Confirma && goWatchec=0, "Start New Session?",
+                "Continue on Last Session?")
+            Visible: =Confirma
+            Width: =855
+            X: =150
+            Y: =321
+            ZIndex: =29
+
+        Icon13_3 As icon.Check:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =43
+            HoverColor: |-
+                =ColorFade(ColorValue("#FFBF00"), 20%)
+            Icon: =Icon.Check
+            OnSelect: |-
+                =//Reset(VideoData);
+                UpdateContext({Confirma: false});
+                UpdateContext({IsBtnStart: true});
+                /*
+                If(Confirma && goWatchec=0, Set(goWatchec,0),
+                Set(goWatchec, First(Filter(
+                            myProfileProgress,
+                            Title = gal_topic.Selected.Title &&
+                            User = varUserEmail
+                        )).TimeDura))
+                        */
+            Visible: =Confirma
+            Width: =855
+            X: =150
+            Y: =371
+            ZIndex: =30
+
+        progress_bar_2 As rectangle:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =10
+            Visible: =Confirma
+            Width: =855
+            X: =150
+            Y: =443
+            ZIndex: =31
+
+        Rectangle2_2 As rectangle:
+            Fill: =RGBA(255, 191, 0, 1)
+            Height: =10
+            Visible: =Confirma
+            Width: =855
+            X: =150
+            Y: =443
+            ZIndex: =32
+

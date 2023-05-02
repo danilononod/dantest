@@ -1,0 +1,83 @@
+EdtForm_2 As screen:
+
+    Rectangle1_3 As rectangle:
+        Fill: |-
+            =ColorValue("#1DB954")
+        Height: =150
+        Width: =1366
+        ZIndex: =1
+
+    Label2_3 As label:
+        Align: =TextPosition.Left
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =150
+        Size: =36
+        Text: ="Hello,  " & Left(varUserEmail,Find(" ",varUserEmail)) & "      " & If(Hour(Now())<12, "Good morning!", Hour(Now())<17, "Good afternoon!", "Good evening!")
+        Width: =430
+        X: =936
+        ZIndex: =2
+
+    timer_3 As timer:
+        AutoStart: =true
+        Duration: =0
+        OnTimerEnd: = Set(timestamp,Now())
+        OnTimerStart: =true
+        Repeat: =true
+        Visible: =false
+        X: =12
+        Y: =128
+        ZIndex: =5
+
+    Label1_4 As label:
+        AutoHeight: =true
+        Color: =RGBA(232, 244, 217, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =52
+        Italic: =true
+        Size: =24
+        Text: |-
+            =Text(timestamp,"[$-en-US]mm/dd/yy hh:mm:ss")
+        Width: =286
+        Y: =78
+        ZIndex: =6
+
+    Button1_2 As button:
+        DisplayMode: =If(!IsBlank(ErrorMessage4_2.Text) || IsBlank(DataCardValue2_2.Text) , DisplayMode.Disabled, DisplayMode.Edit)
+        Fill: |-
+            =ColorValue("#1DB954")
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        Font: =Font.Verdana
+        FontWeight: =FontWeight.Bold
+        Height: =97
+        OnSelect: |-
+            =Patch('PEx BT', varFormdat, DetailsForm_2.Updates); 
+            Notify("Form Submitted", NotificationType.Success);
+            ResetForm(DetailsForm_2);
+            Navigate(SuccessScrn, ScreenTransition.Fade)
+        Size: =50
+        Text: ="SUBMIT"
+        Width: =412
+        X: =870
+        Y: =616
+        ZIndex: =10
+
+    Icon3_2 As icon.Home:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =89
+        Icon: =Icon.Home
+        OnSelect: =Back()
+        Width: =71
+        X: =56
+        ZIndex: =11
+
+    Label5_2 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(230, 230, 230, 1)
+        Height: =35
+        Italic: =true
+        Text: ="Date                  Time"
+        Width: =262
+        Y: =115
+        ZIndex: =12
+

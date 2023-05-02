@@ -1,0 +1,9 @@
+[
+  {
+    "AddinConnectorId": "07aa44f4-be91-42ce-84aa-4c833497d38e",
+    "AddinId": "6d1f157d-95bf-406d-b65d-cfd3240f724e",
+    "Name": "ExportDataFromPowerApps",
+    "ServiceKind": "AddinWadl",
+    "Type": "ServiceInfo"
+  }
+]

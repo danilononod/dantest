@@ -1,0 +1,151 @@
+"ESD_Certifcate As screen.'printableLayout_A4Landscape_ver1.0'":
+    Fill: =If(locShowSpinner_1, Color.PapayaWhip, Color.White)
+    Height: =816
+    OnVisible: |-
+        =UpdateContext({locShowSpinner_1:true})
+    Width: =1056
+
+    Gallery5_1 As gallery.galleryVertical:
+        Height: =814
+        Items: =HomeListTopic
+        Layout: =Layout.Vertical
+        ShowScrollbar: =false
+        TemplateSize: =809
+        Visible: =endspinner_1 && !locShowSpinner_1
+        Width: =1056
+        ZIndex: =1
+
+        Image10_1 As image:
+            Height: =809
+            Image: |-
+                ="https://wdc.box.com/shared/static/3qonjizhiqvr2ve24dtazuuf3uo71w79.png"
+            OnSelect: =Select(Parent)
+            Width: =1046
+            ZIndex: =1
+
+        Label38_4 As label:
+            Align: =LayoutAlignItems.Center
+            FontWeight: =FontWeight.Semibold
+            Height: =130
+            Italic: =true
+            OnSelect: =Select(Parent)
+            Size: =50
+            Text: |-
+                =Last(
+                    Filter(
+                        TrainingProfileProgress_Lean,
+                        Reg_ID_ref = ID_gal,
+                        Topic = gal_topic.Selected.Title
+                    )
+                ).User
+            Width: =969
+            X: =39
+            Y: =222
+            ZIndex: =2
+
+        Label38_5 As label:
+            Align: =LayoutAlignItems.Center
+            FontWeight: =FontWeight.Semibold
+            Height: =101
+            Italic: =true
+            OnSelect: =Select(Parent)
+            Size: =25
+            Text: ="successfully completed"
+            Width: =1046
+            Y: =336
+            ZIndex: =3
+
+        Label38_6 As label:
+            Align: =LayoutAlignItems.Center
+            FontWeight: =FontWeight.Semibold
+            Height: =180
+            Italic: =true
+            OnSelect: =Select(Parent)
+            Size: =50
+            Text: |-
+                =Last(Filter(
+                            TrainingProfileProgress_Lean,
+                            Reg_ID_ref=ID_gal, Topic=gal_topic.Selected.Title
+                        )).Topic
+            Width: =1046
+            Y: =387
+            ZIndex: =4
+
+        Label38_7 As label:
+            Align: =LayoutAlignItems.Center
+            FontWeight: =FontWeight.Semibold
+            Height: =101
+            Italic: =true
+            OnSelect: =Select(Parent)
+            Size: =25
+            Text: |-
+                =Last(Filter(
+                            TrainingProfileProgress_Lean,
+                            Reg_ID_ref=ID_gal, Topic=gal_topic.Selected.Title
+                        )).DateTime
+            Width: =1046
+            Y: =551
+            ZIndex: =5
+
+    Icon6_1 As icon.Text:
+        Color: =RGBA(0, 18, 107, 0.76)
+        Height: =49
+        Icon: =Icon.Print
+        OnSelect: =Print()
+        Visible: =!locShowSpinner_1 && !ESD_Certifcate.Printing
+        Width: =66
+        X: =911
+        Y: =12
+        ZIndex: =2
+
+    Icon13_2 As icon.BackArrow:
+        Color: =RGBA(0, 18, 107, 0.76)
+        Height: =52
+        Icon: =Icon.BackArrow
+        OnSelect: =Navigate(TrainingReg,ScreenTransition.Fade)
+        Tooltip: ="Back to previous"
+        Visible: =!locShowSpinner_1 && !ESD_Certifcate.Printing
+        X: =977
+        Y: =12
+        ZIndex: =3
+
+    Timer5_1 As timer:
+        AutoPause: =false
+        AutoStart: =true
+        Duration: =7000
+        OnTimerEnd: |
+            =UpdateContext({endspinner_1:true});
+            UpdateContext({locShowSpinner_1:false})
+        OnTimerStart: |-
+            =UpdateContext({locShowSpinner:true});
+        Visible: =false
+        X: =61
+        Y: =690
+        ZIndex: =4
+
+    locShowSpinner_1 As image:
+        Image: =spinner
+        Visible: =locShowSpinner_1
+        X: =478
+        Y: =342
+        ZIndex: =6
+
+    Label40 As label:
+        Height: =45
+        Text: ="Loading... Please wait!"
+        Visible: =locShowSpinner_1
+        Width: =212
+        X: =422
+        Y: =322
+        ZIndex: =7
+
+    Button15 As button:
+        Height: =52
+        OnSelect: =Navigate(CertiHowSavePrint,ScreenTransition.None)
+        Text: ="How to SAVE or PRINT your Certificate"
+        Visible: =!locShowSpinner_1 && !ESD_Certifcate.Printing
+        Width: =409
+        X: =323
+        Y: =12
+        ZIndex: =8
+

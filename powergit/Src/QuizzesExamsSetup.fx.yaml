@@ -1,0 +1,916 @@
+QuizzesExamsSetup As screen:
+    OnVisible: =
+
+    Form_TrainingExam As form:
+        AcceptsFocus: =false
+        DataSource: ='Training Exam'
+        Height: =636
+        NumberOfColumns: =1
+        SnapToColumns: =false
+        Width: =1079
+        X: =212
+        Y: =28
+        ZIndex: =1
+
+        DataCard1 As typedDataCard.blankCard:
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =48
+            Width: =1079
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            Label17 As label:
+                Align: =Align.Center
+                Fill: =RGBA(50, 86, 160, 1)
+                Height: =75
+                Size: =30
+                Text: ="Create Questionnaire"
+                Width: =1071
+                X: =3
+                ZIndex: =1
+
+        "'Topic ID_DataCard1' As typedDataCard.numberEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="TopicID"
+            Default: =ThisItem.'Topic ID'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Topic ID"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =79
+            Required: =false
+            Update: =drpdwn_varNumID.SelectedText.Value
+            Width: =178
+            X: =5
+            Y: =1
+            ZIndex: =1
+
+            DataCardKey35 As label:
+                AutoHeight: =true
+                Height: =33
+                Text: |-
+                    ="#Question"
+                Width: =103
+                Wrap: =false
+                Y: =10
+                ZIndex: =1
+
+            ErrorMessage35 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =drpdwn_varNumID.Y + drpdwn_varNumID.Height
+                ZIndex: =3
+
+            StarVisible35 As label:
+                Align: =Align.Center
+                Height: =DataCardKey35.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey35.Y
+                ZIndex: =4
+
+            drpdwn_varNumID As dropdown:
+                Default: =varNumID+1
+                Height: =46
+                Items: =[1,2,3,4,5]
+                OnChange: =varNumID
+                Reset: =varReset
+                Width: =84
+                Y: =40
+                ZIndex: =5
+
+        TopicTitle_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="TopicTitle"
+            Default: =ThisItem.TopicTitle
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="TopicTitle"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Training Exam'], DataSourceInfo.MaxLength, "TopicTitle")
+            Required: =false
+            Update: =DataCardValue21.Text
+            Visible: =false
+            Width: =359
+            X: =1
+            Y: =4
+            ZIndex: =1
+
+            DataCardKey26 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue21 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =drpdwn_varTopics.SelectedText.Value
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey26.Y + DataCardKey26.Height + 5
+                ZIndex: =2
+
+            ErrorMessage26 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue21.Y + DataCardValue21.Height
+                ZIndex: =3
+
+            StarVisible26 As label:
+                Align: =Align.Center
+                Height: =DataCardKey26.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey26.Y
+                ZIndex: =4
+
+        DataCard2 As typedDataCard.blankCard:
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =62
+            Width: =1068
+            X: =2
+            Y: =4
+            ZIndex: =1
+
+            Button22 As button:
+                OnSelect: |+
+                    =Switch(drpdwn_varNumOption.Selected.Value, 5,
+                    ClearCollect(GenerateOpt,{ID:1, Name:txt_Option1.Text},
+                    {ID:2, Name:txt_Option2.Text},
+                    {ID:3, Name:txt_Option3.Text},
+                    {ID:4, Name:txt_Option4.Text},
+                    {ID:5, Name:txt_Option5.Text}
+                    ),4, 
+                    ClearCollect(GenerateOpt,{ID:1, Name:txt_Option1.Text},
+                    {ID:2, Name:txt_Option2.Text},
+                    {ID:3, Name:txt_Option3.Text},
+                    {ID:4, Name:txt_Option4.Text}),
+                    3, 
+                    ClearCollect(GenerateOpt,{ID:1, Name:txt_Option1.Text},
+                    {ID:2, Name:txt_Option2.Text},
+                    {ID:3, Name:txt_Option3.Text}),
+                    2, 
+                    ClearCollect(GenerateOpt,{ID:1, Name:txt_Option1.Text},
+                    {ID:2, Name:txt_Option2.Text})
+                    
+                    );
+                    
+                    Set(GenAnsOpt, true);
+                    
+                Text: ="GenerateAns"
+                X: =448
+                Y: =4
+                ZIndex: =1
+
+        Title_DataCard3 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Title"
+            Default: =ThisItem.Title
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Title"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Training Exam'], DataSourceInfo.MaxLength, "Title")
+            Required: =false
+            Update: =drpdwn_varTopics.SelectedText.Value
+            Width: =445
+            X: =0
+            Y: =1
+            ZIndex: =2
+
+            DataCardKey23 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                Y: =10
+                ZIndex: =1
+
+            ErrorMessage23 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =drpdwn_varTopics.Y + drpdwn_varTopics.Height
+                ZIndex: =3
+
+            StarVisible23 As label:
+                Align: =Align.Center
+                Height: =DataCardKey23.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey23.Y
+                ZIndex: =4
+
+            drpdwn_varTopics As dropdown:
+                AllowEmptySelection: =true
+                Default: =" "
+                Items: =If(drpdwn_varProgram.Selected.Value="Six Sigma", vardimSigma, Distinct(Filter(myTrainingTopics,Vid_Dur="LEAN"), Title))
+                OnChange: |
+                    =Set(DefaultTopic,drpdwn_varTopics.SelectedText.Value);
+                    Set(varNumID, 0)
+                Reset: =varReset
+                Width: =445
+                Y: =43
+                ZIndex: =5
+
+        Program_DataCard3 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Program"
+            Default: =ThisItem.Program
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Program"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Training Exam'], DataSourceInfo.MaxLength, "Program")
+            Required: =false
+            Update: =drpdwn_varProgram.SelectedText.Value
+            Width: =354
+            X: =3
+            Y: =1
+            ZIndex: =2
+
+            DataCardKey27 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                Y: =10
+                ZIndex: =1
+
+            ErrorMessage27 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =drpdwn_varProgram.Y + drpdwn_varProgram.Height
+                ZIndex: =3
+
+            StarVisible27 As label:
+                Align: =Align.Center
+                Height: =DataCardKey27.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey27.Y
+                ZIndex: =4
+
+            drpdwn_varProgram As dropdown:
+                AllowEmptySelection: =true
+                Default: =" "
+                Height: =41
+                Items: =["Lean", "Six Sigma"]
+                Reset: =varReset
+                Width: =352
+                Y: =43
+                ZIndex: =5
+
+        OptNum_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="OptNum"
+            Default: =ThisItem.OptNum
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="OptNum"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(drpdwn_varNumOption.Selected.Value)
+            Width: =89
+            X: =4
+            Y: =1
+            ZIndex: =2
+
+            DataCardKey34 As label:
+                AutoHeight: =true
+                Height: =33
+                PaddingLeft: =0
+                Text: |-
+                    ="#Options"
+                Width: =98
+                Wrap: =false
+                X: =4
+                Y: =7
+                ZIndex: =1
+
+            ErrorMessage34 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =drpdwn_varNumOption.Y + drpdwn_varNumOption.Height
+                ZIndex: =3
+
+            StarVisible34 As label:
+                Align: =Align.Center
+                Height: =DataCardKey34.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey34.Y
+                ZIndex: =4
+
+            drpdwn_varNumOption As dropdown:
+                Default: ="2"
+                Height: =46
+                Items: =[1,2,3,4,5]
+                Reset: =varReset
+                Width: =84
+                Y: =40
+                ZIndex: =5
+
+        "'Question item_DataCard1' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Questionitem"
+            Default: =ThisItem.'Question item'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Question item"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =184
+            MaxLength: =DataSourceInfo([@'Training Exam'], DataSourceInfo.MaxLength, "Questionitem")
+            Required: =false
+            Update: =DataCardValue22.Text
+            Width: =1068
+            X: =0
+            Y: =2
+            ZIndex: =2
+
+            DataCardKey24 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue22 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Fill: =If(!IsBlank(DataCardValue22.Text),Color.Gray,RGBA(255, 255, 255, 1))
+                Height: =113
+                MaxLength: =Parent.MaxLength
+                Mode: =TextMode.MultiLine
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Y: =43
+                ZIndex: =2
+
+            ErrorMessage24 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue22.Y + DataCardValue22.Height
+                ZIndex: =3
+
+            StarVisible24 As label:
+                Align: =Align.Center
+                Height: =DataCardKey24.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey24.Y
+                ZIndex: =4
+
+        Option1_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Option1"
+            Default: =ThisItem.Option1
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Option1"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Training Exam'], DataSourceInfo.MaxLength, "Option1")
+            Required: =false
+            Update: =txt_Option1.Text
+            Visible: =If(drpdwn_varNumOption.Selected.Value>=2,true,false)
+            Width: =1068
+            X: =1
+            Y: =2
+            ZIndex: =2
+
+            DataCardKey29 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                Y: =10
+                ZIndex: =1
+
+            txt_Option1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Color: = If(rad_AnsOption.SelectedText.Value=Blank(),Color.Black, If(rad_AnsOption.SelectedText.Value=txt_Option1.Text, Color.White, If(rad_AnsOption.SelectedText.Value<>txt_Option1.Text, Color.Red)))
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Fill: =If(rad_AnsOption.SelectedText.Value=txt_Option1.Text, Color.Green, If(IsBlank(txt_Option1.Text) || IsBlank(GenerateOpt),RGBA(255, 255, 255, 1), Color.LightSlateGray))
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Y: =DataCardKey29.Y + DataCardKey29.Height + 5
+                ZIndex: =2
+
+            ErrorMessage29 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =txt_Option1.Y + txt_Option1.Height
+                ZIndex: =3
+
+            StarVisible29 As label:
+                Align: =Align.Center
+                Height: =DataCardKey29.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey29.Y
+                ZIndex: =4
+
+        Option2_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Option2"
+            Default: =ThisItem.Option2
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Option2"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Training Exam'], DataSourceInfo.MaxLength, "Option2")
+            Required: =false
+            Update: =txt_Option2.Text
+            Visible: =If(drpdwn_varNumOption.Selected.Value>=2,true,false)
+            Width: =1068
+            X: =3
+            Y: =2
+            ZIndex: =2
+
+            DataCardKey30 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                Y: =10
+                ZIndex: =1
+
+            txt_Option2 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Color: = If(rad_AnsOption.SelectedText.Value=Blank(),Color.Black, If(rad_AnsOption.SelectedText.Value=txt_Option2.Text, Color.White, If(rad_AnsOption.SelectedText.Value<>txt_Option2.Text, Color.Red)))
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Fill: =If(rad_AnsOption.SelectedText.Value=txt_Option2.Text, Color.Green, If(IsBlank(txt_Option2.Text) || IsBlank(GenerateOpt),RGBA(255, 255, 255, 1), Color.LightSlateGray))
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Y: =DataCardKey30.Y + DataCardKey30.Height + 5
+                ZIndex: =2
+
+            ErrorMessage30 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =txt_Option2.Y + txt_Option2.Height
+                ZIndex: =3
+
+            StarVisible30 As label:
+                Align: =Align.Center
+                Height: =DataCardKey30.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey30.Y
+                ZIndex: =4
+
+        Option3_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Option3"
+            Default: =ThisItem.Option3
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Option3"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Training Exam'], DataSourceInfo.MaxLength, "Option3")
+            Required: =false
+            Update: =txt_Option3.Text
+            Visible: =If(drpdwn_varNumOption.Selected.Value>=3,true,false)
+            Width: =1079
+            X: =4
+            Y: =2
+            ZIndex: =2
+
+            DataCardKey31 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                Y: =10
+                ZIndex: =1
+
+            txt_Option3 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Color: = If(rad_AnsOption.SelectedText.Value=Blank(),Color.Black, If(rad_AnsOption.SelectedText.Value=txt_Option3.Text, Color.White, If(rad_AnsOption.SelectedText.Value<>txt_Option3.Text, Color.Red)))
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Fill: =If(rad_AnsOption.SelectedText.Value=txt_Option3.Text, Color.Green, If(IsBlank(txt_Option3.Text) || IsBlank(GenerateOpt),RGBA(255, 255, 255, 1), Color.LightSlateGray))
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Y: =DataCardKey31.Y + DataCardKey31.Height + 5
+                ZIndex: =2
+
+            ErrorMessage31 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =txt_Option3.Y + txt_Option3.Height
+                ZIndex: =3
+
+            StarVisible31 As label:
+                Align: =Align.Center
+                Height: =DataCardKey31.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey31.Y
+                ZIndex: =4
+
+        Option4_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Option4"
+            Default: =ThisItem.Option4
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Option4"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Training Exam'], DataSourceInfo.MaxLength, "Option4")
+            Required: =false
+            Update: =txt_Option4.Text
+            Visible: =If(drpdwn_varNumOption.Selected.Value>=4,true,false)
+            Width: =1068
+            X: =-1
+            Y: =3
+            ZIndex: =2
+
+            DataCardKey32 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                Y: =10
+                ZIndex: =1
+
+            txt_Option4 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Color: = If(rad_AnsOption.SelectedText.Value=Blank(),Color.Black, If(rad_AnsOption.SelectedText.Value=txt_Option4.Text, Color.White, If(rad_AnsOption.SelectedText.Value<>txt_Option4.Text, Color.Red)))
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Fill: =If(rad_AnsOption.SelectedText.Value=txt_Option4.Text, Color.Green, If(IsBlank(txt_Option4.Text) || IsBlank(GenerateOpt),RGBA(255, 255, 255, 1), Color.LightSlateGray))
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Y: =DataCardKey32.Y + DataCardKey32.Height + 5
+                ZIndex: =2
+
+            ErrorMessage32 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =txt_Option4.Y + txt_Option4.Height
+                ZIndex: =3
+
+            StarVisible32 As label:
+                Align: =Align.Center
+                Height: =DataCardKey32.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey32.Y
+                ZIndex: =4
+
+        Option5_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Option5"
+            Default: =ThisItem.Option5
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Option5"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Training Exam'], DataSourceInfo.MaxLength, "Option5")
+            Required: =false
+            Update: =txt_Option5.Text
+            Visible: =If(drpdwn_varNumOption.Selected.Value>=5,true,false)
+            Width: =1079
+            X: =0
+            Y: =3
+            ZIndex: =2
+
+            DataCardKey33 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                Y: =10
+                ZIndex: =1
+
+            txt_Option5 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Color: = If(rad_AnsOption.SelectedText.Value=Blank(),Color.Black, If(rad_AnsOption.SelectedText.Value=txt_Option5.Text, Color.White, If(rad_AnsOption.SelectedText.Value<>txt_Option5.Text, Color.Red)))
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Fill: =If(rad_AnsOption.SelectedText.Value=txt_Option5.Text, Color.Green, If(IsBlank(txt_Option5.Text) || IsBlank(GenerateOpt),RGBA(255, 255, 255, 1), Color.LightSlateGray))
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Y: =45
+                ZIndex: =2
+
+            ErrorMessage33 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =txt_Option5.Y + txt_Option5.Height
+                ZIndex: =3
+
+            StarVisible33 As label:
+                Align: =Align.Center
+                Height: =DataCardKey33.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey33.Y
+                ZIndex: =4
+
+        AnsKey_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="AnsKey"
+            Default: =ThisItem.AnsKey
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="AnsKey"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =86
+            MaxLength: =DataSourceInfo([@'Training Exam'], DataSourceInfo.MaxLength, "AnsKey")
+            Required: =false
+            Update: =rad_AnsOption.Selected.Name
+            Visible: =GenAnsOpt
+            Width: =1068
+            X: =0
+            Y: =5
+            ZIndex: =2
+
+            DataCardKey28 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                Y: =10
+                ZIndex: =1
+
+            ErrorMessage28 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =rad_AnsOption.Y + rad_AnsOption.Height
+                ZIndex: =3
+
+            StarVisible28 As label:
+                Align: =Align.Center
+                Height: =DataCardKey28.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey28.Y
+                ZIndex: =4
+
+            rad_AnsOption As radio:
+                Height: =103
+                Items: =GenerateOpt
+                Layout: =Layout.Horizontal
+                RadioSize: =25
+                Width: =659
+                X: =105
+                ZIndex: =5
+
+    btn_New_Question As button:
+        OnSelect: |-
+            =NewForm(Form_TrainingExam);
+            UpdateContext({vardimSigma: ["Basic Statistics 1",
+            "Minitab Tutorial Part 1",
+            "Data Collection",
+            "Process Mapping and C-E Tools",
+            "MSA - Attributes",
+            "MSA - Variables",
+            "Capability Analysis",
+            "FMEA",
+            "Graphical Techniques",
+            "Regression and Correlation",
+            "Intro_ to Hypothesis Testing",
+            "Means Testing",
+            "Proportions Testing",
+            "Variance (Sigma) Testing",
+            "One-Way ANOVA",
+            "Sample Size Selection",
+            "Introduction to DOE",
+            "Full Factorial Experiments",
+            "2k Factorial Experiments",
+            "Statapult Exercise",
+            "Introduction to SPC",
+            "SPC - Variables",
+            "SPC - Attributes",
+            "Six Sigma Overview",
+            "Project Definition",
+            "Basic Statistics 2",
+            "Minitab Tutorial Part 2",
+            "Project Closure",
+            "Control Methods"]})
+        Text: ="New_Question"
+        X: =40
+        Y: =40
+        ZIndex: =2
+
+    Button19_1 As button:
+        DisplayMode: =If(GenAnsOpt, DisplayMode.Edit,DisplayMode.Disabled)
+        OnSelect: |-
+            =SubmitForm(Form_TrainingExam); Select(btn_New_Question); ClearCollect(GenerateOpt,{ID:1, Name:Blank()});
+            Set(varNumID, varNumID+1);
+            Set(GenAnsOpt, false)
+        Text: ="Submit"
+        Visible: =If(IsBlank(GenerateOpt.ID),false,true)
+        X: =656
+        Y: =720
+        ZIndex: =3
+
+    btn_New_Question_1 As button:
+        OnSelect: =ResetForm(Form_TrainingExam); Set(varReset, false);Set(varReset, true);Select(btn_New_Question)
+        Text: ="ResetForm"
+        X: =40
+        Y: =102
+        ZIndex: =4
+

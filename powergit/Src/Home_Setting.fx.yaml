@@ -1,0 +1,311 @@
+Home_Setting As screen:
+    OnVisible: |-
+        =Remove(DirectReports, {Image: Image4_1.Image})
+
+    Rectangle1 As rectangle:
+        Height: =115
+        Width: =1366
+        ZIndex: =1
+
+    "Gallery12 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Height: =480
+        Items: =GroupBy(PExHealthTeam, "Team", "TeamRef")
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =241
+        Width: =513
+        X: =238
+        Y: =77
+        ZIndex: =1
+
+        Title15 As label:
+            Height: =52
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Team
+            VerticalAlign: =VerticalAlign.Top
+            Width: =244
+            X: =24
+            Y: =33
+            ZIndex: =1
+
+        "Gallery13 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+            Height: =137
+            Items: =ThisItem.TeamRef
+            Layout: =Layout.Vertical
+            TemplatePadding: =0
+            TemplateSize: =33
+            Width: =227
+            X: =59
+            Y: =85
+            ZIndex: =1
+
+            Title17 As label:
+                Height: =Self.Size * 1.8
+                OnSelect: =Select(Parent)
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =13
+                Text: |
+                    =ThisItem.Full_Name
+                VerticalAlign: =VerticalAlign.Top
+                Width: =Parent.TemplateWidth - 104
+                ZIndex: =1
+
+            Separator17 As rectangle:
+                Height: =1
+                OnSelect: =Select(Parent)
+                Width: =Parent.TemplateWidth
+                Y: =Parent.TemplateHeight - 1
+                ZIndex: =3
+
+        Separator15 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Title15_1 As label:
+            Height: =52
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: |-
+                =CountRows(ForAll(Distinct(ThisItem.TeamRef,Full_Name), {Result: ThisRecord.Value}))
+            VerticalAlign: =VerticalAlign.Top
+            Width: =69
+            X: =236
+            Y: =33
+            ZIndex: =4
+
+        Title15_2 As label:
+            Height: =52
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =
+            VerticalAlign: =VerticalAlign.Top
+            Width: =69
+            X: =330
+            Y: =117
+            ZIndex: =5
+
+    "Gallery15 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Items: =GroupBy('PEx BT', "Team", "Team1")
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =280
+        Width: =443
+        X: =889
+        Y: =109
+        ZIndex: =1
+
+        Title21 As label:
+            Height: =36
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Team
+            VerticalAlign: =VerticalAlign.Top
+            Width: =172
+            X: =15
+            Y: =4
+            ZIndex: =1
+
+        "Gallery17 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+            Height: =214
+            Items: =ThisItem.Team1
+            Layout: =Layout.Vertical
+            TemplatePadding: =0
+            TemplateSize: =24
+            Width: =173
+            X: =31
+            Y: =40
+            ZIndex: =1
+
+            Title25 As label:
+                FontWeight: =FontWeight.Normal
+                Height: =32
+                OnSelect: =Select(Parent)
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =13
+                Text: =ThisItem.FullName
+                VerticalAlign: =VerticalAlign.Top
+                Width: =187
+                X: =12
+                Y: =3
+                ZIndex: =1
+
+            Separator25 As rectangle:
+                Height: =1
+                OnSelect: =Select(Parent)
+                Width: =Parent.TemplateWidth
+                Y: =Parent.TemplateHeight - 1
+                ZIndex: =3
+
+        Separator21 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Title21_1 As label:
+            Height: =36
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: |-
+                =CountRows(ForAll(Distinct(ThisItem.Team1,FullName), {Result: ThisRecord.Value}))
+            VerticalAlign: =VerticalAlign.Top
+            Width: =141
+            X: =204
+            Y: =4
+            ZIndex: =4
+
+    Label2 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =86
+        Size: =36
+        Text: ="PEX Team Daily Temperature Check
+        Width: =1182
+        Y: =14
+        ZIndex: =2
+
+    Icon1 As icon.Add:
+        Color: =RGBA(141, 198, 63, 1)
+        Icon: =Icon.Add
+        OnSelect: |-
+            =ResetForm(DetailsForm_1); Set(varFormdat,Defaults('PEx BT')); Reset(timer_2); 
+            If(LookUp('PEx BT', FullName= varUserEmail, FullName) = varUserEmail, Navigate(UserValidScrn), Navigate(SuccessScrn))
+        X: =1252
+        Y: =25
+        ZIndex: =3
+
+    Title1_1 As label:
+        Height: =Self.Size * 1.8
+        OnSelect: =Select(Parent)
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Text: =ThisItem.Team
+        VerticalAlign: =VerticalAlign.Top
+        Width: =Parent.TemplateWidth - 104
+        X: =32
+        Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+        ZIndex: =7
+
+    Label6 As label:
+        Height: =82
+        Text: =Text('Full Name' & "-" & Created, "mm/dd/yy" & " PM")
+        Width: =425
+        X: =172
+        Y: =592
+        ZIndex: =11
+
+    Button3 As button:
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        OnSelect: |-
+            =ClearCollect(
+               vardata, Gallery3_1.AllItems
+            )
+        Text: ="Button"
+        X: =55
+        Y: =517
+        ZIndex: =12
+
+    Label6_1 As label:
+        Height: =82
+        Text: =CountRows(Filter( Gallery3_1.AllItems, Team = "TeamC"))
+        Width: =425
+        X: =192
+        Y: =612
+        ZIndex: =13
+
+    DatePicker1 As datepicker:
+        Height: =60
+        OnChange: =Text(DatePicker1.SelectedDate) & " 12 AM"
+        Width: =300
+        X: =12
+        Y: =623
+        ZIndex: =14
+
+    Label4 As label:
+        Height: =74
+        Text: =Text(DatePicker1.SelectedDate, "mm/dd/yy") & " AM"
+        Width: =252
+        X: =649
+        Y: =660
+        ZIndex: =15
+
+    Label4_2 As label:
+        Height: =74
+        Text: |-
+            =Text(DatePicker1.SelectedDate, "mm/dd/yy")
+            & If(
+                Hour(ThisItem.Created) < 12,
+                " AM",
+                Hour(ThisItem.Created) < 17,
+                " PM",
+                " NS"
+            )
+        Width: =252
+        X: =444
+        Y: =620
+        ZIndex: =16
+
+    DatePicker2 As datepicker:
+        DefaultDate: =DatePicker1.SelectedDate
+        Height: =60
+        OnChange: =Text(DatePicker2.SelectedDate) & " 12 AM"
+        Width: =300
+        X: =12
+        Y: =694
+        ZIndex: =17
+
+    Button4 As button:
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        OnSelect: |-
+            =ClearCollect(DataEmpBox,
+                    Filter(
+                    'PEx BT',
+                    Text(
+                        DatePicker1.SelectedDate,
+                        "mm/dd/yyyy"
+                    ) & " AM" = Text(
+                        Created,
+                        "mm/dd/yyyy"
+                    ) & If(
+                        Hour(Created) < 12,
+                        " AM",
+                        Hour(Created) < 17,
+                        " PM",
+                        " NS"
+                    )
+                ).Created
+                )
+        Text: ="Button"
+        X: =340
+        Y: =728
+        ZIndex: =18
+

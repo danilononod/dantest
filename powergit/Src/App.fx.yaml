@@ -1,0 +1,28 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: |
+        =Set(TrainingInfo, TrainingProfileProgress_SixSigma);
+        Concurrent(
+        Set(varUserEmail, User().FullName),
+        //Set(varUserEmail,"Mylin Almeida"),
+        Set(varUserimg, User().Image),
+        /*Set(varUserMngr, Office365Users.ManagerV2(Office365Users.MyProfileV2().id).displayName);*/
+        Set(spinner, "https://wdc.box.com/shared/static/opj2ftaplvg4c3pk3juauw7kb3jm2xux.gif"),
+        Set(timestamp, Now()),
+        Set(vardatefrom, Value(Today()-1,"[$-en-US]yyyymmddhh")),
+        Set(vardateto,Value(Today(),"[$-en-US]yyyymmdd")),
+        
+        ClearCollect(myProfileProgress,ShowColumns(SortByColumns(TrainingInfo, "Modified",SortOrder.Descending), "ID","Program", "User", "Title", "TimeDura", "Progress", "DateTime", "Modified", "TotalScore", "Reg_ID_ref")),
+        ClearCollect(myTrainingTopics, ShowColumns('Training Topics', "ID","Title", "Vid_Dur", "Remarks")),
+        ClearCollect(myTrainingReg, ShowColumns(TrainingRegistration, "ID","Title", "TrainingModule", "StartDate", "BeltType", "Function")),
+        ClearCollect(myHREmplist, ShowColumns(HR_EMPLIST_100421,"field_Active","field_EmployeeName","field_ManagerName","field_Function"))
+        
+        )
+
+    Host As hostControl.DefaultHostControlVariant:
+        OnCancel: =false
+        OnEdit: =false
+        OnNew: =false
+        OnSave: =false
+        OnView: =false
+

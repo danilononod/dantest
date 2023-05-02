@@ -1,0 +1,257 @@
+AddEmpDirList As screen:
+
+    Rectangle1_4 As rectangle:
+        Fill: |-
+            =ColorValue("#1DB954")
+        Height: =150
+        Width: =1366
+        ZIndex: =1
+
+    "Gallery5_2 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        BorderColor: =If(!IsBlank(TextInputSearch_1.Text), ColorValue("black"), ColorValue("White"))
+        BorderThickness: =3
+        Height: =454
+        Items: =EmpNames
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =116
+        Visible: =If(!IsBlank(TextInputSearch_1.Text), true, false)
+        Width: =372
+        X: =59
+        Y: =262
+        ZIndex: =1
+
+        Title8_2 As label:
+            AutoHeight: =true
+            FontWeight: =FontWeight.Normal
+            Height: =27
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =1
+            PaddingRight: =1
+            PaddingTop: =0
+            Size: =15
+            Text: =ThisItem.DisplayName
+            Tooltip: =ThisItem.DisplayName
+            VerticalAlign: =VerticalAlign.Top
+            Width: =164
+            Wrap: =false
+            X: =14
+            Y: =20
+            ZIndex: =1
+
+        Separator9_2 As rectangle:
+            Height: =0
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Icon4_2 As icon.Add:
+            Height: =48
+            Icon: =Icon.People
+            OnSelect: |-
+                =ClearCollect(
+                   DirectReports, 
+                   Office365Users.DirectReports(ThisItem.Mail)
+                   /*(LookUp(Gallery5_2, 'Full Name'= ThisItem.DisplayName).'Full Name')Michael@xxxxxx.xxmicrosoft.com is a manager email*/
+                );
+                
+                Collect(DirectReports,
+                  Table(
+                    {
+                      FirstName: Disp.text,
+                      LastName: lastNameTextBox.text
+                    }
+                  )       
+                )
+            Visible: |-
+                =/*If(LookUp(HealthTemp, 'Full Name'= ThisItem.DisplayName).'Full Name' = ThisItem.DisplayName, false, true)*/
+                true
+            Width: =44
+            X: =298
+            Y: =20
+            ZIndex: =4
+
+    Label2_4 As label:
+        Align: =TextPosition.Left
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =150
+        Size: =36
+        Text: ="Hello,  " & Left(varUserEmail,Find(" ",varUserEmail)) & "      " & If(Hour(Now())<12, "Good morning!", Hour(Now())<17, "Good afternoon!", "Good evening!")
+        Width: =430
+        X: =936
+        ZIndex: =2
+
+    timer_4 As timer:
+        AutoStart: =true
+        Duration: =0
+        OnTimerEnd: = Set(timestamp,Now())
+        OnTimerStart: =true
+        Repeat: =true
+        Visible: =false
+        X: =12
+        Y: =128
+        ZIndex: =5
+
+    Label1_5 As label:
+        AutoHeight: =true
+        Color: =RGBA(232, 244, 217, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =52
+        Italic: =true
+        Size: =24
+        Text: |-
+            =Text(timestamp,"[$-en-US]mm/dd/yy hh:mm:ss")
+        Width: =286
+        Y: =78
+        ZIndex: =6
+
+    Button1_3 As button:
+        DisplayMode: =If(!IsBlank(ErrorMessage4_2.Text) || IsBlank(DataCardValue2_2.Text) , DisplayMode.Disabled, DisplayMode.Edit)
+        Fill: |-
+            =ColorValue("#1DB954")
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        Font: =Font.Verdana
+        FontWeight: =FontWeight.Bold
+        Height: =97
+        OnSelect: |-
+            =Patch(HealthTemp, Gallery5_3.Selected, {Full_x0020_Name:Title8_3.Value})
+            /*
+            ClearCollect(
+               DirectReports, 
+               Office365Users.DirectReports("analiza.aguinaldo@wdc.com")
+              (LookUp(Gallery5_2, 'Full Name'= ThisItem.DisplayName).'Full Name')Michael@xxxxxx.xxmicrosoft.com is a manager email
+            )*/
+        Size: =50
+        Text: ="SUBMIT"
+        Width: =412
+        X: =506
+        Y: =664
+        ZIndex: =10
+
+    Icon3_3 As icon.Home:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =89
+        Icon: =Icon.Home
+        OnSelect: =Back()
+        Width: =71
+        X: =56
+        ZIndex: =11
+
+    Label5_3 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(230, 230, 230, 1)
+        Height: =35
+        Italic: =true
+        Text: ="Date                  Time"
+        Width: =262
+        Y: =115
+        ZIndex: =12
+
+    TextInputSearch_1 As text:
+        Default: =""
+        Height: =45
+        Italic: =true
+        Size: =20
+        Width: =360
+        X: =56
+        Y: =192
+        ZIndex: =14
+
+    Label4_1 As label:
+        Text: |-
+            ="Search Result:"
+        Width: =402
+        X: =44
+        Y: =163
+        ZIndex: =15
+
+    "Gallery5_3 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        BorderColor: =If(!IsBlank(TextInputSearch_1.Text), ColorValue("black"), ColorValue("White"))
+        BorderThickness: =3
+        Height: =447
+        Items: =DirectReports
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =84
+        Visible: =If(!IsBlank(TextInputSearch_1.Text), true, false)
+        Width: =493
+        X: =734
+        Y: =183
+        ZIndex: =16
+
+        Title8_3 As label:
+            Height: =41
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.DisplayName
+            Tooltip: =
+            VerticalAlign: =VerticalAlign.Top
+            Width: =310
+            X: =32
+            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            ZIndex: =1
+
+        Separator9_3 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        IconAdd As icon.Add:
+            Height: =30
+            Icon: =Icon.Add
+            OnSelect: =
+            Width: =37
+            X: =319
+            Y: =32
+            ZIndex: =5
+
+        IconDel As icon.Add:
+            Height: =30
+            Icon: =Icon.Trash
+            OnSelect: =Select(Parent)
+            Visible: =If(!IconAdd.Icon, true, false)
+            Width: =37
+            X: =379
+            Y: =32
+            ZIndex: =6
+
+    Button1_4 As button:
+        DisplayMode: =If(!IsBlank(ErrorMessage4_2.Text) || IsBlank(DataCardValue2_2.Text) , DisplayMode.Disabled, DisplayMode.Edit)
+        Fill: |-
+            =ColorValue("#1DB954")
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        Font: =Font.Verdana
+        FontWeight: =FontWeight.Bold
+        Height: =97
+        OnSelect: |-
+            =Clear(DirectReports);
+            ForAll(
+                 Office365Users.DirectReports("analiza.aguinaldo@wdc.com"), 
+                 Collect(DirectReports, Office365Users.DirectReports(varUserEmail))
+            )
+        Size: =50
+        Text: ="SUBMIT"
+        Width: =412
+        X: =945
+        Y: =664
+        ZIndex: =17
+
+    Button2 As button:
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        OnSelect: |
+            =ClearCollect(
+               EmpNames, 
+            Office365Users.SearchUser({searchTerm:TextInputSearch_1.Text,top:100}))
+        Text: ="Button"
+        X: =446
+        Y: =192
+        ZIndex: =18
+

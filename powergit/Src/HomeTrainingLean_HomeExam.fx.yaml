@@ -1,0 +1,68 @@
+HomeTrainingLean_HomeExam As screen:
+    OnVisible: |-
+        =ClearCollect(myTrainingQ, ShowColumns(Filter('Training Exam', Program=training_prog_gal.Selected.Value, TopicTitle=gal_topic.Selected.Title),"ID", "Title", "Questionitem","TopicTitle", "TopicID", "TopicName", "Program", "AnsKey", "Option1","Option2","Option3","Option4","Option5", "OptNum"));
+        Set(PointScore, 0);
+        
+        
+        
+        
+        //{Step: 0, Question:"Question1", AvailableOptions: ["1", "2", "3"] },   
+        //Collect(myTrainingQ_Opt, {Option: [""]})
+
+    Rectangle1_23 As rectangle:
+        Height: =115
+        Width: =1366
+        ZIndex: =1
+
+    Rectangle1_24 As rectangle:
+        Height: =115
+        Width: =1366
+        Y: =653
+        ZIndex: =2
+
+    Icon9_2 As icon.Home:
+        Height: =73
+        Icon: =Icon.Home
+        Width: =79
+        X: =42
+        Y: =21
+        ZIndex: =3
+
+    Label2_22 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        Fill: =RGBA(255, 191, 0, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =342
+        Size: =40
+        Text: ="Welcome to Training" & Char(10) & "QUIZ and EXERCISE"
+        Width: =1366
+        ZIndex: =4
+
+    Button12 As button:
+        Height: =66
+        OnSelect: |+
+            =Set(Sel_ok, false);
+            Set(varFormMode,FormMode.Edit);
+            If(Last(Filter(
+                        myProfileProgress,
+            ID=ID_gal
+                    )).TotalScore >= 95, Navigate(ESD_Certifcate,ScreenTransition.CoverRight),Navigate(HomeTrainingLean_Exam_1,ScreenTransition.CoverRight))
+            
+        Text: |-
+            =//"Start"
+            If(Last(Filter(
+                        myProfileProgress,
+            ID=ID_gal
+                    )).TotalScore >= 95, "View Certificate", "Start")
+        X: =1180
+        Y: =477
+        ZIndex: =5
+
+    Image2_4 As image:
+        Image: =SSlogo
+        X: =1240
+        Y: =21
+        ZIndex: =7
+

@@ -1,0 +1,1153 @@
+Screen1_1 As screen:
+    Fill: =
+    OnVisible: =
+
+    "GridDataCollection As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        DisplayMode: =
+        Height: =452
+        Items: |-
+            =//If(sorte, SortByColumns(Filter(AllStater, Remarks="NotYetStarted", !IsBlank(StartDate), vardateStart > StartDate), "StartDate", Ascending),
+            //SortByColumns(Filter(AllStater, Remarks="NotYetStarted", !IsBlank(StartDate), vardateStart > StartDate), "StartDate", Descending))
+            If(SearchEmp, SearchEmpAdd, If(sorte, SortByColumns(Filter(AllStater, Remarks="NotYetStarted", !IsBlank(StartDate), vardateStart > StartDate), "StartDate", SortOrder.Ascending),
+            SortByColumns(Filter(AllStater, Remarks="NotYetStarted", !IsBlank(StartDate), vardateStart > StartDate), "StartDate", SortOrder.Descending)))
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =61
+        Width: =996
+        X: =8
+        Y: =301
+        ZIndex: =1
+
+        Title1_5 As label:
+            FontWeight: =FontWeight.Lighter
+            Height: =29
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: =Substitute(ThisItem.EmpName, "Ã±", "ñ")
+            VerticalAlign: =VerticalAlign.Top
+            Width: =126
+            X: =31
+            Y: =24
+            ZIndex: =1
+
+        Separator2_1 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Title1_6 As label:
+            FontWeight: =FontWeight.Lighter
+            Height: =29
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: =ThisItem.Remarks
+            VerticalAlign: =VerticalAlign.Top
+            Width: =88
+            X: =573
+            Y: =24
+            ZIndex: =4
+
+        Title1_7 As label:
+            FontWeight: =FontWeight.Lighter
+            Height: =29
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: =ThisItem.DateTime
+            VerticalAlign: =VerticalAlign.Top
+            Width: =88
+            X: =473
+            Y: =24
+            ZIndex: =5
+
+        Title1_8 As label:
+            FontWeight: =FontWeight.Lighter
+            Height: =29
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: =ThisItem.StartDate
+            VerticalAlign: =VerticalAlign.Top
+            Width: =88
+            X: =369
+            Y: =24
+            ZIndex: =6
+
+        Title1_9 As label:
+            Align: =Align.Center
+            Height: =24
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: ="EmpName"
+            VerticalAlign: =VerticalAlign.Top
+            Width: =126
+            X: =31
+            ZIndex: =7
+
+        Title1_10 As label:
+            Align: =Align.Center
+            Height: =24
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: ="Remarks"
+            VerticalAlign: =VerticalAlign.Top
+            Width: =74
+            X: =575
+            ZIndex: =8
+
+        Title1_11 As label:
+            Align: =Align.Center
+            Height: =24
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: ="RegisterDate"
+            VerticalAlign: =VerticalAlign.Top
+            Width: =86
+            X: =371
+            ZIndex: =9
+
+        Title1_12 As label:
+            Align: =Align.Center
+            Height: =24
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: ="LastUpdate"
+            VerticalAlign: =VerticalAlign.Top
+            Width: =80
+            X: =475
+            ZIndex: =10
+
+        Checkbox2 As checkbox:
+            CheckboxSize: =20
+            Default: =ThisItem in ColStated
+            Height: =29
+            OnCheck: =Collect(ColStated, ThisItem)
+            OnSelect: =Select(Parent)
+            OnUncheck: =Remove(ColStated, ThisItem)
+            Text: ="Option"
+            Width: =21
+            Y: =3
+            ZIndex: =11
+
+        Title1_13 As label:
+            FontWeight: =FontWeight.Lighter
+            Height: =29
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: =ThisItem.ID
+            VerticalAlign: =VerticalAlign.Top
+            Width: =39
+            X: =187
+            Y: =24
+            ZIndex: =12
+
+        Title1_14 As label:
+            Align: =Align.Center
+            Height: =24
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: ="ID_Reg"
+            VerticalAlign: =VerticalAlign.Top
+            Width: =66
+            X: =173
+            ZIndex: =13
+
+        Title1_15 As label:
+            FontWeight: =FontWeight.Lighter
+            Height: =29
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: =ThisItem.Progress
+            VerticalAlign: =VerticalAlign.Top
+            Width: =39
+            X: =256
+            Y: =24
+            ZIndex: =14
+
+        Title1_16 As label:
+            Align: =Align.Center
+            Height: =24
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: ="Progress"
+            VerticalAlign: =VerticalAlign.Top
+            Width: =66
+            X: =239
+            ZIndex: =15
+
+        Title1_17 As label:
+            FontWeight: =FontWeight.Lighter
+            Height: =29
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: =ThisItem.TotalScore
+            VerticalAlign: =VerticalAlign.Top
+            Width: =39
+            X: =318
+            Y: =24
+            ZIndex: =16
+
+        Title1_18 As label:
+            Align: =Align.Center
+            Height: =24
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: ="Score"
+            VerticalAlign: =VerticalAlign.Top
+            Width: =66
+            X: =305
+            ZIndex: =17
+
+        Icon28 As icon.Add:
+            Height: =32
+            Icon: =Icon.Add
+            OnSelect: |-
+                =ResetForm(vid_data_form_2); SubmitForm(vid_data_form_2);
+                ClearCollect(myProfileProgress, ShowColumns(TrainingProfileProgress,"ID","Program", "User", "Title", "TimeDura", "Progress", "DateTime", 
+                "Modified", "TotalScore", "Reg_ID_ref"))
+            Width: =30
+            X: =929
+            Y: =21
+            ZIndex: =18
+
+        Title1_19 As label:
+            Align: =LayoutAlignItems.Center
+            FontWeight: =FontWeight.Lighter
+            Height: =36
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: =ThisItem.field_Function
+            VerticalAlign: =VerticalAlign.Top
+            Width: =131
+            X: =661
+            Y: =24
+            ZIndex: =19
+
+        Title1_20 As label:
+            Align: =Align.Center
+            Height: =24
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: ="Func"
+            VerticalAlign: =VerticalAlign.Top
+            Width: =74
+            X: =683
+            ZIndex: =20
+
+        Title1_21 As label:
+            Align: =LayoutAlignItems.Center
+            FontWeight: =FontWeight.Lighter
+            Height: =36
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: =ThisItem.ManName
+            VerticalAlign: =VerticalAlign.Top
+            Width: =131
+            X: =795
+            Y: =25
+            ZIndex: =21
+
+        Title1_22 As label:
+            Align: =Align.Center
+            Height: =24
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =10
+            Text: ="Manager"
+            VerticalAlign: =VerticalAlign.Top
+            Width: =74
+            X: =817
+            Y: =1
+            ZIndex: =22
+
+    Button23_3 As button:
+        OnSelect: |-
+            =/*
+            ForAll(Gallery5_6.AllItems,Collect(myexport, {EmployeeName:ThisRecord.field_Function, Progress: ThisRecord.Department }));
+            //ClearCollect(myexport_2,Ungroup(RenameColumns(myexport,"EmployeeName","field_ManagerName"),"Progress"));
+            ClearCollect(myexport_2,Ungroup(RenameColumns(myexport,"EmployeeName","EmployeeName"),"Progress"));
+            */
+            
+            ClearCollect( AllState, ShowColumns(
+                AddColumns(
+                    myHREmplist,
+                    "Progress",
+                    LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        Text(Progress*100, "0%")),
+                    "DateTime",
+                            LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        DateTime),
+                    "TotalScore",
+                           LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        TotalScore)
+                    )
+                
+                
+                , "EmpName","field_Function","ManName","Progress", "DateTime", "TotalScore"
+            ));
+            Reset(GridDataCollection);
+            ClearCollect( AllState, ShowColumns(
+                AddColumns(
+                    myHREmplist,
+                    "Progress",
+                    LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        Text(Progress*100, "0%")),
+                    "DateTime",
+                            LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        DateTime),
+                    "TotalScore",
+                           LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        TotalScore)
+                    )
+                
+                
+                , "EmpName","field_Function","ManName","Progress", "DateTime", "TotalScore"
+            ));
+            
+            ClearCollect(HARD, AddColumns(AllState,"Remarks",
+            If(IsBlank(Progress) && IsBlank(TotalScore), "NotYetStarted",
+            If(Value(Progress) < 100% && IsBlank(TotalScore), "In-progress",
+            If(Progress = "100%" && IsBlank(TotalScore) && TotalScore <> 95, "In-progress: No Recorded Quiz",
+            If(Progress = "100%" && !IsBlank(TotalScore) && TotalScore < 95, "In-progress: For re-take Quiz",
+            If(Progress = "100%" && TotalScore >= 95, "Completed")))))));
+            
+            ClearCollect( AllStater,
+                AddColumns(
+                    HARD,
+                    "Title",
+                    LookUp(
+                        myTrainingReg,
+                        Title = HARD[@EmpName] && TrainingModule="ESD Annual Certification",
+                    Title),
+                    "StartDate",
+                     LookUp(
+                        myTrainingReg,
+                        Title = HARD[@EmpName] && TrainingModule="ESD Annual Certification",
+                    StartDate),
+                    "ID",
+                     LookUp(
+                        myTrainingReg,
+                        Title = HARD[@EmpName] && TrainingModule="ESD Annual Certification", ID)
+            ))
+            
+            
+            /*
+            
+            Set(varExport, ExportDataFromPowerApps.Run(JSON(AllStater,JSONFormat.IncludeBinaryData & JSONFormat.IgnoreUnsupportedTypes)).filelink); Launch(varExport)
+            
+            ForAll(Gallery5_6.AllItems,Collect(myexport,{EmployeeName:ThisRecord.field_ManagerName, Progress: ThisRecord.}));
+            
+            ClearCollect(ColCollection2,Ungroup(RenameColumns(Gallery5_6.AllItems,"field_Active","Progress_Chunk"),"Progress"))
+            
+            ForAll(Gallery5_7.AllItems,Collect(myexport2,{EmployeeName:ThisRecord.field_EmployeeName, Progress: ThisRecord.EmpName.field_Active }));
+            
+            Set(varExport, ExportDataFromPowerApps.Run(JSON(myexport,JSONFormat.IncludeBinaryData & JSONFormat.IgnoreUnsupportedTypes)).filelink); Launch(varExport)
+            */
+        Text: ="Refresh"
+        X: =153
+        Y: =67
+        ZIndex: =9
+
+    Label17_1 As label:
+        Height: =46
+        Text: |-
+            ="TotalEmployee: " &CountRows(GridDataCollection.AllItems)
+        Width: =235
+        X: =278
+        Y: =193
+        ZIndex: =17
+
+    DatePicker4 As datepicker:
+        Height: =43
+        OnChange: |-
+            =Reset(GridDataCollection);
+            UpdateContext({SearchEmp:false});
+            UpdateContext({vardateStart: DatePicker4.SelectedDate})
+        Reset: =clrButton.Pressed
+        Width: =190
+        X: =60
+        Y: =195
+        ZIndex: =18
+
+    Icon8_4 As icon.ArrowUp:
+        Height: =46
+        Icon: =Icon.Sort
+        OnSelect: |-
+            =UpdateContext({sorte:!sorte})
+        Width: =49
+        X: =464
+        Y: =192
+        ZIndex: =19
+
+    clrButton As button:
+        Text: ="ClearDate"
+        X: =559
+        Y: =192
+        ZIndex: =30
+
+    TextInput2 As text:
+        Clear: =true
+        Default: =""
+        HintText: ="Search Name"
+        X: =60
+        Y: =131
+        ZIndex: =31
+
+    Icon29 As icon.Search:
+        Icon: =Icon.Search
+        OnSelect: |-
+            =Reset(GridDataCollection);
+            UpdateContext({SearchEmp:true});
+            Set(SearchEmpAdd, Search(AllStater, TextInput2.Text, "EmpName"))
+        X: =390
+        Y: =107
+        ZIndex: =32
+
+    vid_data_form_2 As form:
+        AcceptsFocus: =false
+        DataSource: =TrainingProfileProgress
+        DefaultMode: =FormMode.New
+        Height: =689
+        NumberOfColumns: =1
+        OnSuccess: |-
+            =UpdateContext({SuccessSend:true})
+        Visible: =false
+        Width: =460
+        X: =856
+        Y: =64
+        ZIndex: =33
+
+        Reg_ID_ref_DataCard1_2 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Reg_ID_ref"
+            Default: |-
+                =//Last(Filter(myTrainingReg, Title=varUserEmail, TrainingModule="ESD Annual Certification")).ID
+                ID_gal
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Reg_ID_ref"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue4_3.Text)
+            Width: =460
+            X: =0
+            Y: =6
+            ZIndex: =1
+
+            DataCardKey6_3 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue4_3 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Last(Filter(AllStater, Title=GridDataCollection.Selected.EmpName)).ID
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey6_3.Y + DataCardKey6_3.Height + 5
+                ZIndex: =2
+
+            ErrorMessage6_2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue4_3.Y + DataCardValue4_3.Height
+                ZIndex: =3
+
+            StarVisible6_2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey6_3.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey6_3.Y
+                ZIndex: =4
+
+        TotalScore_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="TotalScore"
+            Default: =ThisItem.TotalScore
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="TotalScore"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue20.Text)
+            Width: =460
+            X: =0
+            Y: =7
+            ZIndex: =1
+
+            DataCardKey22 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue20 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Value(btnQuizScore.Selected.Value)
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey22.Y + DataCardKey22.Height + 5
+                ZIndex: =2
+
+            ErrorMessage22 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue20.Y + DataCardValue20.Height
+                ZIndex: =3
+
+            StarVisible22 As label:
+                Align: =Align.Center
+                Height: =DataCardKey22.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey22.Y
+                ZIndex: =4
+
+        Topic_DataCard1_2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Title"
+            Default: =ThisItem.Topic
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Topic"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =65
+            MaxLength: =DataSourceInfo([@TrainingProfileProgress], DataSourceInfo.MaxLength, "Title")
+            Required: =true
+            Update: =DataCardValue3_2.Text
+            Width: =460
+            X: =0
+            Y: =0
+            ZIndex: =25
+
+            DataCardKey5_3 As label:
+                Height: =0
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue3_2 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =drpdwnTopic.Selected.Result
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey5_3.Y + DataCardKey5_3.Height + 5
+                ZIndex: =2
+
+            ErrorMessage5_2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue3_2.Y + DataCardValue3_2.Height
+                ZIndex: =3
+
+            StarVisible5_2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey5_3.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey5_3.Y
+                ZIndex: =4
+
+        TimeDura_DataCard1_2 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="TimeDura"
+            Default: =ThisItem.TimeDura
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="TimeDura"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue9_2.Text)
+            Width: =460
+            X: =0
+            Y: =1
+            ZIndex: =25
+
+            DataCardKey12_2 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                ZIndex: =1
+
+            DataCardValue9_2 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Value(Label53.Text)
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey12_2.Y + DataCardKey12_2.Height + 5
+                ZIndex: =2
+
+            ErrorMessage12_2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue9_2.Y + DataCardValue9_2.Height
+                ZIndex: =3
+
+            StarVisible12_2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey12_2.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey12_2.Y
+                ZIndex: =4
+
+        Progress_DataCard1_2 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Progress"
+            Default: =ThisItem.Progress
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Progress"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue10_2.Text)
+            Width: =460
+            X: =0
+            Y: =2
+            ZIndex: =25
+
+            DataCardKey13_2 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue10_2 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Value(btnProgress.Selected.Value)
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey13_2.Y + DataCardKey13_2.Height + 5
+                ZIndex: =2
+
+            ErrorMessage13_2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue10_2.Y + DataCardValue10_2.Height
+                ZIndex: =3
+
+            StarVisible13_2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey13_2.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey13_2.Y
+                ZIndex: =4
+
+        User_DataCard1_2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="User"
+            Default: =ThisItem.User
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="User"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@TrainingProfileProgress], DataSourceInfo.MaxLength, "User")
+            Required: =false
+            Update: =DataCardValue11_2.Text
+            Width: =460
+            X: =0
+            Y: =3
+            ZIndex: =25
+
+            DataCardKey15_2 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue11_2 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Last(Filter(AllStater, Title=GridDataCollection.Selected.EmpName)).EmpName
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey15_2.Y + DataCardKey15_2.Height + 5
+                ZIndex: =2
+
+            ErrorMessage15_2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue11_2.Y + DataCardValue11_2.Height
+                ZIndex: =3
+
+            StarVisible15_2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey15_2.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey15_2.Y
+                ZIndex: =4
+
+        Program_DataCard1_2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Program"
+            Default: =
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Program"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@TrainingProfileProgress], DataSourceInfo.MaxLength, "Program")
+            Required: =false
+            Update: =DataCardValue13_2.Text
+            Width: =460
+            X: =0
+            Y: =4
+            ZIndex: =25
+
+            DataCardKey16_2 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue13_2 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =btnProgram.Selected.Value
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey16_2.Y + DataCardKey16_2.Height + 5
+                ZIndex: =2
+
+            ErrorMessage16_2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue13_2.Y + DataCardValue13_2.Height
+                ZIndex: =3
+
+            StarVisible16_2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey16_2.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey16_2.Y
+                ZIndex: =4
+
+        DateTime_DataCard1_2 As typedDataCard.dateEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="DateTime"
+            Default: =ThisItem.DateTime
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="DateTime"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue14_2.SelectedDate
+            Width: =460
+            X: =0
+            Y: =5
+            ZIndex: =25
+
+            DataCardKey17_2 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue14_2 As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: |-
+                    =//timestamp
+                    Last(Filter(AllStater, Title=GridDataCollection.Selected.EmpName)).StartDate
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey17_2.Y + DataCardKey17_2.Height + 5
+                ZIndex: =2
+
+            ErrorMessage17_2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue14_2.Y + DataCardValue14_2.Height
+                ZIndex: =3
+
+            StarVisible17_2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey17_2.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey17_2.Y
+                ZIndex: =4
+
+    Checkbox3 As checkbox:
+        CheckboxSize: =30
+        Default: =
+        Height: =45
+        OnCheck: =ClearCollect(ColStated, AllStater)
+        OnSelect: =
+        OnUncheck: =Clear(ColStated)
+        Text: =
+        Width: =30
+        X: =8
+        Y: =239
+        ZIndex: =34
+
+    Group14 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =35
+
+        btnProgress As radio:
+            Height: =65
+            Items: =["50%","100%"]
+            Layout: =Layout.Horizontal
+            Width: =305
+            X: =1021
+            Y: =511
+            ZIndex: =20
+
+        Label17_2 As label:
+            Height: =41
+            Text: |-
+                ="Apply Changed For Progress:"
+            Underline: =true
+            Width: =309
+            X: =1021
+            Y: =481
+            ZIndex: =21
+
+        btnQuizScore As radio:
+            Height: =65
+            Items: =["50","100"]
+            Layout: =Layout.Horizontal
+            Width: =305
+            X: =1032
+            Y: =631
+            ZIndex: =22
+
+        Label17_3 As label:
+            Height: =41
+            Text: |-
+                ="Apply Changed For QuizResult:"
+            Underline: =true
+            Width: =309
+            X: =1032
+            Y: =601
+            ZIndex: =23
+
+        btnProgram As radio:
+            Height: =65
+            Items: =["ESD","LEAN"]
+            Layout: =Layout.Horizontal
+            Width: =305
+            X: =1027
+            Y: =278
+            ZIndex: =24
+
+        Label17_4 As label:
+            Height: =41
+            Text: |-
+                ="Apply Changed For Program:"
+            Underline: =true
+            Width: =309
+            X: =1027
+            Y: =248
+            ZIndex: =25
+
+        Label17_5 As label:
+            Height: =41
+            Text: |-
+                ="Apply Changed For Topic:"
+            Underline: =true
+            Width: =309
+            X: =1025
+            Y: =352
+            ZIndex: =27
+
+        drpdwnTopic As dropdown:
+            Default: =
+            Height: =64
+            Items: =Distinct(TrainingProfileProgress.Topic,Topic)
+            Width: =339
+            X: =1027
+            Y: =399
+            ZIndex: =28
+
+        Label53 As label:
+            Height: =41
+            Text: ="976"
+            Visible: =false
+            X: =1032
+            Y: =192
+            ZIndex: =29
+

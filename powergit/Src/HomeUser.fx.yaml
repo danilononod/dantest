@@ -1,0 +1,439 @@
+HomeUser As screen:
+    OnVisible: |+
+        =UpdateContext({endspinner_2:true});
+        UpdateContext({locShowSpinner_3:false});
+        UpdateContext({locShowSpinner_2:false});
+        
+        UpdateContext({dashready:false});
+        ClearCollect( AllState, ShowColumns(
+            AddColumns(
+                myHREmplist,
+                "Progress",
+                LookUp(
+                    myProfileProgress,
+                    User = Substitute(myHREmplist[@EmployeeName], "ñ", "Ã±"),
+            
+                    Text(Progress*100, "0%")
+                ),
+                "DateTime",
+                LookUp(
+                    myProfileProgress,
+                    User = Substitute(myHREmplist[@EmployeeName], "ñ", "Ã±"),
+                    DateTime),
+                "TotalScore",
+                LookUp(
+                    myProfileProgress,
+                    User = Substitute(myHREmplist[@EmployeeName], "ñ", "Ã±"),
+                    TotalScore 
+                ))
+            
+            
+            , "field_EmployeeName","field_Function","field_ManagerName","Progress", "DateTime", "TotalScore"
+        )
+        );
+        
+        Concurrent(
+        
+        ClearCollect(myFuncAllDes, AddColumns(Sort(GroupBy(AllState,"field_Function","Department"), CountRows(Department), SortOrder.Descending), "TotalQty",
+                 CountRows(Department),
+                  "NotYetStarted",
+                  Sum(Department, IsBlank(Progress) && IsBlank(TotalScore)),
+        
+                  "In-progress",
+        
+                          Sum(Department, !IsBlank(Progress) && Progress <> "100%" && IsBlank(TotalScore)
+                  //&& DateTime>DateValue("10/12/2021")
+        
+                  ) ,
+        
+                  "In-progressQuiz=0",
+        
+                  Sum(Department, Progress = "100%" && IsBlank(TotalScore)
+                  //&& DateTime>DateValue("10/12/2021")
+        
+                  ) ,
+                 "In-progressQuiz<95",
+                 
+                  Sum(Department, Progress = "100%" && !IsBlank(TotalScore) && TotalScore < 95
+                  //&& DateTime>DateValue("10/12/2021")
+        
+                  ),
+                           "Completed",
+                  Sum(Department,Progress = "100%" && TotalScore >= 95 ),
+                  
+                  "TotalQtye",
+                 CountRows(Department)
+                  
+                  
+                  
+                
+                  )
+                  
+        ),
+        ClearCollect(myFuncAllAsc, AddColumns(Sort(GroupBy(AllState,"field_Function","Department"), CountRows(Department), SortOrder.Descending), "TotalQty",
+                 CountRows(Department),
+                  "NotYetStarted",
+                  Sum(Department, IsBlank(Progress) && IsBlank(TotalScore)),
+        
+                  "In-progress",
+        
+                    Sum(Department, !IsBlank(Progress) && Progress <> "100%" && IsBlank(TotalScore)
+                  //&& DateTime>DateValue("10/12/2021")
+        
+                  ) ,
+        
+                  "In-progressQuiz=0",
+        
+                  Sum(Department, Progress = "100%" && IsBlank(TotalScore)
+                  //&& DateTime>DateValue("10/12/2021")
+        
+                  ) ,
+                 "In-progressQuiz<95",
+                 
+                  Sum(Department, Progress = "100%" && !IsBlank(TotalScore) && TotalScore < 95
+                  //&& DateTime>DateValue("10/12/2021")
+        
+                  ),
+                           "Completed",
+                  Sum(Department,Progress = "100%" && TotalScore >= 95 ),
+                  
+                  "TotalQtye",
+                 CountRows(Department)
+                  
+                  
+                  
+                  
+                  )
+                  
+        ));
+        ClearCollect( AllState, ShowColumns(
+            AddColumns(
+                myHREmplist,
+                "Progress",
+                LookUp(
+                    myProfileProgress,
+                    User = Substitute(myHREmplist[@EmployeeName], "ñ", "Ã±"),
+            
+                    Text(Progress*100, "0%")
+                ),
+                "DateTime",
+                LookUp(
+                    myProfileProgress,
+                    User = Substitute(myHREmplist[@EmployeeName], "ñ", "Ã±"),
+                    DateTime),
+                "TotalScore",
+                LookUp(
+                    myProfileProgress,
+                    User = Substitute(myHREmplist[@EmployeeName], "ñ", "Ã±"),
+                    TotalScore 
+                ))
+            
+            
+            , "field_EmployeeName","field_Function","field_ManagerName","Progress", "DateTime", "TotalScore"
+        )
+        );
+        
+        ForAll(
+            ForAll(Distinct(
+                AllState,
+                field_ManagerName
+            ), {Result: ThisRecord.Value}), Collect(RETR,
+            LookUp(
+                AllState,
+                field_ManagerName= Result
+            )));
+         
+            ClearCollect(myFuncAllManDes, DropColumns(AddColumns(Sort(GroupBy(AllState,"field_ManagerName","Department"), CountRows(Department), SortOrder.Descending),
+        "TotalQty",
+                 CountRows(Department),
+        
+                  "NotYetStarted",
+                  Sum(Department, IsBlank(Progress) && IsBlank(TotalScore)),
+        
+                  "In-progressQuiz=0",
+        
+                  Sum(Department, Progress = "100%" && IsBlank(TotalScore) && TotalScore <> 95
+                  //&& DateTime>DateValue("10/12/2021")
+        
+                  ) ,
+                 "In-progressQuiz<95",
+                 
+                  Sum(Department, Progress = "100%" && !IsBlank(TotalScore) && TotalScore < 95
+                  //&& DateTime>DateValue("10/12/2021")
+        
+                  ),
+                           "Completed",
+                  Sum(Department,Progress = "100%" && TotalScore >= 95 )
+                  ,
+                  
+                  "TotalQtye",
+                 CountRows(Department)
+                  
+                  
+                  
+                
+                  ), "Department"));
+               ClearCollect(AllStatze, 
+            AddColumns(
+                myFuncAllManDes,
+                "field_Function",
+                LookUp(RETR,
+                    field_ManagerName = myFuncAllManDes[@field_ManagerName],
+                       field_Function
+                ))
+                
+                );
+                UpdateContext({dashready:!dashready})   
+        
+            
+        
+
+    Rectangle1_28 As rectangle:
+        Height: =115
+        Width: =1366
+        ZIndex: =2
+
+    Image3 As image:
+        Height: =46
+        Image: |-
+            ="https://sharedspace.sharepoint.com/sites/PEXSystemsProject/Images1/WD_Culture_FootNote.PNG"
+        Width: =1366
+        Y: =722
+        ZIndex: =3
+
+    Label34 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =98
+        Size: =45
+        Text: ="Welcome to PHO Online Training"
+        Width: =1286
+        Y: =8
+        ZIndex: =9
+
+    Label38 As label:
+        Align: =TextPosition.Right
+        Color: =RGBA(255, 255, 0, 1)
+        Height: =28
+        Italic: =true
+        Size: =10
+        Text: |-
+            ="UpdatedAsOf: 12-28-21 11:50 AM"
+        Width: =207
+        X: =1158
+        Y: =87
+        ZIndex: =10
+
+    Timer5_2 As timer:
+        AutoPause: =false
+        Duration: =7000
+        OnTimerEnd: |+
+            =UpdateContext({locShowSpinner_3: If(IsBlank(Label35.Text),true,
+            If(Label35.Text = Lower(varUserEmail),false))});
+            UpdateContext({locShowSpinner_2:false});
+            UpdateContext({endspinner_2:false});
+            If(!locShowSpinner_3,Navigate(TrainingReg,ScreenTransition.CoverRight))
+            
+        OnTimerStart: |-
+            =UpdateContext({locShowSpinner:true});
+        Start: =locShowSpinner_2
+        Visible: =false
+        X: =114
+        Y: =728
+        ZIndex: =11
+
+    locShowSpinner_2 As image:
+        Image: =spinner
+        Visible: =locShowSpinner_2
+        X: =665
+        Y: =247
+        ZIndex: =12
+
+    Label40_1 As label:
+        Height: =45
+        Text: ="Loading... Please wait!"
+        Visible: =locShowSpinner_2
+        Width: =212
+        X: =637
+        Y: =227
+        ZIndex: =13
+
+    Label35 As label:
+        Text: =Lower(Substitute(Last(Filter(HR_EMPLIST_100421, EmployeeName = Lower(Substitute(varUserEmail, "ñ", "Ã±")),Active = "Y")).EmployeeName, "Ã±", "ñ"))
+        Visible: =false
+        X: =366
+        Y: =187
+        ZIndex: =17
+
+    UserLogin As group:
+        Height: =5
+        Width: =5
+        X: =60
+        Y: =60
+        ZIndex: =17
+
+        email_input As text:
+            BorderColor: |
+                =RGBA(0, 18, 107, 1)
+            Clear: =true
+            Color: |-
+                =//RGBA(0, 0, 0, 1)
+                If(!IsBlank(email_input.Text)&&Lower(email_input.Text)=Lower(User().Email),ColorValue("White"),ColorValue("yellow"))
+            Default: =""
+            Fill: |-
+                =If(IsBlank(email_input.Text),ColorValue("White"),
+                If(!IsBlank(email_input.Text)&&Lower(email_input.Text)=Lower(User().Email) || !IsBlank(email_input.Text)&&Lower(email_input.Text)=Lower(User().Email),ColorValue("Green"),
+                If(Len(email_input.Text)=Len(User().Email),ColorValue("Red"))))
+            Height: =99
+            HintText: ="To login please enter your email here."
+            LineHeight: =20
+            PaddingLeft: =5
+            Size: =25
+            Visible: =endspinner_2&&!locShowSpinner_2 && !locShowSpinner_3
+            Width: =640
+            X: =395
+            Y: =300
+            ZIndex: =4
+
+        Label28 As label:
+            Height: =69
+            Size: =16
+            Text: |-
+                ="Email Address:"
+            Visible: =endspinner_2&&!locShowSpinner_2 && !locShowSpinner_3
+            Width: =179
+            X: =216
+            Y: =330
+            ZIndex: =5
+
+        Icon11 As icon.Check:
+            DisplayMode: =If(!IsBlank(email_input.Text)&&Lower(email_input.Text)=Lower(User().Email) || !IsBlank(email_input.Text)&&Lower(email_input.Text)=Lower(User().FullName),DisplayMode.Edit,DisplayMode.Disabled)
+            Height: =68
+            Icon: =Icon.Check
+            OnSelect: |-
+                =UpdateContext({locShowSpinner_2:true});
+                //UpdateContext({locShowSpinner_3:false})
+                //Navigate(TrainingReg,ScreenTransition.CoverRight)
+            Visible: =endspinner_2&&!locShowSpinner_2 && !locShowSpinner_3
+            Width: =84
+            X: =1091
+            Y: =300
+            ZIndex: =6
+
+        Icon11_1 As icon.Check:
+            Height: =67
+            Icon: =Icon.Cancel
+            OnSelect: =Reset(email_input)
+            Visible: =!locShowSpinner_2 && !locShowSpinner_3 && email_input.Fill=ColorValue("Red")
+            Width: =91
+            X: =637
+            Y: =405
+            ZIndex: =7
+
+        Label23 As label:
+            Text: ="Click to proceed"
+            Visible: =endspinner_2&&!locShowSpinner_2 && !locShowSpinner_3
+            X: =1058
+            Y: =359
+            ZIndex: =8
+
+    Button21 As button:
+        BorderColor: =ColorFade(ColorValue("White"), -15%)
+        DisplayMode: =If(dashready, DisplayMode.Edit,DisplayMode.Disabled)
+        FontWeight: =FontWeight.Lighter
+        Height: =67
+        OnSelect: |-
+            =//Navigate(DashBoard_2,ScreenTransition.CoverRight)
+            false
+        Size: =13
+        Text: ="Dashboard Monitoring"
+        Width: =158
+        X: =1208
+        ZIndex: =19
+
+    ExemptedList As group:
+        Height: =5
+        Width: =5
+        X: =60
+        Y: =60
+        ZIndex: =19
+
+        Rectangle2 As rectangle:
+            Fill: =RGBA(255, 255, 0, 1)
+            Height: =204
+            Visible: =locShowSpinner_3 && endspinner_2 && !locShowSpinner_2
+            Width: =1366
+            Y: =490
+            ZIndex: =1
+
+        Icon14 As icon.EmojiSmile:
+            Color: =RGBA(39, 113, 194, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =73
+            Icon: =Icon.EmojiSmile
+            Visible: =locShowSpinner_3 && endspinner_2 && !locShowSpinner_2
+            Width: =90
+            X: =40
+            Y: =511
+            ZIndex: =14
+
+        Label41 As label:
+            Color: =RGBA(39, 113, 194, 1)
+            Height: =136
+            Size: =30
+            Text: ="Great! You are exempted to take the training."
+            Visible: =locShowSpinner_3 && endspinner_2 && !locShowSpinner_2
+            Width: =902
+            X: =156
+            Y: =480
+            ZIndex: =15
+
+        Label41_1 As label:
+            Color: =RGBA(39, 113, 194, 1)
+            Height: =98
+            Size: =20
+            Text: ="For any concern and clarification you may contact/mail markhenry.laparan@wdc.com"
+            Visible: =locShowSpinner_3 && endspinner_2 && !locShowSpinner_2
+            Width: =545
+            X: =821
+            Y: =604
+            ZIndex: =16
+
+        Icon19 As icon.Flag:
+            Color: =RGBA(246, 88, 16, 1)
+            HoverColor: =ColorFade(Self.Color, 70%)
+            Icon: =Icon.Mail
+            OnSelect: |-
+                =Launch("mailto: markhenry.laparan@wdc.com", {subject: "ESD Certification Compliance Training 2021 Exceptional List", cc: "danilo.nonod@wdc.com", body: "       =====Please Do not DELETE this line an auto-mail content for Exceptional List===   " & Char(10) & Char(10) & "Name: _________________" & Char(10) & "Function/Dept.: _________________" & Char(10) & "JobLevel: _________________" & Char(10) & "Manager: _________________"  & Char(10)  & Char(10) & "<Intentionally left blank for your message>"})
+            Tooltip: ="Click to Open your Mail!"
+            Visible: =locShowSpinner_3 && endspinner_2 && !locShowSpinner_2
+            X: =742
+            Y: =616
+            ZIndex: =18
+
+    Icon22 As icon.CheckBadge:
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: =DisplayMode.View
+        Height: =34
+        Icon: =Icon.Trending
+        Width: =30
+        X: =1208
+        Y: =40
+        ZIndex: =20
+
+    Button26 As button:
+        OnSelect: |-
+            =Set(timestampv, Text(Now(), "mm-dd-yy hh:mm AM/PM"))
+        Text: ="Timestamp"
+        Visible: =If(varUserEmail="Danilo Nonod Jr.", true, false)
+        X: =1015
+        Y: =140
+        ZIndex: =21
+
+    Label57 As label:
+        Text: =timestampv
+        Visible: =If(varUserEmail="Danilo Nonod Jr.", true, false)
+        X: =1208
+        Y: =146
+        ZIndex: =22
+

@@ -1,0 +1,667 @@
+"'Admin ESD_ExemptedSheet' As screen":
+    Fill: =
+    OnVisible: =
+
+    "Gallery8 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Height: =170
+        Items: =If(!IsBlank(TextInput2_1.Text) && FireSearch,Search(HR_EMPLIST_100421, SearchEmpEx, "field_EmployeeName"))
+        Layout: =Layout.Vertical
+        TemplateFill: =If(ThisItem.IsSelected,RGBA(215,213,240,1),RGBA(0, 0, 0, 0))
+        TemplatePadding: =0
+        TemplateSize: =Min(96, Self.Height - 60)
+        Width: =1070
+        X: =127
+        Y: =232
+        ZIndex: =1
+
+        Title12 As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Normal
+            Height: =91
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =15
+            Text: =ThisItem.EmployeeName
+            VerticalAlign: =VerticalAlign.Top
+            Width: =222
+            X: =27
+            Y: =5
+            ZIndex: =1
+
+        Separator14 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Title12_1 As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Normal
+            Height: =91
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =15
+            Text: =ThisItem.ManagerName
+            VerticalAlign: =VerticalAlign.Top
+            Width: =222
+            X: =222
+            Y: =5
+            ZIndex: =4
+
+        Title12_2 As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Normal
+            Height: =91
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =15
+            Text: =ThisItem.Function
+            VerticalAlign: =VerticalAlign.Top
+            Width: =222
+            X: =444
+            Y: =5
+            ZIndex: =5
+
+        Title12_3 As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Normal
+            Height: =78
+            Italic: =true
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =15
+            Text: =Switch(ThisItem.Active, "Y", "Required", "N", "Exempted")
+            VerticalAlign: =VerticalAlign.Top
+            Width: =163
+            X: =648
+            Y: =5
+            ZIndex: =6
+
+        Title12_4 As label:
+            Align: =Align.Center
+            Height: =78
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =15
+            Text: =ThisItem.ESDREM_2021
+            VerticalAlign: =VerticalAlign.Top
+            Width: =163
+            X: =811
+            ZIndex: =7
+
+        Title12_5 As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Lighter
+            Height: =96
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =15
+            Text: =ThisItem.ESD_2021_Rem
+            VerticalAlign: =VerticalAlign.Top
+            Width: =275
+            X: =795
+            ZIndex: =8
+
+        Checkbox5 As checkbox:
+            Default: =ThisItem in RowStated
+            Height: =33
+            OnCheck: =Collect(RowStated, ThisItem)
+            OnSelect: =Select(Parent)
+            OnUncheck: =Remove(RowStated, ThisItem)
+            Text: =
+            Width: =39
+            Y: =28
+            ZIndex: =9
+
+    Button23_4 As button:
+        OnSelect: |-
+            =/*
+            ForAll(Gallery5_6.AllItems,Collect(myexport, {EmployeeName:ThisRecord.field_Function, Progress: ThisRecord.Department }));
+            //ClearCollect(myexport_2,Ungroup(RenameColumns(myexport,"EmployeeName","field_ManagerName"),"Progress"));
+            ClearCollect(myexport_2,Ungroup(RenameColumns(myexport,"EmployeeName","EmployeeName"),"Progress"));
+            */
+            
+            ClearCollect( AllState, ShowColumns(
+                AddColumns(
+                    myHREmplist,
+                    "Progress",
+                    LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        Text(Progress*100, "0%")),
+                    "DateTime",
+                            LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        DateTime),
+                    "TotalScore",
+                           LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        TotalScore)
+                    )
+                
+                
+                , "EmpName","field_Function","ManName","Progress", "DateTime", "TotalScore"
+            ));
+            Reset(GridDataCollection_1);
+            ClearCollect( AllState, ShowColumns(
+                AddColumns(
+                    myHREmplist,
+                    "Progress",
+                    LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        Text(Progress*100, "0%")),
+                    "DateTime",
+                            LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        DateTime),
+                    "TotalScore",
+                           LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        TotalScore)
+                    )
+                
+                
+                , "EmpName","field_Function","ManName","Progress", "DateTime", "TotalScore"
+            ));
+            
+            ClearCollect(HARD, AddColumns(AllState,"Remarks",
+            If(IsBlank(Progress) && IsBlank(TotalScore), "NotYetStarted",
+            If(Value(Progress) < 100% && IsBlank(TotalScore), "In-progress",
+            If(Progress = "100%" && IsBlank(TotalScore) && TotalScore <> 95, "In-progress: No Recorded Quiz",
+            If(Progress = "100%" && !IsBlank(TotalScore) && TotalScore < 95, "In-progress: For re-take Quiz",
+            If(Progress = "100%" && TotalScore >= 95, "Completed")))))));
+            
+            ClearCollect( AllStater,
+                AddColumns(
+                    HARD,
+                    "Title",
+                    LookUp(
+                        myTrainingReg,
+                        Title = HARD[@EmpName] && TrainingModule="ESD Annual Certification",
+                    Title),
+                    "StartDate",
+                     LookUp(
+                        myTrainingReg,
+                        Title = HARD[@EmpName] && TrainingModule="ESD Annual Certification",
+                    StartDate),
+                    "ID",
+                     LookUp(
+                        myTrainingReg,
+                        Title = HARD[@EmpName] && TrainingModule="ESD Annual Certification", ID)
+            ))
+            
+            
+            /*
+            
+            Set(varExport, ExportDataFromPowerApps.Run(JSON(AllStater,JSONFormat.IncludeBinaryData & JSONFormat.IgnoreUnsupportedTypes)).filelink); Launch(varExport)
+            
+            ForAll(Gallery5_6.AllItems,Collect(myexport,{EmployeeName:ThisRecord.field_ManagerName, Progress: ThisRecord.}));
+            
+            ClearCollect(ColCollection2,Ungroup(RenameColumns(Gallery5_6.AllItems,"field_Active","Progress_Chunk"),"Progress"))
+            
+            ForAll(Gallery5_7.AllItems,Collect(myexport2,{EmployeeName:ThisRecord.field_EmployeeName, Progress: ThisRecord.EmpName.field_Active }));
+            
+            Set(varExport, ExportDataFromPowerApps.Run(JSON(myexport,JSONFormat.IncludeBinaryData & JSONFormat.IgnoreUnsupportedTypes)).filelink); Launch(varExport)
+            */
+        Text: ="Refresh"
+        X: =1154
+        Y: =153
+        ZIndex: =9
+
+    Icon8_5 As icon.ArrowUp:
+        Height: =46
+        Icon: =Icon.Sort
+        OnSelect: |-
+            =UpdateContext({sorte:!sorte})
+        Width: =49
+        X: =1210
+        Y: =395
+        ZIndex: =19
+
+    TextInput2_1 As text:
+        Clear: =true
+        Default: =""
+        DelayOutput: =true
+        HintText: ="Search Name"
+        X: =391
+        Y: =133
+        ZIndex: =31
+
+    Icon29_1 As icon.Search:
+        Icon: =Icon.Search
+        OnSelect: |-
+            =UpdateContext({FireSearch:true});
+            Set(SearchEmpEx, TextInput2_1.Text );
+                Set(
+                    varFormModeEx,
+                    FormMode.Edit
+                );
+                Set(
+                    varDisplayView,
+                    DisplayMode.View
+                );
+        X: =722
+        Y: =124
+        ZIndex: =32
+
+    Checkbox_All As checkbox:
+        CheckboxSize: =30
+        Default: =
+        Height: =45
+        OnCheck: =ClearCollect(RowStated, myHREmplist)
+        OnUncheck: =Clear(RowStated)
+        Text: =
+        Width: =30
+        X: =133
+        Y: =173
+        ZIndex: =34
+
+    Button24 As button:
+        Height: =92
+        OnSelect: |-
+            =Patch(HR_EMPLIST_100421, Gallery8.Selected, {Active: If(btnProgram_1.Selected.Value="Exempted", "N", "Y"), ESD_2021_Rem:txt_RemESD.Text});
+            //ClearCollect(myHREmplist, ShowColumns(HR_EMPLIST_100421,"field_Active","field_EmployeeName","field_ManagerName","field_Function"))
+            //Patch(TrainingProfileProgress, Last(Filter(myProfileProgress, Reg_ID_ref=ID_gal))
+        Text: ="Button"
+        Width: =302
+        X: =1053
+        Y: =618
+        ZIndex: =36
+
+    Group15 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =36
+
+        btnProgram_1 As radio:
+            Height: =65
+            Items: =["Required","Exempted"]
+            Layout: =Layout.Horizontal
+            Width: =305
+            X: =2
+            Y: =432
+            ZIndex: =24
+
+        Label17_7 As label:
+            Height: =41
+            Text: |-
+                ="Apply Changed For Program:"
+            Underline: =true
+            Width: =309
+            X: =2
+            Y: =402
+            ZIndex: =25
+
+        Label17_8 As label:
+            Height: =41
+            Text: ="Remarks"
+            Underline: =true
+            Width: =309
+            Y: =506
+            ZIndex: =27
+
+        Label53_1 As label:
+            Height: =41
+            Text: ="976"
+            Visible: =false
+            X: =7
+            Y: =346
+            ZIndex: =29
+
+        txt_RemESD As text:
+            Clear: =true
+            Default: =""
+            Height: =207
+            HintText: ="Please Add Notes here."
+            Mode: =TextMode.MultiLine
+            Y: =561
+            ZIndex: =35
+
+    Rectangle1_40 As rectangle:
+        Fill: =RGBA(7, 184, 224, 1)
+        Height: =115
+        Width: =1366
+        ZIndex: =37
+
+    Image3_7 As image:
+        Height: =46
+        Image: |-
+            ="https://sharedspace.sharepoint.com/sites/PEXSystemsProject/Images1/WD_Culture_FootNote.PNG"
+        Width: =1366
+        Y: =722
+        ZIndex: =38
+
+    Icon20_3 As icon.Reload:
+        Color: =RGBA(3, 92, 112, 1)
+        DisabledColor: =RGBA(7, 184, 224, 1)
+        Height: =73
+        HoverColor: =ColorFade(Self.Color, 50%)
+        Icon: =Icon.Reload
+        OnSelect: |-
+            =UpdateContext({locShowSpinner_VG:true});
+            Concurrent(
+                
+            ClearCollect(myProfileProgress,ShowColumns(SortByColumns(TrainingProfileProgress, "Modified",SortOrder.Descending), "ID","Program", "User", "Title", "TimeDura", "Progress", "DateTime", "Modified", "TotalScore", "Reg_ID_ref")),
+            ClearCollect(myTrainingTopics, ShowColumns('Training Topics', "ID","Title", "Vid_Dur", "Remarks")),
+            ClearCollect(myTrainingReg, ShowColumns(TrainingRegistration, "ID","Title", "TrainingModule", "StartDate", "BeltType", "Function")),
+            ClearCollect(myHREmplist, HR_EMPLIST_100421)
+            );
+            
+            
+            UpdateContext({locShowSpinner_VG:false});
+            
+            
+            Reset(gal_FuncStat);
+            Set(VRY,{});
+            UpdateContext({locShowSpinner_2:true});
+            UpdateContext({locShowSpinner_3:false});
+            Set(VRYY,{});
+            
+            
+            ClearCollect( AllState, ShowColumns(
+                AddColumns(
+                    myHREmplist,
+                    "Progress",
+                    LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        Text(Progress*100, "0%")),
+                    "DateTime",
+                            LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        DateTime),
+                    "TotalScore",
+                           LookUp(
+                        myProfileProgress,
+                        User = myHREmplist[@EmpName],
+                        TotalScore)
+                    )
+                
+                
+                , "EmpName","field_Function","ManName","Progress", "DateTime", "TotalScore"
+            ));
+            
+            Concurrent(
+            
+            ClearCollect(myFuncAllDes, AddColumns(Sort(GroupBy(AllState,"field_Function","Department"), CountRows(Department), SortOrder.Descending), "TotalQty",
+                     CountRows(Department),
+                      "NotYetStarted",
+                      Sum(Department, IsBlank(Progress)), //&& IsBlank(TotalScore))
+                      
+            
+                       "In-progress",
+            
+                        Sum(Department, !IsBlank(Progress) && Value(Progress) < 100%  //&& IsBlank(TotalScore)
+                      //&& DateTime>DateValue("10/12/2021")
+            
+                      
+            
+                      ),
+                               "Completed",
+                      Sum(Department,Progress = "100%" //&& TotalScore >= 95 
+                      
+                      ),
+                      
+                      "TotalQtye",
+                     CountRows(Department)
+                      
+                      
+                      
+                    
+                      )
+                      
+            ),
+            ClearCollect(myFuncAllAsc, AddColumns(Sort(GroupBy(AllState,"field_Function","Department"), CountRows(Department), SortOrder.Descending), "TotalQty",
+                     CountRows(Department),
+                      "NotYetStarted",
+                      Sum(Department, IsBlank(Progress) && IsBlank(TotalScore)),
+            
+                      
+                       "In-progress",
+            
+                        Sum(Department, !IsBlank(Progress) && Value(Progress) < 100%  //&& IsBlank(TotalScore)
+                      //&& DateTime>DateValue("10/12/2021")
+            
+                      
+            
+                      ),
+                               "Completed",
+                      Sum(Department,Progress = "100%" //&& TotalScore >= 95 
+                      
+                      ),
+                      
+                      "TotalQtye",
+                     CountRows(Department)
+                      
+                      
+                      
+                      
+                      
+                      
+                      )
+                      
+            ));
+            Set(timestamp_esd, Now());
+            
+            //To Distinct table in data
+            
+            ForAll(
+                Distinct(
+                    AllState,
+                    ManName
+                ), Collect(RETR,
+                LookUp(
+                    AllState,
+                    ManName= Result
+                )));
+             
+                ClearCollect(myFuncAllManDes, DropColumns(AddColumns(Sort(GroupBy(AllState,"ManName","Department"), CountRows(Department), SortOrder.Descending),
+            "TotalQty",
+                     CountRows(Department),
+            
+                      "NotYetStarted",
+                      Sum(Department, IsBlank(Progress) && IsBlank(TotalScore)),
+            
+                       
+                       "In-progress",
+            
+                        Sum(Department, !IsBlank(Progress) && Value(Progress) < 100%  //&& IsBlank(TotalScore)
+                      //&& DateTime>DateValue("10/12/2021")
+            
+                      
+            
+                      ),
+                               "Completed",
+                      Sum(Department,Progress = "100%" //&& TotalScore >= 95 
+                      
+                      ),
+                      
+                      "TotalQtye",
+                     CountRows(Department),
+            
+                    "Rate", Sum(Department, Progress) / CountRows(Department)
+                      
+                      ), "Department"));
+                   ClearCollect(AllStatze, 
+                AddColumns(
+                    myFuncAllManDes,
+                    "field_Function",
+                    LookUp(RETR,
+                        ManName = myFuncAllManDes[@ManName],
+                           field_Function
+                    ))
+                    
+                    )
+        Tooltip: ="Click to get the latest update!"
+        Visible: =!locShowSpinner_2
+        Width: =122
+        X: =456
+        Y: =20
+        ZIndex: =39
+
+    lbl_Refresh_1 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(127, 143, 169, 1)
+        DisplayMode: =DisplayMode.View
+        Height: =19
+        Size: =10
+        Text: ="Refresh"
+        Visible: =!locShowSpinner_2
+        Width: =67
+        X: =483
+        Y: =48
+        ZIndex: =40
+
+    Icon18_4 As icon.BackArrow:
+        Color: =RGBA(39, 113, 194, 1)
+        Icon: =Icon.Home
+        OnSelect: =Navigate(HomeUser,ScreenTransition.None)
+        Visible: |-
+            =//If(varUserEmail="Danilo Nonod Jr.", true, false)
+            true
+        X: =54
+        Y: =20
+        ZIndex: =41
+
+    lbl_DateTimeStamp_1 As label:
+        Color: =RGBA(9, 33, 98, 1)
+        DisplayMode: =DisplayMode.View
+        Height: =49
+        Size: =10
+        Text: |-
+            ="Datetime: " & Text(timestamp,"[$-en-US]mm/dd/yy hh:mm:ss AM/PM") & Char(10) & "LastUpdate: " & timestamp_esd
+        Tooltip: ="Click Refresh to get the latest update!"
+        Visible: =!locShowSpinner_2
+        Width: =280
+        X: =127
+        Y: =66
+        ZIndex: =42
+
+    timer_6 As timer:
+        AutoStart: =true
+        Duration: =0
+        OnTimerEnd: = Set(timestamp,Now())
+        OnTimerStart: =true
+        Repeat: =true
+        Visible: =false
+        X: =32
+        Y: =148
+        ZIndex: =43
+
+    Label17_9 As label:
+        Align: =Align.Center
+        Height: =44
+        Text: ="EmployeeName"
+        Width: =163
+        X: =179
+        Y: =180
+        ZIndex: =44
+
+    Label17_10 As label:
+        Align: =Align.Center
+        Height: =44
+        Text: ="ManagerName"
+        Width: =163
+        X: =375
+        Y: =184
+        ZIndex: =45
+
+    Label17_11 As label:
+        Align: =Align.Center
+        Height: =44
+        Text: ="Function"
+        Width: =163
+        X: =598
+        Y: =184
+        ZIndex: =46
+
+    Label17_12 As label:
+        Align: =Align.Center
+        Height: =44
+        Text: ="Tagged As"
+        Width: =163
+        X: =784
+        Y: =184
+        ZIndex: =47
+
+    Label17_13 As label:
+        Align: =Align.Center
+        Height: =44
+        Text: ="Remarks"
+        Width: =163
+        X: =947
+        Y: =184
+        ZIndex: =48
+
+    Button24_1 As button:
+        Height: =92
+        OnSelect: |+
+            =Patch(HR_EMPLIST_100421, Gallery8.Selected, {EmployeeName:Last(Filter(AllState, EmpName=Substitute(Gallery8.Selected.EmployeeName, "Ã±", "ñ"))).EmpName });
+            UpdateContext({FireSearch:false});
+            Refresh(HR_EMPLIST_100421)
+            //Patch(TrainingProfileProgress, Last(Filter(myProfileProgress, Reg_ID_ref=ID_gal))
+            
+        Text: ="Button"
+        Width: =302
+        X: =504
+        Y: =588
+        ZIndex: =49
+
+    Label51 As label:
+        Height: =52
+        Text: =Last(Filter(AllState, EmpName=Substitute(Gallery8.Selected.EmployeeName, "Ã±", "ñ"))).EmpName
+        Width: =224
+        X: =510
+        Y: =426
+        ZIndex: =50
+
+    Button24_2 As button:
+        Height: =92
+        OnSelect: |+
+            =ForAll(RenamColumns(HR_EMPLIST_100421,"field_EmployeeName","EID"), Patch(HR_EMPLIST_100421, LookUp(HR_EMPLIST_100421, EmployeeName=EID), {EmployeeName:Dropdown2.Selected.Value}));
+            UpdateContext({FireSearch:false});
+            Refresh(HR_EMPLIST_100421)
+            //Patch(TrainingProfileProgress, Last(Filter(myProfileProgress, Reg_ID_ref=ID_gal))
+            
+        Text: ="Button"
+        Width: =302
+        X: =786
+        Y: =478
+        ZIndex: =51
+
+    Dropdown2 As dropdown:
+        Items: =["Ã±"]
+        X: =421
+        Y: =457
+        ZIndex: =52
+
