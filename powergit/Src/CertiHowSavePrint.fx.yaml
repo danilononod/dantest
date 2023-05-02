@@ -25,18 +25,6 @@ CertiHowSavePrint As screen:
         Y: =15
         ZIndex: =3
 
-    Video1 As videoPlayback:
-        AutoStart: =true
-        Fill: =RGBA(0, 0, 0, 1)
-        Height: =590
-        Loop: =true
-        Media: |-
-            ="https://sharedspace-my.sharepoint.com/personal/roshelle_villanueva_wdc_com/Documents/FromBox/Alith/LSS%20e-Learning%20Modules/Lean/Exported%20Video/5S.mp4?cid=5f6b5c94-8994-4c43-bf74-ab5c23f7b19d"
-        Width: =1327
-        X: =18
-        Y: =132
-        ZIndex: =4
-
     Icon13 As icon.BackArrow:
         Color: =RGBA(255, 255, 255, 1)
         Icon: =Icon.BackArrow
@@ -44,4 +32,29 @@ CertiHowSavePrint As screen:
         X: =40
         Y: =25
         ZIndex: =5
+
+    HtmlText1 As htmlViewer:
+        Height: =341
+        HtmlText: |-
+            ="https://sharedspace.sharepoint.com/:v:/s/apac-ph-process-excellence/EY4LdMO3CNlLuY3_WkpLCuwBg76hbhIoVJR9XEsLMXgHww?e=4OAEpI"
+        Width: =561
+        X: =60
+        Y: =60
+        ZIndex: =6
+
+    Video4 As videoPlayback:
+        Height: =532
+        Media: =vdo
+        Width: =1216
+        X: =60
+        Y: =156
+        ZIndex: =7
+
+    Button28 As button:
+        OnSelect: |-
+            =Set(vdo, "https://sharedspace.sharepoint.com/sites/PExManagerReport/Shared%20Documents/5S.mp4")
+        Text: ="Button"
+        X: =916
+        Y: =398
+        ZIndex: =8
 

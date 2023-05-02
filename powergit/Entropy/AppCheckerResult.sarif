@@ -29180,19 +29180,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "CertiHowSavePrint.Video1.ClosedCaptionsUrl"
+                  "fullyQualifiedName": "CertiHowSavePrint.Video4.ClosedCaptionsUrl"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "CertiHowSavePrint.Video1.ClosedCaptionsUrl",
+                  "fullyQualifiedName": "CertiHowSavePrint.Video4.ClosedCaptionsUrl",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "ClosedCaptionsUrl",
                 "module": "CertiHowSavePrint",
-                "type": "CertiHowSavePrint.Video1"
+                "type": "CertiHowSavePrint.Video4"
               }
             }
           ],
@@ -29210,49 +29210,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "CertiHowSavePrint.Video1.AutoStart"
+                  "fullyQualifiedName": "CertiHowSavePrint.Video4.AccessibleLabel"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "CertiHowSavePrint.Video1.AutoStart",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "AutoStart",
-                "module": "CertiHowSavePrint",
-                "type": "CertiHowSavePrint.Video1"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "acc-AutostartShouldBeOff",
-          "ruleIndex": 28
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "CertiHowSavePrint.Video1.AccessibleLabel"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "CertiHowSavePrint.Video1.AccessibleLabel",
+                  "fullyQualifiedName": "CertiHowSavePrint.Video4.AccessibleLabel",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "AccessibleLabel",
                 "module": "CertiHowSavePrint",
-                "type": "CertiHowSavePrint.Video1"
+                "type": "CertiHowSavePrint.Video4"
               }
             }
           ],
@@ -31381,6 +31351,36 @@
               },
               "properties": {
                 "member": "WD_Culture_FootNote",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedMediaResources",
+          "ruleIndex": 30
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.VID20201208184239"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.VID20201208184239",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "VID20201208184239",
                 "module": "App",
                 "type": "App"
               }
