@@ -200,7 +200,7 @@ HomeTrainingList As screen:
         ZIndex: =4
 
     Button14 As button:
-        DisplayMode: =If(LookUp(AllStateExported,Title=varRecord.Title, Status) = false, DisplayMode.Disabled,DisplayMode.Edit)
+        DisplayMode: =//If(LookUp(AllStateExported,Title=varRecord.Title, Status) = false, DisplayMode.Disabled,DisplayMode.Edit)
         Height: =81
         OnSelect: |
             =Set(goWatchec,0);

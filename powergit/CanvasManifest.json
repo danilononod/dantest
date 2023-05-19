@@ -78,6 +78,7 @@
       "projectionmapping": true,
       "reactformulabar": false,
       "reliableconcurrent": true,
+      "reservedkeywords": false,
       "reverttooldpowerautomate": false,
       "rtlinstudiopreview": false,
       "rtlsupport": false,
@@ -94,6 +95,7 @@
       "zeroalltabindexes": false
     },
     "Author": "",
+    "BindingErrorCount": 451,
     "ContainsThirdPartyPcfControls": false,
     "DefaultConnectedDataSourceMaxGetRowsCount": 2000,
     "DocumentAppType": "DesktopOrTablet",
@@ -111,7 +113,8 @@
     "LocalDatabaseReferences": "{}",
     "ManualOfflineProfileId": "",
     "Name": "PEX_ELearning_Modules_SixSigma",
-    "OriginatingVersion": "1.311"
+    "OriginatingVersion": "1.311",
+    "ParserErrorCount": 42
   },
   "PublishInfo": {
     "AppName": "PEX_ELearning_Modules_SixSigma",

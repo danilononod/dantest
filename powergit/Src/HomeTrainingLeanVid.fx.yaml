@@ -100,6 +100,7 @@ HomeTrainingLeanVid As screen:
         DefaultMode: =FormMode.New
         Height: =597
         NumberOfColumns: =1
+        SnapToColumns: =false
         Visible: =false
         Width: =460
         Y: =93
@@ -996,7 +997,7 @@ HomeTrainingLeanVid As screen:
     varTrigger_btn As button:
         OnSelect: |-
             =If(IsBlank(Last(Filter(myProfileProgress, Reg_ID_ref=ID_gal, Title=gal_topic.Selected.Title).User)), ResetForm(vid_data_form); SubmitForm(vid_data_form);
-            ClearCollect(myProfileProgress, ShowColumns(TrainingProfileProgress_Lean,"ID","Program", "User", "Title", "TimeDura", "Progress", "DateTime", "Modified", "TotalScore", "Reg_ID_ref")), Patch(TrainingProfileProgress_Lean,Last(Filter(myProfileProgress, Reg_ID_ref=ID_gal)),({Progress:Value(Label9.Text), TimeDura:VideoData.Time, DateTime:timestamp, Topic:gal_topic.Selected.Title}))  )
+            ClearCollect(myProfileProgress, ShowColumns(TrainingProfileProgress_SixSigma,"ID","Program", "User", "Title", "TimeDura", "Progress", "DateTime", "Modified", "TotalScore", "Reg_ID_ref")), Patch(TrainingProfileProgress_SixSigma,Last(Filter(myProfileProgress, Reg_ID_ref=ID_gal)),({Progress:Value(Label9.Text), TimeDura:VideoData.Time, DateTime:timestamp, Topic:gal_topic.Selected.Title}))  )
         Text: ="TrggerButton"
         Visible: =varUserEmail="Danilo Nonod Jr."
         X: =1160
